@@ -1,1 +1,277 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | GBPS Karam Khan Nizamani</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #006a4e, #009879);
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 30px 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .school-logo {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #006a4e;
+            font-size: 23px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #006a4e;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 7px;
+            background: #006a4e;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #004d39;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #006a4e;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="school-logo">🏫</div>
+
+    <h1>GBPS Karam Khan Nizamani</h1>
+
+    <div class="subtitle">
+        School Admin Login
+    </div>
+
+    <form id="loginForm">
+
+        <label for="email">Admin Email</label>
+
+        <input
+            type="email"
+            id="email"
+            value="gbps.karamkhan.nizamani@gmail.com"
+            placeholder="Enter admin email"
+            required
+        >
+
+        <label for="password">Password</label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+        >
+
+        <button type="submit" id="loginButton">
+            🔐 Login
+        </button>
+
+    </form>
+
+    <div id="message"></div>
+
+    <a href="index.html" class="back">
+        ← Back to School App
+    </a>
+
+</div>
+
+
+<!-- Firebase -->
+<script type="module">
+
+    import { initializeApp } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    import {
+        getAuth,
+        signInWithEmailAndPassword
+    } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+    // Your existing Firebase project configuration
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAEtsOoIe3tll0_hvovC42j9ujcb8Wavu4",
+        authDomain: "poet--deedar---shahbaz.firebaseapp.com",
+        projectId: "poet--deedar---shahbaz",
+        storageBucket: "poet--deedar---shahbaz.firebasestorage.app",
+        messagingSenderId: "411582745091",
+        appId: "1:411582745091:web:96413eef58092e77911c36",
+        measurementId: "G-E0V5QH9D98"
+    };
+
+
+    // Initialize Firebase
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+
+    // Login form
+
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const message = document.getElementById("message");
+
+
+    loginForm.addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+
+        message.textContent = "";
+        loginButton.disabled = true;
+        loginButton.textContent = "Logging in...";
+
+
+        try {
+
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+            message.style.color = "green";
+            message.textContent =
+                "Login successful. Opening dashboard...";
+
+
+            setTimeout(function() {
+
+                window.location.href = "admin.html";
+
+            }, 700);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.style.color = "red";
+
+            if (
+                error.code === "auth/invalid-credential" ||
+                error.code === "auth/wrong-password" ||
+                error.code === "auth/user-not-found"
+            ) {
+
+                message.textContent =
+                    "Incorrect email or password.";
+
+            } else if (error.code === "auth/too-many-requests") {
+
+                message.textContent =
+                    "Too many attempts. Please try again later.";
+
+            } else {
+
+                message.textContent =
+                    "Login failed. Please check your connection.";
+
+            }
+
+            loginButton.disabled = false;
+            loginButton.textContent = "🔐 Login";
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
