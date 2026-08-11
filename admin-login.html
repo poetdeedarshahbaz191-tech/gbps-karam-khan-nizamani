@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | GBPS Karam Khan Nizamani</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #00695c, #00897b);
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 30px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            padding: 7px;
+            border: 3px solid #00695c;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #00695c;
+            font-size: 23px;
+            margin-bottom: 5px;
+        }
+
+        .school-name {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #00897b;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #00695c;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .login-button:hover {
+            background: #004d40;
+        }
+
+        .message {
+            margin-top: 15px;
+            min-height: 20px;
+            font-size: 14px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #00695c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .security {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f1f8f6;
+            border-radius: 10px;
+            color: #555;
+            font-size: 13px;
+        }
+
+        footer {
+            margin-top: 20px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        @media (max-width: 450px) {
+            .login-box {
+                padding: 25px 18px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <img
+            src="school-logo.png"
+            alt="GBPS Karam Khan Nizamani Campus Logo"
+            class="logo"
+        >
+
+        <h1>Government Boys Primary School</h1>
+
+        <div class="school-name">
+            Karam Khan Nizamani Campus
+        </div>
+
+        <h2>🔐 Admin / Teacher Login</h2>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+
+                <label for="email">Email Address</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="login-button">
+                Login
+            </button>
+
+        </form>
+
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+
+        <div class="security">
+            🔒 Student records and attendance are intended
+            for authorized school staff only.
+        </div>
+
+
+        <a href="index.html" class="back">
+            ← Back to School App
+        </a>
+
+
+        <footer>
+            © 2026 Government Boys Primary School
+        </footer>
+
+    </div>
+
+
+    <script>
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                const message =
+                    document.getElementById("message");
+
+                message.textContent =
+                    "Firebase Authentication will be connected here.";
+
+                message.style.color = "#00695c";
+
+            });
+
+    </script>
+
+</body>
+</html>
+
