@@ -1,1 +1,352 @@
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Government Boys Primary School | Karam Khan Nizamani Campus</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8ff;
+            color: #222;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0d47a1, #087f5b);
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+        }
+
+        .school-logo {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 15px;
+            filter: drop-shadow(0 4px 7px rgba(0,0,0,0.3));
+        }
+
+        header h1 {
+            font-size: 25px;
+        }
+
+        header p {
+            margin-top: 7px;
+            font-size: 16px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 45px 20px;
+            background: white;
+        }
+
+        .hero h2 {
+            color: #0d47a1;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .about {
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .about h2 {
+            color: #0d47a1;
+            margin-bottom: 15px;
+        }
+
+        .about-box {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            line-height: 1.7;
+        }
+
+        .classes {
+            padding: 30px 20px;
+        }
+
+        .classes h2 {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 25px;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .class-card {
+            background: white;
+            padding: 25px 10px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            font-size: 18px;
+            font-weight: bold;
+            color: #0d47a1;
+            text-decoration: none;
+            display: block;
+            transition: 0.2s;
+        }
+
+        .class-card:hover {
+            transform: translateY(-3px);
+            background: #eaf3ff;
+        }
+
+        .facilities {
+            padding: 30px 20px;
+        }
+
+        .facilities h2 {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 25px;
+        }
+
+        .facility-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .facility-card {
+            background: white;
+            padding: 22px 10px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .facility-card h3 {
+            color: #087f5b;
+            margin-bottom: 8px;
+        }
+
+        .mission {
+            margin: 30px 20px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
+            border-left: 5px solid #087f5b;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .mission h2 {
+            color: #0d47a1;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            margin-top: 30px;
+            background: #0d47a1;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+
+            .school-logo {
+                width: 125px;
+                height: 125px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            .hero h2 {
+                font-size: 24px;
+            }
+
+            .class-grid,
+            .facility-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <!-- School Logo -->
+    <img
+        src="school-logo.png"
+        alt="GBPS Karam Khan Nizamani Campus Logo"
+        class="school-logo"
+    >
+
+    <h1>Government Boys Primary School</h1>
+
+    <p>Karam Khan Nizamani Campus</p>
+
+</header>
+
+
+<section class="hero">
+
+    <h2>Welcome to Our School App</h2>
+
+    <p>
+        A simple digital learning platform for our students
+        from KG to Class 5.
+    </p>
+
+</section>
+
+
+<section class="about">
+
+    <h2>About Our School</h2>
+
+    <div class="about-box">
+
+        <p>
+            Government Boys Primary School Karam Khan Nizamani Campus
+            is committed to providing meaningful learning opportunities
+            for children and helping them develop knowledge, discipline,
+            confidence and good character.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="classes">
+
+    <h2>Our Classes</h2>
+
+    <div class="class-grid">
+
+        <a href="kg.html" class="class-card">
+            🎒<br>
+            KG
+        </a>
+
+        <a href="class1.html" class="class-card">
+            📘<br>
+            Class 1
+        </a>
+
+        <a href="class2.html" class="class-card">
+            📗<br>
+            Class 2
+        </a>
+
+        <a href="class3.html" class="class-card">
+            📙<br>
+            Class 3
+        </a>
+
+        <a href="class4.html" class="class-card">
+            📕<br>
+            Class 4
+        </a>
+
+        <a href="class5.html" class="class-card">
+            📚<br>
+            Class 5
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="facilities">
+
+    <h2>Our School Facilities</h2>
+
+    <div class="facility-grid">
+
+        <div class="facility-card">
+            <h3>📚 Learning</h3>
+            <p>Meaningful learning opportunities for students.</p>
+        </div>
+
+        <div class="facility-card">
+            <h3>👨‍🏫 Teachers</h3>
+            <p>Dedicated teachers supporting children's education.</p>
+        </div>
+
+        <div class="facility-card">
+            <h3>📝 Activities</h3>
+            <p>Educational activities for skill development.</p>
+        </div>
+
+        <div class="facility-card">
+            <h3>🌱 Development</h3>
+            <p>Focus on knowledge, discipline and character.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="mission">
+
+    <h2>Our Mission</h2>
+
+    <p>
+        To provide children with meaningful learning opportunities
+        and help them become knowledgeable, confident and responsible
+        members of society.
+    </p>
+
+</section>
+
+
+<footer>
+
+    <p>
+        <strong>Government Boys Primary School</strong>
+    </p>
+
+    <p>
+        Karam Khan Nizamani Campus
+    </p>
+
+    <p>
+        © 2026 Government Boys Primary School
+    </p>
+
+</footer>
+
+</body>
+</html>
