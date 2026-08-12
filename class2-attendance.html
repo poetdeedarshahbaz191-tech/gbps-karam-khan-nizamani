@@ -1,1 +1,890 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Class 2 Attendance | GBPS Karam Khan Nizamani</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #0d47a1;
+            color: white;
+            text-align: center;
+            padding: 18px 15px;
+        }
+
+        header h1 {
+            font-size: 22px;
+        }
+
+        header p {
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .top-box,
+        .add-box,
+        .table-box {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+        }
+
+        .back {
+            display: inline-block;
+            color: #0d47a1;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #0d47a1;
+            margin-bottom: 8px;
+        }
+
+        .date-box {
+            margin-top: 15px;
+        }
+
+        .date-box label {
+            font-weight: bold;
+        }
+
+        input[type="date"],
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 15px 8px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        .summary-box strong {
+            display: block;
+            font-size: 22px;
+            color: #0d47a1;
+            margin-bottom: 5px;
+        }
+
+        .add-btn {
+            width: 100%;
+            margin-top: 12px;
+            padding: 11px;
+            border: none;
+            border-radius: 7px;
+            background: #0d47a1;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #08306b;
+        }
+
+        .table-box {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th,
+        td {
+            padding: 10px 7px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #0d47a1;
+            color: white;
+        }
+
+        td img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .btn {
+            border: none;
+            padding: 7px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            font-size: 12px;
+        }
+
+        .present {
+            background: #2e7d32;
+        }
+
+        .absent {
+            background: #c62828;
+        }
+
+        .leave {
+            background: #f9a825;
+        }
+
+        .edit {
+            background: #1565c0;
+        }
+
+        .remove {
+            background: #8e0000;
+        }
+
+        .active {
+            outline: 3px solid #222;
+        }
+
+        .empty {
+            padding: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        footer {
+            margin-top: 30px;
+            background: #0d47a1;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏫 Government Boys Primary School</h1>
+    <p>Karam Khan Nizamani Campus</p>
+</header>
+
+<div class="container">
+
+    <div class="top-box">
+
+        <a href="admin.html" class="back">
+            ← Admin Dashboard
+        </a>
+
+        <h2>👨‍🎓 Class 2 Student Record & Attendance</h2>
+
+        <p>Government Boys Primary School</p>
+
+        <div class="date-box">
+
+            <label for="attendanceDate">
+                Attendance Date:
+            </label>
+
+            <input
+                type="date"
+                id="attendanceDate"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-box">
+            <strong id="totalStudents">0</strong>
+            Total Students
+        </div>
+
+        <div class="summary-box">
+            <strong id="presentStudents">0</strong>
+            Present Students
+        </div>
+
+        <div class="summary-box">
+            <strong id="absentStudents">0</strong>
+            Absent Students
+        </div>
+
+        <div class="summary-box">
+            <strong id="leaveStudents">0</strong>
+            Leave
+        </div>
+
+    </div>
+
+
+    <div class="add-box">
+
+        <h2>➕ Add Class 2 Student</h2>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Student Name"
+        >
+
+        <input
+            type="text"
+            id="grNo"
+            placeholder="GR No."
+        >
+
+        <input
+            type="file"
+            id="studentPicture"
+            accept="image/*"
+        >
+
+        <button
+            class="add-btn"
+            onclick="addStudent()"
+        >
+            Add Student
+        </button>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>S. No.</th>
+                    <th>Student Name</th>
+                    <th>GR No.</th>
+                    <th>Picture</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Leave</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="studentTableBody"></tbody>
+
+        </table>
+
+        <div
+            id="emptyMessage"
+            class="empty"
+        >
+            No Class 2 students added yet.
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    <strong>Government Boys Primary School</strong><br>
+    Karam Khan Nizamani Campus<br><br>
+    © 2026 Government Boys Primary School
+</footer>
+
+
+<script>
+
+let students = JSON.parse(
+    localStorage.getItem(
+        "class2AttendanceStudents"
+    ) || "[]"
+);
+
+
+const dateInput =
+    document.getElementById(
+        "attendanceDate"
+    );
+
+
+dateInput.value =
+    localStorage.getItem(
+        "class2AttendanceDate"
+    ) ||
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+dateInput.addEventListener(
+    "change",
+    function () {
+
+        localStorage.setItem(
+            "class2AttendanceDate",
+            this.value
+        );
+
+    }
+);
+
+
+function saveStudents() {
+
+    localStorage.setItem(
+        "class2AttendanceStudents",
+        JSON.stringify(students)
+    );
+
+}
+
+
+function addStudent() {
+
+    const name =
+        document
+            .getElementById("studentName")
+            .value
+            .trim();
+
+
+    const grNo =
+        document
+            .getElementById("grNo")
+            .value
+            .trim();
+
+
+    const pictureInput =
+        document.getElementById(
+            "studentPicture"
+        );
+
+
+    if (!name || !grNo) {
+
+        alert(
+            "Please enter Student Name and GR No."
+        );
+
+        return;
+    }
+
+
+    if (
+        students.some(
+            student =>
+                student.grNo === grNo
+        )
+    ) {
+
+        alert(
+            "This GR No. already exists."
+        );
+
+        return;
+    }
+
+
+    if (
+        pictureInput.files.length > 0
+    ) {
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function (event) {
+
+                createStudent(
+                    name,
+                    grNo,
+                    event.target.result
+                );
+
+            };
+
+
+        reader.readAsDataURL(
+            pictureInput.files[0]
+        );
+
+    } else {
+
+        createStudent(
+            name,
+            grNo,
+            ""
+        );
+
+    }
+
+}
+
+
+function createStudent(
+    name,
+    grNo,
+    picture
+) {
+
+    students.push({
+
+        id: Date.now(),
+
+        name: name,
+
+        grNo: grNo,
+
+        picture: picture,
+
+        attendance: "none"
+
+    });
+
+
+    saveStudents();
+
+
+    document.getElementById(
+        "studentName"
+    ).value = "";
+
+
+    document.getElementById(
+        "grNo"
+    ).value = "";
+
+
+    document.getElementById(
+        "studentPicture"
+    ).value = "";
+
+
+    renderStudents();
+
+}
+
+
+function setAttendance(
+    id,
+    status
+) {
+
+    const student =
+        students.find(
+            student =>
+                student.id === id
+        );
+
+
+    if (!student) return;
+
+
+    student.attendance =
+        status;
+
+
+    saveStudents();
+
+    renderStudents();
+
+}
+
+
+function editStudent(id) {
+
+    const student =
+        students.find(
+            student =>
+                student.id === id
+        );
+
+
+    if (!student) return;
+
+
+    const newName =
+        prompt(
+            "Edit Student Name:",
+            student.name
+        );
+
+
+    if (
+        newName === null ||
+        newName.trim() === ""
+    ) return;
+
+
+    const newGrNo =
+        prompt(
+            "Edit GR No.:",
+            student.grNo
+        );
+
+
+    if (
+        newGrNo === null ||
+        newGrNo.trim() === ""
+    ) return;
+
+
+    if (
+        students.some(
+            student =>
+                student.id !== id &&
+                student.grNo ===
+                newGrNo.trim()
+        )
+    ) {
+
+        alert(
+            "This GR No. already exists."
+        );
+
+        return;
+    }
+
+
+    student.name =
+        newName.trim();
+
+
+    student.grNo =
+        newGrNo.trim();
+
+
+    saveStudents();
+
+    renderStudents();
+
+}
+
+
+function removeStudent(id) {
+
+    const student =
+        students.find(
+            student =>
+                student.id === id
+        );
+
+
+    if (!student) return;
+
+
+    if (
+        !confirm(
+            "Remove " +
+            student.name +
+            " from Class 2?"
+        )
+    ) return;
+
+
+    students =
+        students.filter(
+            student =>
+                student.id !== id
+        );
+
+
+    saveStudents();
+
+    renderStudents();
+
+}
+
+
+function renderStudents() {
+
+    const tableBody =
+        document.getElementById(
+            "studentTableBody"
+        );
+
+
+    const emptyMessage =
+        document.getElementById(
+            "emptyMessage"
+        );
+
+
+    tableBody.innerHTML = "";
+
+
+    if (students.length === 0) {
+
+        emptyMessage.style.display =
+            "block";
+
+    } else {
+
+        emptyMessage.style.display =
+            "none";
+
+
+        students.forEach(
+            (student, index) => {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const pictureHTML =
+                    student.picture
+                    ? `<img src="${student.picture}" alt="Student">`
+                    : "—";
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(student.name)}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(student.grNo)}
+                    </td>
+
+                    <td>
+                        ${pictureHTML}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn present ${
+                                student.attendance ===
+                                "present"
+                                ? "active"
+                                : ""
+                            }"
+                            onclick="
+                                setAttendance(
+                                    ${student.id},
+                                    'present'
+                                )
+                            "
+                        >
+                            ✅
+                        </button>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn absent ${
+                                student.attendance ===
+                                "absent"
+                                ? "active"
+                                : ""
+                            }"
+                            onclick="
+                                setAttendance(
+                                    ${student.id},
+                                    'absent'
+                                )
+                            "
+                        >
+                            ❌
+                        </button>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn leave ${
+                                student.attendance ===
+                                "leave"
+                                ? "active"
+                                : ""
+                            }"
+                            onclick="
+                                setAttendance(
+                                    ${student.id},
+                                    'leave'
+                                )
+                            "
+                        >
+                            🟡
+                        </button>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn edit"
+                            onclick="
+                                editStudent(
+                                    ${student.id}
+                                )
+                            "
+                        >
+                            ✏️ Edit
+                        </button>
+
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn remove"
+                            onclick="
+                                removeStudent(
+                                    ${student.id}
+                                )
+                            "
+                        >
+                            🗑️
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(row);
+
+            }
+        );
+
+    }
+
+
+    updateSummary();
+
+}
+
+
+function updateSummary() {
+
+    const total =
+        students.length;
+
+
+    const present =
+        students.filter(
+            student =>
+                student.attendance ===
+                "present"
+        ).length;
+
+
+    const absent =
+        students.filter(
+            student =>
+                student.attendance ===
+                "absent"
+        ).length;
+
+
+    const leave =
+        students.filter(
+            student =>
+                student.attendance ===
+                "leave"
+        ).length;
+
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "presentStudents"
+    ).textContent = present;
+
+
+    document.getElementById(
+        "absentStudents"
+    ).textContent = absent;
+
+
+    document.getElementById(
+        "leaveStudents"
+    ).textContent = leave;
+
+}
+
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+renderStudents();
+
+</script>
+
+</body>
+</html>
