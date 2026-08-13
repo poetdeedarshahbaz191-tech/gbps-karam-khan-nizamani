@@ -1,1 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Government Boys Primary School | Karam Khan Nizamani Campus</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f3f8fc;
+            color: #172033;
+        }
+
+        /* ================= SCHOOL HERO ================= */
+
+        .school-hero {
+            min-height: 600px;
+
+            background:
+                linear-gradient(
+                    rgba(0, 35, 90, 0.25),
+                    rgba(0, 75, 55, 0.35)
+                ),
+                url("school-background.png")
+                center center / cover no-repeat;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 30px 15px;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 950px;
+        }
+
+        /* ================= SCHOOL LOGO ================= */
+
+        .school-logo {
+            width: 145px;
+            height: 145px;
+
+            object-fit: contain;
+
+            display: block;
+
+            margin: 0 auto 15px;
+
+            filter:
+                drop-shadow(
+                    0 5px 10px
+                    rgba(0,0,0,0.5)
+                );
+        }
+
+        /* ================= SCHOOL TITLE ================= */
+
+        .school-title {
+            display: inline-block;
+
+            background: rgba(255,255,255,0.95);
+
+            padding: 20px 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,0.25);
+        }
+
+        .school-title h1 {
+            color: #0d2b68;
+
+            font-size: 36px;
+
+            margin-bottom: 8px;
+        }
+
+        .school-title p {
+            color: #08734e;
+
+            font-size: 23px;
+
+            font-weight: bold;
+        }
+
+        /* ================= WELCOME ================= */
+
+        .welcome-banner {
+            margin: 22px auto 0;
+
+            max-width: 650px;
+
+            background: #0d47a1;
+
+            color: white;
+
+            padding: 13px 20px;
+
+            border-radius: 30px;
+
+            font-size: 19px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 5px 15px
+                rgba(0,0,0,0.3);
+        }
+
+        /* ================= ADMIN LOGIN ================= */
+
+        .admin-login {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            padding: 12px 25px;
+
+            background: white;
+
+            color: #0d47a1;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.25);
+
+            transition: 0.2s;
+        }
+
+        .admin-login:hover {
+            transform: translateY(-3px);
+
+            background: #eaf3ff;
+        }
+
+        /* ================= CURVE ================= */
+
+        .curve {
+            height: 45px;
+
+            margin-top: -35px;
+
+            position: relative;
+
+            z-index: 2;
+
+            background: #f3f8fc;
+
+            border-radius:
+                50% 50% 0 0;
+        }
+
+        /* ================= WELCOME ================= */
+
+        .welcome {
+            text-align: center;
+
+            padding: 35px 20px 20px;
+        }
+
+        .welcome h2 {
+            color: #0d2b68;
+
+            font-size: 32px;
+
+            margin-bottom: 15px;
+        }
+
+        .welcome p {
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            max-width: 700px;
+
+            margin: auto;
+        }
+
+        /* ================= INFO ================= */
+
+        .info-section {
+            max-width: 1100px;
+
+            margin: 30px auto;
+
+            padding: 0 20px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1.4fr 1fr;
+
+            gap: 20px;
+        }
+
+        .info-card {
+            background: white;
+
+            padding: 25px 20px;
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0,0,0,0.10);
+        }
+
+        .info-icon {
+            font-size: 40px;
+
+            margin-bottom: 10px;
+        }
+
+        .info-card h3 {
+            color: #0d47a1;
+
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            line-height: 1.6;
+        }
+
+        /* ================= CLASSES ================= */
+
+        .classes {
+            padding: 35px 20px;
+        }
+
+        .classes h2 {
+            text-align: center;
+
+            color: #0d47a1;
+
+            font-size: 30px;
+
+            margin-bottom: 25px;
+        }
+
+        .class-grid {
+            max-width: 1050px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+        }
+
+        .class-card {
+            background: white;
+
+            padding: 22px 10px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,0.10);
+
+            color: #0d2b68;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            font-size: 18px;
+
+            border-top:
+                4px solid #087f5b;
+
+            transition: 0.2s;
+        }
+
+        .class-card:hover {
+            transform: translateY(-5px);
+
+            background: #eef7ff;
+
+            box-shadow:
+                0 8px 20px
+                rgba(0,0,0,0.15);
+        }
+
+        .class-icon {
+            display: block;
+
+            font-size: 38px;
+
+            margin-bottom: 8px;
+        }
+
+        /* ================= ABOUT ================= */
+
+        .about {
+            padding: 35px 20px;
+
+            background: #eef6fc;
+
+            text-align: center;
+        }
+
+        .about h2 {
+            color: #0d47a1;
+
+            font-size: 30px;
+
+            margin-bottom: 20px;
+        }
+
+        .about-box {
+            max-width: 900px;
+
+            margin: auto;
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,0.08);
+
+            line-height: 1.8;
+
+            font-size: 17px;
+        }
+
+        /* ================= MISSION ================= */
+
+        .mission {
+            max-width: 950px;
+
+            margin: 35px auto;
+
+            padding: 30px 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e3f2fd,
+                    #e8f5e9
+                );
+
+            border-radius: 18px;
+
+            text-align: center;
+
+            border-left:
+                6px solid #087f5b;
+
+            border-right:
+                6px solid #0d47a1;
+        }
+
+        .mission h2 {
+            color: #0d2b68;
+
+            margin-bottom: 12px;
+        }
+
+        .mission p {
+            font-size: 17px;
+
+            line-height: 1.7;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #092c73;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px 15px;
+
+            line-height: 1.8;
+        }
+
+        footer strong {
+            font-size: 18px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 800px) {
+
+            .school-hero {
+                min-height: 570px;
+            }
+
+            .school-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .school-title {
+                padding: 16px 18px;
+            }
+
+            .school-title h1 {
+                font-size: 27px;
+            }
+
+            .school-title p {
+                font-size: 18px;
+            }
+
+            .welcome-banner {
+                font-size: 16px;
+                padding: 11px 15px;
+            }
+
+            .info-section {
+                grid-template-columns: 1fr;
+            }
+
+            .class-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .welcome h2 {
+                font-size: 27px;
+            }
+        }
+
+        @media (max-width: 420px) {
+
+            .school-hero {
+                min-height: 540px;
+            }
+
+            .school-title h1 {
+                font-size: 23px;
+            }
+
+            .school-title p {
+                font-size: 16px;
+            }
+
+            .class-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 12px;
+            }
+
+            .class-card {
+                padding: 18px 5px;
+
+                font-size: 16px;
+            }
+
+            .class-icon {
+                font-size: 32px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ================= SCHOOL HERO ================= -->
+
+<header class="school-hero">
+
+    <div class="hero-content">
+
+        <img
+            src="school-logo.png"
+            alt="GBPS Karam Khan Nizamani Campus Logo"
+            class="school-logo"
+        >
+
+        <div class="school-title">
+
+            <h1>
+                Government Boys Primary School
+            </h1>
+
+            <p>
+                Karam Khan Nizamani Campus
+            </p>
+
+        </div>
+
+        <div class="welcome-banner">
+            🌟 Welcome to All Students, Teachers & Parents 🌟
+        </div>
+
+        <a
+            href="admin-login.html"
+            class="admin-login"
+        >
+            🔐 Admin Login
+        </a>
+
+    </div>
+
+</header>
+
+<div class="curve"></div>
+
+<!-- ================= WELCOME ================= -->
+
+<section class="welcome">
+
+    <h2>
+        Welcome to Our School App
+    </h2>
+
+    <p>
+        A simple digital learning platform for our students
+        from <strong>KG to Class 5</strong>.
+    </p>
+
+</section>
+
+<!-- ================= INFO CARDS ================= -->
+
+<section class="info-section">
+
+    <div class="info-card">
+
+        <div class="info-icon">
+            👨‍👩‍👦
+        </div>
+
+        <h3>
+            Together We Learn
+        </h3>
+
+        <p>
+            Together we learn, grow and build a bright future
+            through education, discipline and values.
+        </p>
+
+    </div>
+
+    <div class="info-card">
+
+        <div class="info-icon">
+            🎓
+        </div>
+
+        <h3>
+            Our School
+        </h3>
+
+        <p>
+            Providing meaningful learning opportunities
+            for children in a supportive educational environment.
+        </p>
+
+    </div>
+
+    <div class="info-card">
+
+        <div class="info-icon">
+            📚
+        </div>
+
+        <h3>
+            Our Mission
+        </h3>
+
+        <p>
+            To help every child become knowledgeable,
+            confident and responsible.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ================= CLASSES ================= -->
+
+<section class="classes">
+
+    <h2>
+        📚 Our Classes
+    </h2>
+
+    <div class="class-grid">
+
+        <a
+            href="kg.html"
+            class="class-card"
+        >
+            <span class="class-icon">🎒</span>
+            KG
+        </a>
+
+        <a
+            href="class1.html"
+            class="class-card"
+        >
+            <span class="class-icon">✏️</span>
+            Class 1
+        </a>
+
+        <a
+            href="class2.html"
+            class="class-card"
+        >
+            <span class="class-icon">📖</span>
+            Class 2
+        </a>
+
+        <a
+            href="class3.html"
+            class="class-card"
+        >
+            <span class="class-icon">🌍</span>
+            Class 3
+        </a>
+
+        <a
+            href="class4.html"
+            class="class-card"
+        >
+            <span class="class-icon">🎓</span>
+            Class 4
+        </a>
+
+        <a
+            href="class5.html"
+            class="class-card"
+        >
+            <span class="class-icon">🏆</span>
+            Class 5
+        </a>
+
+        <a
+            href="class1-attendance.html"
+            class="class-card"
+        >
+            <span class="class-icon">📝</span>
+            Attendance
+        </a>
+
+        <a
+            href="admin-login.html"
+            class="class-card"
+        >
+            <span class="class-icon">🔐</span>
+            Admin
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about">
+
+    <h2>
+        About Our School
+    </h2>
+
+    <div class="about-box">
+
+        <p>
+            Government Boys Primary School Karam Khan Nizamani Campus
+            is committed to providing meaningful learning opportunities
+            for children and helping them develop knowledge, discipline,
+            confidence and good character.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ================= MISSION ================= -->
+
+<section class="mission">
+
+    <h2>
+        🌱 Our Mission
+    </h2>
+
+    <p>
+        To provide children with meaningful learning opportunities
+        and help them become knowledgeable, confident and responsible
+        members of society.
+    </p>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        <strong>
+            Government Boys Primary School
+        </strong>
+    </p>
+
+    <p>
+        Karam Khan Nizamani Campus
+    </p>
+
+    <p>
+        © 2026 Government Boys Primary School
+    </p>
+
+</footer>
+
+</body>
+
+</html>
+
+So after replacing index.html, make sure the uploaded school picture is exactly named school-background.png.
