@@ -91,6 +91,23 @@
             background: #004d39;
         }
 
+        .cancel-btn {
+            margin-top: 15px;
+            margin-left: 8px;
+            background: #777;
+            color: white;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+            display: none;
+        }
+
+        .cancel-btn:hover {
+            background: #555;
+        }
+
         .table-container {
             overflow-x: auto;
         }
@@ -98,7 +115,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 1100px;
+            min-width: 1150px;
         }
 
         th {
@@ -119,6 +136,20 @@
             background: #f5f5f5;
         }
 
+        .edit-btn {
+            background: #1565c0;
+            color: white;
+            border: none;
+            padding: 7px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .edit-btn:hover {
+            background: #0d47a1;
+        }
+
         .delete-btn {
             background: #c62828;
             color: white;
@@ -126,6 +157,10 @@
             padding: 7px 10px;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #8e0000;
         }
 
         .empty {
@@ -152,6 +187,10 @@
             .box {
                 padding: 15px;
             }
+
+            .cancel-btn {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
@@ -169,10 +208,11 @@
         ← Back to Admin Dashboard
     </a>
 
-    <!-- ADD STUDENT -->
+
+    <!-- ADD / EDIT STUDENT -->
     <div class="box">
 
-        <h2>➕ Add New Student</h2>
+        <h2 id="formTitle">➕ Add New Student</h2>
 
         <div class="form-grid">
 
@@ -239,8 +279,22 @@
 
         </div>
 
-        <button class="add-btn" onclick="addStudent()">
+
+        <button
+            class="add-btn"
+            id="saveButton"
+            onclick="saveStudent()"
+        >
             ➕ Add Student
+        </button>
+
+
+        <button
+            class="cancel-btn"
+            id="cancelButton"
+            onclick="cancelEdit()"
+        >
+            Cancel
         </button>
 
     </div>
@@ -278,6 +332,7 @@
 
         </div>
 
+
         <div id="emptyMessage" class="empty">
             No students added yet.
         </div>
@@ -294,12 +349,17 @@
 
 <script>
 
+    // LOAD STUDENTS
     let students =
         JSON.parse(localStorage.getItem("students")) || [];
 
 
-    // ADD STUDENT
-    function addStudent() {
+    // CURRENT EDITING STUDENT
+    let editingIndex = -1;
+
+
+    // SAVE NEW STUDENT OR UPDATE STUDENT
+    function saveStudent() {
 
         const grNumber =
             document.getElementById("grNumber").value.trim();
@@ -323,7 +383,7 @@
             document.getElementById("rollNumber").value.trim();
 
 
-        // CHECK ALL FIELDS
+        // CHECK FIELDS
         if (
             grNumber === "" ||
             name === "" ||
@@ -340,7 +400,7 @@
         }
 
 
-        // CREATE STUDENT
+        // CREATE STUDENT OBJECT
         const student = {
 
             grNumber: grNumber,
@@ -356,20 +416,116 @@
             className: studentClass,
 
             roll: roll
+
         };
 
 
-        students.push(student);
+        // UPDATE EXISTING STUDENT
+        if (editingIndex !== -1) {
+
+            students[editingIndex] = student;
+
+            alert("Student information updated successfully.");
+
+        }
+
+        // ADD NEW STUDENT
+        else {
+
+            students.push(student);
+
+            alert("Student added successfully.");
+
+        }
 
 
-        // SAVE
+        // SAVE TO LOCAL STORAGE
         localStorage.setItem(
             "students",
             JSON.stringify(students)
         );
 
 
-        // CLEAR FORM
+        // RESET FORM
+        clearForm();
+
+
+        // REFRESH TABLE
+        displayStudents();
+
+    }
+
+
+    // EDIT STUDENT
+    function editStudent(index) {
+
+        const student = students[index];
+
+
+        // LOAD STUDENT DATA INTO FORM
+        document.getElementById("grNumber").value =
+            student.grNumber || "";
+
+        document.getElementById("studentName").value =
+            student.name || "";
+
+        document.getElementById("fatherName").value =
+            student.father || "";
+
+        document.getElementById("dateOfBirth").value =
+            student.dateOfBirth || "";
+
+        document.getElementById("bForm").value =
+            student.bForm || "";
+
+        document.getElementById("studentClass").value =
+            student.className || "";
+
+        document.getElementById("rollNumber").value =
+            student.roll || "";
+
+
+        // REMEMBER WHICH STUDENT IS BEING EDITED
+        editingIndex = index;
+
+
+        // CHANGE FORM TITLE
+        document.getElementById("formTitle").innerHTML =
+            "✏️ Edit Student";
+
+
+        // CHANGE BUTTON
+        document.getElementById("saveButton").innerHTML =
+            "💾 Update Student";
+
+
+        // SHOW CANCEL BUTTON
+        document.getElementById("cancelButton").style.display =
+            "inline-block";
+
+
+        // SCROLL TO FORM
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    }
+
+
+    // CANCEL EDIT
+    function cancelEdit() {
+
+        editingIndex = -1;
+
+        clearForm();
+
+    }
+
+
+    // CLEAR FORM
+    function clearForm() {
+
         document.getElementById("grNumber").value = "";
 
         document.getElementById("studentName").value = "";
@@ -385,8 +541,23 @@
         document.getElementById("rollNumber").value = "";
 
 
-        // DISPLAY
-        displayStudents();
+        // RESET TITLE
+        document.getElementById("formTitle").innerHTML =
+            "➕ Add New Student";
+
+
+        // RESET BUTTON
+        document.getElementById("saveButton").innerHTML =
+            "➕ Add Student";
+
+
+        // HIDE CANCEL
+        document.getElementById("cancelButton").style.display =
+            "none";
+
+
+        // RESET EDITING INDEX
+        editingIndex = -1;
 
     }
 
@@ -404,6 +575,7 @@
         table.innerHTML = "";
 
 
+        // NO STUDENTS
         if (students.length === 0) {
 
             emptyMessage.style.display = "block";
@@ -415,6 +587,7 @@
         emptyMessage.style.display = "none";
 
 
+        // DISPLAY EVERY STUDENT
         students.forEach(function(student, index) {
 
             const row =
@@ -442,10 +615,17 @@
                 <td>
 
                     <button
+                        class="edit-btn"
+                        onclick="editStudent(${index})"
+                    >
+                        ✏️ Edit
+                    </button>
+
+                    <button
                         class="delete-btn"
                         onclick="deleteStudent(${index})"
                     >
-                        Delete
+                        🗑️ Delete
                     </button>
 
                 </td>
@@ -485,7 +665,7 @@
     }
 
 
-    // LOAD STUDENTS
+    // LOAD RECORDS WHEN PAGE OPENS
     displayStudents();
 
 </script>
