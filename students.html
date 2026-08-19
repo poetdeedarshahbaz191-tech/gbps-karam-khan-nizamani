@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 20px auto;
             padding: 15px;
         }
@@ -98,7 +98,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 650px;
+            min-width: 1100px;
         }
 
         th {
@@ -106,11 +106,13 @@
             color: white;
             padding: 11px;
             text-align: left;
+            white-space: nowrap;
         }
 
         td {
             padding: 10px;
             border-bottom: 1px solid #ddd;
+            white-space: nowrap;
         }
 
         tr:hover {
@@ -142,6 +144,7 @@
         }
 
         @media (max-width: 600px) {
+
             header h1 {
                 font-size: 19px;
             }
@@ -162,36 +165,88 @@
 
 <div class="container">
 
-    <a href="admin-dashboard.html" class="back">← Back to Admin Dashboard</a>
+    <a href="admin-dashboard.html" class="back">
+        ← Back to Admin Dashboard
+    </a>
 
+    <!-- ADD STUDENT -->
     <div class="box">
+
         <h2>➕ Add New Student</h2>
 
         <div class="form-grid">
 
-            <input type="text" id="studentName" placeholder="Student Name">
+            <!-- GR NUMBER -->
+            <input
+                type="text"
+                id="grNumber"
+                placeholder="GR No."
+            >
 
-            <input type="text" id="fatherName" placeholder="Father's Name">
+            <!-- STUDENT NAME -->
+            <input
+                type="text"
+                id="studentName"
+                placeholder="Student Name"
+            >
 
+            <!-- FATHER NAME -->
+            <input
+                type="text"
+                id="fatherName"
+                placeholder="Father's Name"
+            >
+
+            <!-- DATE OF BIRTH -->
+            <input
+                type="date"
+                id="dateOfBirth"
+                title="Date of Birth"
+            >
+
+            <!-- B-FORM -->
+            <input
+                type="text"
+                id="bForm"
+                placeholder="B-Form"
+            >
+
+            <!-- CLASS -->
             <select id="studentClass">
+
                 <option value="">Select Class</option>
+
                 <option value="KG">KG</option>
+
                 <option value="Class 1">Class 1</option>
+
                 <option value="Class 2">Class 2</option>
+
                 <option value="Class 3">Class 3</option>
+
                 <option value="Class 4">Class 4</option>
+
                 <option value="Class 5">Class 5</option>
+
             </select>
 
-            <input type="text" id="rollNumber" placeholder="Roll Number">
+            <!-- ROLL NUMBER -->
+            <input
+                type="text"
+                id="rollNumber"
+                placeholder="Roll Number"
+            >
 
         </div>
 
         <button class="add-btn" onclick="addStudent()">
             ➕ Add Student
         </button>
+
     </div>
 
+
+    <!-- STUDENT RECORDS -->
     <div class="box">
 
         <h2>👨‍🎓 Student Records</h2>
@@ -199,19 +254,26 @@
         <div class="table-container">
 
             <table>
+
                 <thead>
+
                     <tr>
-                        <th>#</th>
+                        <th>Serial No.</th>
+                        <th>GR No.</th>
                         <th>Student Name</th>
                         <th>Father's Name</th>
+                        <th>Date of Birth</th>
+                        <th>B-Form</th>
                         <th>Class</th>
                         <th>Roll No.</th>
                         <th>Action</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="studentTable">
                 </tbody>
+
             </table>
 
         </div>
@@ -224,95 +286,233 @@
 
 </div>
 
+
 <footer>
     © 2026 GBPS Karam Khan Nizamani Campus
 </footer>
 
+
 <script>
 
-    let students = JSON.parse(localStorage.getItem("students")) || [];
+    let students =
+        JSON.parse(localStorage.getItem("students")) || [];
 
+
+    // ADD STUDENT
     function addStudent() {
 
-        const name = document.getElementById("studentName").value.trim();
-        const father = document.getElementById("fatherName").value.trim();
-        const studentClass = document.getElementById("studentClass").value;
-        const roll = document.getElementById("rollNumber").value.trim();
+        const grNumber =
+            document.getElementById("grNumber").value.trim();
 
-        if (name === "" || father === "" || studentClass === "" || roll === "") {
+        const name =
+            document.getElementById("studentName").value.trim();
+
+        const father =
+            document.getElementById("fatherName").value.trim();
+
+        const dateOfBirth =
+            document.getElementById("dateOfBirth").value;
+
+        const bForm =
+            document.getElementById("bForm").value.trim();
+
+        const studentClass =
+            document.getElementById("studentClass").value;
+
+        const roll =
+            document.getElementById("rollNumber").value.trim();
+
+
+        // CHECK ALL FIELDS
+        if (
+            grNumber === "" ||
+            name === "" ||
+            father === "" ||
+            dateOfBirth === "" ||
+            bForm === "" ||
+            studentClass === "" ||
+            roll === ""
+        ) {
+
             alert("Please fill in all fields.");
+
             return;
         }
 
+
+        // CREATE STUDENT
         const student = {
+
+            grNumber: grNumber,
+
             name: name,
+
             father: father,
+
+            dateOfBirth: dateOfBirth,
+
+            bForm: bForm,
+
             className: studentClass,
+
             roll: roll
         };
 
+
         students.push(student);
 
-        localStorage.setItem("students", JSON.stringify(students));
+
+        // SAVE
+        localStorage.setItem(
+            "students",
+            JSON.stringify(students)
+        );
+
+
+        // CLEAR FORM
+        document.getElementById("grNumber").value = "";
 
         document.getElementById("studentName").value = "";
+
         document.getElementById("fatherName").value = "";
+
+        document.getElementById("dateOfBirth").value = "";
+
+        document.getElementById("bForm").value = "";
+
         document.getElementById("studentClass").value = "";
+
         document.getElementById("rollNumber").value = "";
 
+
+        // DISPLAY
         displayStudents();
+
     }
 
+
+    // DISPLAY STUDENTS
     function displayStudents() {
 
-        const table = document.getElementById("studentTable");
-        const emptyMessage = document.getElementById("emptyMessage");
+        const table =
+            document.getElementById("studentTable");
+
+        const emptyMessage =
+            document.getElementById("emptyMessage");
+
 
         table.innerHTML = "";
 
+
         if (students.length === 0) {
+
             emptyMessage.style.display = "block";
+
             return;
         }
 
+
         emptyMessage.style.display = "none";
+
 
         students.forEach(function(student, index) {
 
-            const row = document.createElement("tr");
+            const row =
+                document.createElement("tr");
+
 
             row.innerHTML = `
+
                 <td>${index + 1}</td>
-                <td>${student.name}</td>
-                <td>${student.father}</td>
-                <td>${student.className}</td>
-                <td>${student.roll}</td>
+
+                <td>${student.grNumber || ""}</td>
+
+                <td>${student.name || ""}</td>
+
+                <td>${student.father || ""}</td>
+
+                <td>${student.dateOfBirth || ""}</td>
+
+                <td>${student.bForm || ""}</td>
+
+                <td>${student.className || ""}</td>
+
+                <td>${student.roll || ""}</td>
+
                 <td>
-                    <button class="delete-btn" onclick="deleteStudent(${index})">
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteStudent(${index})"
+                    >
                         Delete
                     </button>
+
                 </td>
+
             `;
 
+
             table.appendChild(row);
+
         });
+
     }
 
+
+    // DELETE STUDENT
     function deleteStudent(index) {
 
-        if (confirm("Are you sure you want to delete this student?")) {
+        if (
+            confirm(
+                "Are you sure you want to delete this student?"
+            )
+        ) {
 
             students.splice(index, 1);
 
-            localStorage.setItem("students", JSON.stringify(students));
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
 
             displayStudents();
+
         }
+
     }
 
+
+    // LOAD STUDENTS
     displayStudents();
 
 </script>
 
 </body>
 </html>
+Yes. I have your exact current file now. The main issue is that the HTML and JavaScript only contain the old 4 fields.
+I have updated it to include exactly the fields you requested:
+Serial No. | GR No. | Student Name | Father's Name | Date of Birth | B-Form | Class | Roll No. | Action
+Serial No. is generated automatically.
+GR No., DOB and B-Form are entered manually.
+Existing students localStorage data will not be deleted.
+The table is made wider so the new columns can scroll horizontally on mobile.
+All your existing Add/Delete functionality remains.
+Replace your current student-management.html completely with this:
+HTML
+After saving
+Open your GitHub repository and replace the existing student-management.html with this version, then commit the change.
+The page should then show:
+Add New Student
+GR No.
+Student Name
+Father's Name
+Date of Birth
+B-Form
+Select Class
+Roll Number
+And the records table:
+Serial No. | GR No. | Student Name | Father's Name | Date of Birth | B-Form | Class | Roll No. | Action
+One important point: Serial No. is automatic, so you don't need a separate field for entering it. If you delete a student, the displayed serial numbers will automatically remain sequential.
