@@ -474,24 +474,21 @@
             document.getElementById("rollNumber").value.trim();
 
 
-        // CHECK FIELDS
-        if (
-            grNumber === "" ||
-            name === "" ||
-            father === "" ||
-            dateOfBirth === "" ||
-            bForm === "" ||
-            studentClass === "" ||
-            roll === ""
-        ) {
+        // CHECK REQUIRED FIELDS
+if (
+    grNumber === "" ||
+    name === "" ||
+    father === "" ||
+    studentClass === ""
+) {
 
-            showStatus(
-                "Please fill in all fields.",
-                "error"
-            );
+    showStatus(
+        "Please fill in GR No., Student Name, Father's Name and Class.",
+        "error"
+    );
 
-            return;
-        }
+    return;
+}
 
 
         const student = {
