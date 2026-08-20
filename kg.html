@@ -69,6 +69,19 @@
             border-radius: 8px;
         }
 
+        .search-box {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
         .table-box {
             overflow-x: auto;
         }
@@ -89,6 +102,10 @@
         th {
             background: #006a4e;
             color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
         }
 
         .status {
@@ -116,8 +133,13 @@
         }
 
         @media (max-width: 650px) {
+
             table {
                 min-width: 750px;
+            }
+
+            header h1 {
+                font-size: 19px;
             }
         }
     </style>
@@ -134,7 +156,7 @@
 
     <div class="box">
 
-        <a href="admin.html" class="back">
+        <a href="admin-dashboard.html" class="back">
             ← Admin Dashboard
         </a>
 
@@ -150,6 +172,7 @@
 
     </div>
 
+
     <div class="box">
 
         <div id="connectionStatus" class="status">
@@ -158,11 +181,25 @@
 
         <h2>👶 KG Students</h2>
 
+
+        <!-- SEARCH -->
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔎 Search KG student by name, GR No., father name, B-Form or roll number..."
+            >
+
+        </div>
+
+
         <div class="table-box">
 
             <table>
 
                 <thead>
+
                     <tr>
                         <th>S. No.</th>
                         <th>GR No.</th>
@@ -173,13 +210,18 @@
                         <th>Class</th>
                         <th>Roll No.</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="studentTableBody"></tbody>
 
             </table>
 
-            <div id="emptyMessage" class="empty" style="display:none;">
+            <div
+                id="emptyMessage"
+                class="empty"
+                style="display:none;"
+            >
                 No KG students found.
             </div>
 
@@ -188,6 +230,7 @@
     </div>
 
 </div>
+
 
 <footer>
     <strong>Government Boys Primary School</strong><br>
@@ -198,138 +241,157 @@
 
 <script type="module">
 
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
 import {
     getDatabase,
     ref,
     onValue
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
+
+// ==========================================
+// FIREBASE CONFIGURATION
+// SAME CONFIG AS STUDENT MANAGEMENT
+// ==========================================
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "gbps-karam-khan-nizamani.firebaseapp.com",
-    databaseURL: "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
-    projectId: "gbps-karam-khan-nizamani",
-    storageBucket: "gbps-karam-khan-nizamani.firebasestorage.app",
-    messagingSenderId: "772460890400",
-    appId: "YOUR_APP_ID"
+
+    apiKey:
+        "AIzaSyBoTtizM_SfChAAhvjmZloB-j5wCKLH4Ps",
+
+    authDomain:
+        "gbps-karam-khan-nizamani.firebaseapp.com",
+
+    databaseURL:
+        "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
+    projectId:
+        "gbps-karam-khan-nizamani",
+
+    storageBucket:
+        "gbps-karam-khan-nizamani.firebasestorage.app",
+
+    messagingSenderId:
+        "772460890400",
+
+    appId:
+        "1:772460890400:web:cf2379f4e0d21ebe476f45",
+
+    measurementId:
+        "G-KDQ1MQ16WN"
+
 };
 
 
-const app = initializeApp(firebaseConfig);
+// ==========================================
+// INITIALIZE FIREBASE
+// ==========================================
 
-const db = getDatabase(app);
+const app =
+    initializeApp(firebaseConfig);
 
-const studentsRef = ref(db, "students");
+const db =
+    getDatabase(app);
 
+const studentsRef =
+    ref(db, "students");
+
+
+// ==========================================
+// ELEMENTS
+// ==========================================
 
 const tableBody =
-    document.getElementById("studentTableBody");
+    document.getElementById(
+        "studentTableBody"
+    );
 
 const emptyMessage =
-    document.getElementById("emptyMessage");
+    document.getElementById(
+        "emptyMessage"
+    );
 
 const connectionStatus =
-    document.getElementById("connectionStatus");
+    document.getElementById(
+        "connectionStatus"
+    );
 
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+// ==========================================
+// STORE KG STUDENTS
+// ==========================================
+
+let kgStudents = [];
+
+
+// ==========================================
+// LOAD STUDENTS FROM FIREBASE
+// ==========================================
 
 onValue(
+
     studentsRef,
+
     (snapshot) => {
 
-        tableBody.innerHTML = "";
+        const data =
+            snapshot.val() || {};
 
-        const data = snapshot.val();
-
-        if (!data) {
-
-            emptyMessage.style.display = "block";
-
-            connectionStatus.textContent =
-                "🟢 Connected. No students found.";
-
-            return;
-        }
+        const students =
+            Object.entries(data);
 
 
-        const students = Object.values(data);
+        // ======================================
+        // FILTER ONLY KG
+        // IMPORTANT:
+        // STUDENT MANAGEMENT SAVES className
+        // ======================================
 
+        kgStudents =
+            students
+                .filter(([id, student]) => {
 
-        const kgStudents =
-            students.filter(student =>
-                String(student.class || "")
+                    return String(
+                        student.className || ""
+                    )
                     .trim()
-                    .toUpperCase() === "KG"
-            );
+                    .toUpperCase() === "KG";
+
+                })
+                .map(([id, student]) => {
+
+                    return {
+                        id,
+                        ...student
+                    };
+
+                });
 
 
-        if (kgStudents.length === 0) {
-
-            emptyMessage.style.display = "block";
-
-        } else {
-
-            emptyMessage.style.display = "none";
-
-
-            kgStudents.forEach(
-                (student, index) => {
-
-                    const row =
-                        document.createElement("tr");
+        // SORT BY CREATED TIME
+        kgStudents.sort(
+            (a, b) =>
+                (a.createdAt || 0) -
+                (b.createdAt || 0)
+        );
 
 
-                    row.innerHTML = `
-
-                        <td>
-                            ${index + 1}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(student.grNo || "—")}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(student.name || "—")}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(student.fatherName || "—")}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(student.dob || "—")}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(student.bForm || "—")}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(student.class || "KG")}
-                        </td>
-
-                        <td>
-                            ${escapeHTML(student.rollNo || "—")}
-                        </td>
-
-                    `;
-
-
-                    tableBody.appendChild(row);
-
-                }
-            );
-
-        }
+        displayStudents();
 
 
         connectionStatus.textContent =
-            "🟢 Connected. KG students loaded from Firebase.";
+            "🟢 Connected. " +
+            kgStudents.length +
+            " KG student(s) loaded from Firebase.";
 
     },
 
@@ -339,18 +401,182 @@ onValue(
         console.error(error);
 
         connectionStatus.textContent =
-            "🔴 Firebase connection error.";
+            "🔴 Firebase connection error: " +
+            error.message;
 
     }
+
 );
 
+
+// ==========================================
+// DISPLAY STUDENTS
+// ==========================================
+
+function displayStudents() {
+
+    tableBody.innerHTML = "";
+
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    // ======================================
+    // SEARCH
+    // ======================================
+
+    const filteredStudents =
+        kgStudents.filter(student => {
+
+            const searchableText = [
+
+                student.grNumber,
+
+                student.name,
+
+                student.father,
+
+                student.dateOfBirth,
+
+                student.bForm,
+
+                student.className,
+
+                student.roll
+
+            ]
+            .map(value =>
+                String(value || "")
+                    .toLowerCase()
+            )
+            .join(" ");
+
+
+            return searchableText
+                .includes(search);
+
+        });
+
+
+    // ======================================
+    // NO RESULTS
+    // ======================================
+
+    if (
+        filteredStudents.length === 0
+    ) {
+
+        emptyMessage.style.display =
+            "block";
+
+        emptyMessage.textContent =
+            search
+                ? "No KG student matches your search."
+                : "No KG students found.";
+
+        return;
+
+    }
+
+
+    emptyMessage.style.display =
+        "none";
+
+
+    // ======================================
+    // CREATE TABLE
+    // ======================================
+
+    filteredStudents.forEach(
+        (student, index) => {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.grNumber || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.name || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.father || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.dateOfBirth || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.bForm || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.className || "KG"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.roll || "—"
+                    )}
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+}
+
+
+// ==========================================
+// LIVE SEARCH
+// ==========================================
+
+searchInput.addEventListener(
+    "input",
+    displayStudents
+);
+
+
+// ==========================================
+// SECURITY: ESCAPE HTML
+// ==========================================
 
 function escapeHTML(value) {
 
     const div =
         document.createElement("div");
 
-    div.textContent = value;
+    div.textContent =
+        String(value);
 
     return div.innerHTML;
 
