@@ -1,12 +1,10 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>KG Attendance | GBPS Karam Khan Nizamani</title>
+    <title>KG Students | GBPS Karam Khan Nizamani</title>
 
     <style>
         * {
@@ -43,9 +41,7 @@
             padding: 15px;
         }
 
-        .top-box,
-        .add-box,
-        .table-box {
+        .box {
             background: white;
             padding: 18px;
             border-radius: 12px;
@@ -66,60 +62,11 @@
             margin-bottom: 8px;
         }
 
-        .date-box {
-            margin-top: 15px;
-        }
-
-        .date-box label {
-            font-weight: bold;
-        }
-
-        input[type="date"],
-        input[type="text"],
-        input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-        }
-
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .summary-box {
-            background: white;
-            padding: 15px 8px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-        }
-
-        .summary-box strong {
-            display: block;
-            font-size: 22px;
-            color: #006a4e;
-            margin-bottom: 5px;
-        }
-
-        .add-btn {
-            width: 100%;
-            margin-top: 12px;
-            padding: 11px;
-            border: none;
-            border-radius: 7px;
-            background: #006a4e;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        .add-btn:hover {
-            background: #004d39;
+        .info {
+            margin-top: 10px;
+            padding: 12px;
+            background: #e8f5e9;
+            border-radius: 8px;
         }
 
         .table-box {
@@ -144,44 +91,13 @@
             color: white;
         }
 
-        td img {
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .btn {
-            border: none;
-            padding: 7px 9px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-            font-size: 12px;
-        }
-
-        .present {
-            background: #2e7d32;
-        }
-
-        .absent {
-            background: #c62828;
-        }
-
-        .leave {
-            background: #f9a825;
-        }
-
-        .edit {
-            background: #1565c0;
-        }
-
-        .remove {
-            background: #8e0000;
-        }
-
-        .active {
-            outline: 3px solid #222;
+        .status {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 7px;
+            background: #e8f5e9;
+            color: #006a4e;
+            font-weight: bold;
         }
 
         .empty {
@@ -200,8 +116,8 @@
         }
 
         @media (max-width: 650px) {
-            .summary {
-                grid-template-columns: repeat(2, 1fr);
+            table {
+                min-width: 750px;
             }
         }
     </style>
@@ -216,124 +132,62 @@
 
 <div class="container">
 
-    <div class="top-box">
+    <div class="box">
 
         <a href="admin.html" class="back">
             ← Admin Dashboard
         </a>
 
-        <h2>👶 KG Student Record & Attendance</h2>
+        <h2>👶 KG Student Records</h2>
 
-        <p>Government Boys Primary School</p>
+        <p>
+            Government Boys Primary School
+        </p>
 
-        <div class="date-box">
-
-            <label for="attendanceDate">
-                Attendance Date:
-            </label>
-
-            <input
-                type="date"
-                id="attendanceDate"
-            >
-
+        <div class="info">
+            KG students are loaded automatically from the main Student Management system.
         </div>
 
     </div>
 
+    <div class="box">
 
-    <div class="summary">
-
-        <div class="summary-box">
-            <strong id="totalStudents">0</strong>
-            Total Students
+        <div id="connectionStatus" class="status">
+            🟡 Connecting to Firebase...
         </div>
 
-        <div class="summary-box">
-            <strong id="presentStudents">0</strong>
-            Present Students
-        </div>
+        <h2>👶 KG Students</h2>
 
-        <div class="summary-box">
-            <strong id="absentStudents">0</strong>
-            Absent Students
-        </div>
+        <div class="table-box">
 
-        <div class="summary-box">
-            <strong id="leaveStudents">0</strong>
-            Leave
-        </div>
+            <table>
 
-    </div>
+                <thead>
+                    <tr>
+                        <th>S. No.</th>
+                        <th>GR No.</th>
+                        <th>Student Name</th>
+                        <th>Father's Name</th>
+                        <th>Date of Birth</th>
+                        <th>B-Form</th>
+                        <th>Class</th>
+                        <th>Roll No.</th>
+                    </tr>
+                </thead>
 
+                <tbody id="studentTableBody"></tbody>
 
-    <div class="add-box">
+            </table>
 
-        <h2>➕ Add KG Student</h2>
+            <div id="emptyMessage" class="empty" style="display:none;">
+                No KG students found.
+            </div>
 
-        <input
-            type="text"
-            id="studentName"
-            placeholder="Student Name"
-        >
-
-        <input
-            type="text"
-            id="grNo"
-            placeholder="GR No."
-        >
-
-        <input
-            type="file"
-            id="studentPicture"
-            accept="image/*"
-        >
-
-        <button
-            class="add-btn"
-            onclick="addStudent()"
-        >
-            Add Student
-        </button>
-
-    </div>
-
-
-    <div class="table-box">
-
-        <table>
-
-            <thead>
-
-                <tr>
-                    <th>S. No.</th>
-                    <th>Student Name</th>
-                    <th>GR No.</th>
-                    <th>Picture</th>
-                    <th>Present</th>
-                    <th>Absent</th>
-                    <th>Leave</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
-                </tr>
-
-            </thead>
-
-            <tbody id="studentTableBody"></tbody>
-
-        </table>
-
-        <div
-            id="emptyMessage"
-            class="empty"
-        >
-            No KG students added yet.
         </div>
 
     </div>
 
 </div>
-
 
 <footer>
     <strong>Government Boys Primary School</strong><br>
@@ -342,547 +196,165 @@
 </footer>
 
 
-<script>
+<script type="module">
 
-let students = JSON.parse(
-    localStorage.getItem(
-        "kgAttendanceStudents"
-    ) || "[]"
-);
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-
-const dateInput =
-    document.getElementById(
-        "attendanceDate"
-    );
+import {
+    getDatabase,
+    ref,
+    onValue
+} from
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-dateInput.value =
-    localStorage.getItem(
-        "kgAttendanceDate"
-    ) ||
-    new Date()
-        .toISOString()
-        .split("T")[0];
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "gbps-karam-khan-nizamani.firebaseapp.com",
+    databaseURL: "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+    projectId: "gbps-karam-khan-nizamani",
+    storageBucket: "gbps-karam-khan-nizamani.firebasestorage.app",
+    messagingSenderId: "772460890400",
+    appId: "YOUR_APP_ID"
+};
 
 
-dateInput.addEventListener(
-    "change",
-    function () {
+const app = initializeApp(firebaseConfig);
 
-        localStorage.setItem(
-            "kgAttendanceDate",
-            this.value
-        );
+const db = getDatabase(app);
+
+const studentsRef = ref(db, "students");
+
+
+const tableBody =
+    document.getElementById("studentTableBody");
+
+const emptyMessage =
+    document.getElementById("emptyMessage");
+
+const connectionStatus =
+    document.getElementById("connectionStatus");
+
+
+onValue(
+    studentsRef,
+    (snapshot) => {
+
+        tableBody.innerHTML = "";
+
+        const data = snapshot.val();
+
+        if (!data) {
+
+            emptyMessage.style.display = "block";
+
+            connectionStatus.textContent =
+                "🟢 Connected. No students found.";
+
+            return;
+        }
+
+
+        const students = Object.values(data);
+
+
+        const kgStudents =
+            students.filter(student =>
+                String(student.class || "")
+                    .trim()
+                    .toUpperCase() === "KG"
+            );
+
+
+        if (kgStudents.length === 0) {
+
+            emptyMessage.style.display = "block";
+
+        } else {
+
+            emptyMessage.style.display = "none";
+
+
+            kgStudents.forEach(
+                (student, index) => {
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    row.innerHTML = `
+
+                        <td>
+                            ${index + 1}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(student.grNo || "—")}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(student.name || "—")}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(student.fatherName || "—")}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(student.dob || "—")}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(student.bForm || "—")}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(student.class || "KG")}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(student.rollNo || "—")}
+                        </td>
+
+                    `;
+
+
+                    tableBody.appendChild(row);
+
+                }
+            );
+
+        }
+
+
+        connectionStatus.textContent =
+            "🟢 Connected. KG students loaded from Firebase.";
+
+    },
+
+
+    (error) => {
+
+        console.error(error);
+
+        connectionStatus.textContent =
+            "🔴 Firebase connection error.";
 
     }
 );
 
 
-function saveStudents() {
-
-    localStorage.setItem(
-        "kgAttendanceStudents",
-        JSON.stringify(students)
-    );
-
-}
-
-
-function addStudent() {
-
-    const name =
-        document
-            .getElementById("studentName")
-            .value
-            .trim();
-
-
-    const grNo =
-        document
-            .getElementById("grNo")
-            .value
-            .trim();
-
-
-    const pictureInput =
-        document.getElementById(
-            "studentPicture"
-        );
-
-
-    if (!name || !grNo) {
-
-        alert(
-            "Please enter Student Name and GR No."
-        );
-
-        return;
-    }
-
-
-    if (
-        students.some(
-            student =>
-                student.grNo === grNo
-        )
-    ) {
-
-        alert(
-            "This GR No. already exists."
-        );
-
-        return;
-    }
-
-
-    if (
-        pictureInput.files.length > 0
-    ) {
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function (event) {
-
-                createStudent(
-                    name,
-                    grNo,
-                    event.target.result
-                );
-
-            };
-
-
-        reader.readAsDataURL(
-            pictureInput.files[0]
-        );
-
-    } else {
-
-        createStudent(
-            name,
-            grNo,
-            ""
-        );
-
-    }
-
-}
-
-
-function createStudent(
-    name,
-    grNo,
-    picture
-) {
-
-    students.push({
-
-        id: Date.now(),
-
-        name: name,
-
-        grNo: grNo,
-
-        picture: picture,
-
-        attendance: "none"
-
-    });
-
-
-    saveStudents();
-
-
-    document.getElementById(
-        "studentName"
-    ).value = "";
-
-
-    document.getElementById(
-        "grNo"
-    ).value = "";
-
-
-    document.getElementById(
-        "studentPicture"
-    ).value = "";
-
-
-    renderStudents();
-
-}
-
-
-function setAttendance(
-    id,
-    status
-) {
-
-    const student =
-        students.find(
-            student =>
-                student.id === id
-        );
-
-
-    if (!student) return;
-
-
-    student.attendance =
-        status;
-
-
-    saveStudents();
-
-    renderStudents();
-
-}
-
-
-function editStudent(id) {
-
-    const student =
-        students.find(
-            student =>
-                student.id === id
-        );
-
-
-    if (!student) return;
-
-
-    const newName =
-        prompt(
-            "Edit Student Name:",
-            student.name
-        );
-
-
-    if (
-        newName === null ||
-        newName.trim() === ""
-    ) return;
-
-
-    const newGrNo =
-        prompt(
-            "Edit GR No.:",
-            student.grNo
-        );
-
-
-    if (
-        newGrNo === null ||
-        newGrNo.trim() === ""
-    ) return;
-
-
-    if (
-        students.some(
-            student =>
-                student.id !== id &&
-                student.grNo ===
-                newGrNo.trim()
-        )
-    ) {
-
-        alert(
-            "This GR No. already exists."
-        );
-
-        return;
-    }
-
-
-    student.name =
-        newName.trim();
-
-
-    student.grNo =
-        newGrNo.trim();
-
-
-    saveStudents();
-
-    renderStudents();
-
-}
-
-
-function removeStudent(id) {
-
-    const student =
-        students.find(
-            student =>
-                student.id === id
-        );
-
-
-    if (!student) return;
-
-
-    if (
-        !confirm(
-            "Remove " +
-            student.name +
-            " from KG?"
-        )
-    ) return;
-
-
-    students =
-        students.filter(
-            student =>
-                student.id !== id
-        );
-
-
-    saveStudents();
-
-    renderStudents();
-
-}
-
-
-function renderStudents() {
-
-    const tableBody =
-        document.getElementById(
-            "studentTableBody"
-        );
-
-
-    const emptyMessage =
-        document.getElementById(
-            "emptyMessage"
-        );
-
-
-    tableBody.innerHTML = "";
-
-
-    if (students.length === 0) {
-
-        emptyMessage.style.display =
-            "block";
-
-    } else {
-
-        emptyMessage.style.display =
-            "none";
-
-
-        students.forEach(
-            (student, index) => {
-
-                const row =
-                    document.createElement(
-                        "tr"
-                    );
-
-
-                const pictureHTML =
-                    student.picture
-                    ? `<img src="${student.picture}" alt="Student">`
-                    : "—";
-
-
-                row.innerHTML = `
-
-                    <td>
-                        ${index + 1}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(student.name)}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(student.grNo)}
-                    </td>
-
-                    <td>
-                        ${pictureHTML}
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn present ${
-                                student.attendance ===
-                                "present"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'present'
-                                )
-                            "
-                        >
-                            ✅
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn absent ${
-                                student.attendance ===
-                                "absent"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'absent'
-                                )
-                            "
-                        >
-                            ❌
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn leave ${
-                                student.attendance ===
-                                "leave"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'leave'
-                                )
-                            "
-                        >
-                            🟡
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn edit"
-                            onclick="
-                                editStudent(
-                                    ${student.id}
-                                )
-                            "
-                        >
-                            ✏️ Edit
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn remove"
-                            onclick="
-                                removeStudent(
-                                    ${student.id}
-                                )
-                            "
-                        >
-                            🗑️
-                        </button>
-
-                    </td>
-
-                `;
-
-
-                tableBody.appendChild(row);
-
-            }
-        );
-
-    }
-
-
-    updateSummary();
-
-}
-
-
-function updateSummary() {
-
-    const total =
-        students.length;
-
-
-    const present =
-        students.filter(
-            student =>
-                student.attendance ===
-                "present"
-        ).length;
-
-
-    const absent =
-        students.filter(
-            student =>
-                student.attendance ===
-                "absent"
-        ).length;
-
-
-    const leave =
-        students.filter(
-            student =>
-                student.attendance ===
-                "leave"
-        ).length;
-
-
-    document.getElementById(
-        "totalStudents"
-    ).textContent = total;
-
-
-    document.getElementById(
-        "presentStudents"
-    ).textContent = present;
-
-
-    document.getElementById(
-        "absentStudents"
-    ).textContent = absent;
-
-
-    document.getElementById(
-        "leaveStudents"
-    ).textContent = leave;
-
-}
-
-
-function escapeHTML(text) {
+function escapeHTML(value) {
 
     const div =
         document.createElement("div");
 
-    div.textContent = text;
+    div.textContent = value;
 
     return div.innerHTML;
 
 }
-
-
-renderStudents();
 
 </script>
 
