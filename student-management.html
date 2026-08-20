@@ -239,45 +239,39 @@
 
         <div class="form-grid">
 
-            <!-- REQUIRED -->
             <input
                 type="text"
                 id="grNumber"
-                placeholder="GR No. *"
+                placeholder="GR No."
             >
 
-            <!-- REQUIRED -->
             <input
                 type="text"
                 id="studentName"
-                placeholder="Student Name *"
+                placeholder="Student Name"
             >
 
-            <!-- REQUIRED -->
             <input
                 type="text"
                 id="fatherName"
-                placeholder="Father's Name *"
+                placeholder="Father's Name"
             >
 
-            <!-- OPTIONAL -->
             <input
                 type="date"
                 id="dateOfBirth"
                 title="Date of Birth (Optional)"
             >
 
-            <!-- OPTIONAL -->
             <input
                 type="text"
                 id="bForm"
                 placeholder="B-Form (Optional)"
             >
 
-            <!-- REQUIRED -->
             <select id="studentClass">
 
-                <option value="">Select Class *</option>
+                <option value="">Select Class (Optional)</option>
 
                 <option value="KG">KG</option>
 
@@ -293,7 +287,6 @@
 
             </select>
 
-            <!-- OPTIONAL -->
             <input
                 type="text"
                 id="rollNumber"
@@ -483,38 +476,22 @@
 
 
         // ==========================================
-        // ONLY THESE 4 FIELDS ARE REQUIRED
-        // ==========================================
-
-        if (!grNumber || !name || !father || !studentClass) {
-
-            showStatus(
-                "Please fill in GR No., Student Name, Father's Name and Class.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        // ==========================================
-        // STUDENT DATA
-        // OPTIONAL FIELDS MAY BE EMPTY
+        // NO FIELD IS REQUIRED
         // ==========================================
 
         const student = {
 
-            grNumber: grNumber,
+            grNumber: grNumber || "",
 
-            name: name,
+            name: name || "",
 
-            father: father,
+            father: father || "",
 
             dateOfBirth: dateOfBirth || "",
 
             bForm: bForm || "",
 
-            className: studentClass,
+            className: studentClass || "",
 
             roll: roll || "",
 
@@ -871,19 +848,19 @@
 
                 <td>${index + 1}</td>
 
-                <td>${student.grNumber || ""}</td>
+                <td>${student.grNumber || "—"}</td>
 
-                <td>${student.name || ""}</td>
+                <td>${student.name || "—"}</td>
 
-                <td>${student.father || ""}</td>
+                <td>${student.father || "—"}</td>
 
-                <td>${student.dateOfBirth || ""}</td>
+                <td>${student.dateOfBirth || "—"}</td>
 
-                <td>${student.bForm || ""}</td>
+                <td>${student.bForm || "—"}</td>
 
-                <td>${student.className || ""}</td>
+                <td>${student.className || "—"}</td>
 
-                <td>${student.roll || ""}</td>
+                <td>${student.roll || "—"}</td>
 
                 <td>
 
@@ -974,3 +951,7 @@
 
 </body>
 </html>
+Yes. I changed it so no field is compulsory. You can leave GR No., name, father's name, DOB, B-Form, class, or roll number empty, and the student will still be saved to Firebase.
+Here is the complete students.html:
+HTML
+Important: I also changed the class dropdown from Select Class * to Select Class (Optional) and removed the validation completely. So now no field can stop the student from being saved.
