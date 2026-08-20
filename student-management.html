@@ -108,6 +108,29 @@
             background: #555;
         }
 
+        .status {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 7px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .loading {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
         .table-container {
             overflow-x: auto;
         }
@@ -208,7 +231,6 @@
         ← Back to Admin Dashboard
     </a>
 
-
     <!-- ADD / EDIT STUDENT -->
     <div class="box">
 
@@ -216,42 +238,36 @@
 
         <div class="form-grid">
 
-            <!-- GR NUMBER -->
             <input
                 type="text"
                 id="grNumber"
                 placeholder="GR No."
             >
 
-            <!-- STUDENT NAME -->
             <input
                 type="text"
                 id="studentName"
                 placeholder="Student Name"
             >
 
-            <!-- FATHER NAME -->
             <input
                 type="text"
                 id="fatherName"
                 placeholder="Father's Name"
             >
 
-            <!-- DATE OF BIRTH -->
             <input
                 type="date"
                 id="dateOfBirth"
                 title="Date of Birth"
             >
 
-            <!-- B-FORM -->
             <input
                 type="text"
                 id="bForm"
                 placeholder="B-Form"
             >
 
-            <!-- CLASS -->
             <select id="studentClass">
 
                 <option value="">Select Class</option>
@@ -270,7 +286,6 @@
 
             </select>
 
-            <!-- ROLL NUMBER -->
             <input
                 type="text"
                 id="rollNumber"
@@ -278,7 +293,6 @@
             >
 
         </div>
-
 
         <button
             class="add-btn"
@@ -288,7 +302,6 @@
             ➕ Add Student
         </button>
 
-
         <button
             class="cancel-btn"
             id="cancelButton"
@@ -296,6 +309,8 @@
         >
             Cancel
         </button>
+
+        <div id="statusMessage" class="status"></div>
 
     </div>
 
@@ -332,7 +347,6 @@
 
         </div>
 
-
         <div id="emptyMessage" class="empty">
             No students added yet.
         </div>
@@ -347,19 +361,96 @@
 </footer>
 
 
-<script>
+<!-- FIREBASE -->
+<script type="module">
 
-    // LOAD STUDENTS
-    let students =
-        JSON.parse(localStorage.getItem("students")) || [];
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+    import {
+        getDatabase,
+        ref,
+        push,
+        set,
+        update,
+        remove,
+        onValue
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+    // FIREBASE CONFIGURATION
+    const firebaseConfig = {
+
+        apiKey: "AIzaSyBoTtizM_SfChAAhvjmZloB-j5wCKLH4Ps",
+
+        authDomain:
+            "gbps-karam-khan-nizamani.firebaseapp.com",
+
+        databaseURL:
+            "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
+        projectId:
+            "gbps-karam-khan-nizamani",
+
+        storageBucket:
+            "gbps-karam-khan-nizamani.firebasestorage.app",
+
+        messagingSenderId:
+            "772460890400",
+
+        appId:
+            "1:772460890400:web:cf2379f4e0d21ebe476f45",
+
+        measurementId:
+            "G-KDQ1MQ16WN"
+    };
+
+
+    // INITIALIZE FIREBASE
+    const app = initializeApp(firebaseConfig);
+
+    const database = getDatabase(app);
+
+    // DATABASE LOCATION
+    const studentsRef = ref(database, "students");
 
 
     // CURRENT EDITING STUDENT
-    let editingIndex = -1;
+    let editingId = null;
+
+    // STUDENTS OBJECT
+    let students = {};
 
 
-    // SAVE NEW STUDENT OR UPDATE STUDENT
-    function saveStudent() {
+    // STATUS MESSAGE
+    function showStatus(message, type) {
+
+        const status =
+            document.getElementById("statusMessage");
+
+        status.textContent = message;
+
+        status.className =
+            "status " + type;
+
+        status.style.display = "block";
+
+    }
+
+
+    // HIDE STATUS
+    function hideStatus() {
+
+        document.getElementById(
+            "statusMessage"
+        ).style.display = "none";
+
+    }
+
+
+    // SAVE STUDENT
+    window.saveStudent = async function() {
 
         const grNumber =
             document.getElementById("grNumber").value.trim();
@@ -394,13 +485,15 @@
             roll === ""
         ) {
 
-            alert("Please fill in all fields.");
+            showStatus(
+                "Please fill in all fields.",
+                "error"
+            );
 
             return;
         }
 
 
-        // CREATE STUDENT OBJECT
         const student = {
 
             grNumber: grNumber,
@@ -415,149 +508,277 @@
 
             className: studentClass,
 
-            roll: roll
+            roll: roll,
+
+            updatedAt: Date.now()
 
         };
 
 
-        // UPDATE EXISTING STUDENT
-        if (editingIndex !== -1) {
+        try {
 
-            students[editingIndex] = student;
+            // UPDATE EXISTING STUDENT
+            if (editingId) {
 
-            alert("Student information updated successfully.");
+                const studentRef =
+                    ref(
+                        database,
+                        "students/" + editingId
+                    );
+
+                await update(
+                    studentRef,
+                    student
+                );
+
+
+                showStatus(
+                    "✅ Student updated successfully in Firebase.",
+                    "success"
+                );
+
+            }
+
+            // ADD NEW STUDENT
+            else {
+
+                const newStudentRef =
+                    push(studentsRef);
+
+                student.createdAt =
+                    Date.now();
+
+                await set(
+                    newStudentRef,
+                    student
+                );
+
+
+                showStatus(
+                    "✅ Student saved permanently to Firebase.",
+                    "success"
+                );
+
+            }
+
+
+            clearForm();
 
         }
 
-        // ADD NEW STUDENT
-        else {
+        catch (error) {
 
-            students.push(student);
+            console.error(error);
 
-            alert("Student added successfully.");
+            showStatus(
+                "❌ Firebase error: " + error.message,
+                "error"
+            );
 
         }
 
-
-        // SAVE TO LOCAL STORAGE
-        localStorage.setItem(
-            "students",
-            JSON.stringify(students)
-        );
-
-
-        // RESET FORM
-        clearForm();
-
-
-        // REFRESH TABLE
-        displayStudents();
-
-    }
+    };
 
 
     // EDIT STUDENT
-    function editStudent(index) {
+    window.editStudent = function(id) {
 
-        const student = students[index];
+        const student = students[id];
+
+        if (!student) {
+            return;
+        }
 
 
-        // LOAD STUDENT DATA INTO FORM
-        document.getElementById("grNumber").value =
+        document.getElementById(
+            "grNumber"
+        ).value =
             student.grNumber || "";
 
-        document.getElementById("studentName").value =
+
+        document.getElementById(
+            "studentName"
+        ).value =
             student.name || "";
 
-        document.getElementById("fatherName").value =
+
+        document.getElementById(
+            "fatherName"
+        ).value =
             student.father || "";
 
-        document.getElementById("dateOfBirth").value =
+
+        document.getElementById(
+            "dateOfBirth"
+        ).value =
             student.dateOfBirth || "";
 
-        document.getElementById("bForm").value =
+
+        document.getElementById(
+            "bForm"
+        ).value =
             student.bForm || "";
 
-        document.getElementById("studentClass").value =
+
+        document.getElementById(
+            "studentClass"
+        ).value =
             student.className || "";
 
-        document.getElementById("rollNumber").value =
+
+        document.getElementById(
+            "rollNumber"
+        ).value =
             student.roll || "";
 
 
-        // REMEMBER WHICH STUDENT IS BEING EDITED
-        editingIndex = index;
+        editingId = id;
 
 
-        // CHANGE FORM TITLE
-        document.getElementById("formTitle").innerHTML =
+        document.getElementById(
+            "formTitle"
+        ).innerHTML =
             "✏️ Edit Student";
 
 
-        // CHANGE BUTTON
-        document.getElementById("saveButton").innerHTML =
+        document.getElementById(
+            "saveButton"
+        ).innerHTML =
             "💾 Update Student";
 
 
-        // SHOW CANCEL BUTTON
-        document.getElementById("cancelButton").style.display =
+        document.getElementById(
+            "cancelButton"
+        ).style.display =
             "inline-block";
 
 
-        // SCROLL TO FORM
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
 
-    }
+    };
+
+
+    // DELETE STUDENT
+    window.deleteStudent = async function(id) {
+
+        const student = students[id];
+
+        if (!student) {
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to permanently delete this student?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        try {
+
+            const studentRef =
+                ref(
+                    database,
+                    "students/" + id
+                );
+
+            await remove(studentRef);
+
+
+            showStatus(
+                "🗑️ Student permanently deleted from Firebase.",
+                "success"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            showStatus(
+                "❌ Delete error: " + error.message,
+                "error"
+            );
+
+        }
+
+    };
 
 
     // CANCEL EDIT
-    function cancelEdit() {
-
-        editingIndex = -1;
+    window.cancelEdit = function() {
 
         clearForm();
 
-    }
+    };
 
 
     // CLEAR FORM
     function clearForm() {
 
-        document.getElementById("grNumber").value = "";
-
-        document.getElementById("studentName").value = "";
-
-        document.getElementById("fatherName").value = "";
-
-        document.getElementById("dateOfBirth").value = "";
-
-        document.getElementById("bForm").value = "";
-
-        document.getElementById("studentClass").value = "";
-
-        document.getElementById("rollNumber").value = "";
+        document.getElementById(
+            "grNumber"
+        ).value = "";
 
 
-        // RESET TITLE
-        document.getElementById("formTitle").innerHTML =
+        document.getElementById(
+            "studentName"
+        ).value = "";
+
+
+        document.getElementById(
+            "fatherName"
+        ).value = "";
+
+
+        document.getElementById(
+            "dateOfBirth"
+        ).value = "";
+
+
+        document.getElementById(
+            "bForm"
+        ).value = "";
+
+
+        document.getElementById(
+            "studentClass"
+        ).value = "";
+
+
+        document.getElementById(
+            "rollNumber"
+        ).value = "";
+
+
+        editingId = null;
+
+
+        document.getElementById(
+            "formTitle"
+        ).innerHTML =
             "➕ Add New Student";
 
 
-        // RESET BUTTON
-        document.getElementById("saveButton").innerHTML =
+        document.getElementById(
+            "saveButton"
+        ).innerHTML =
             "➕ Add Student";
 
 
-        // HIDE CANCEL
-        document.getElementById("cancelButton").style.display =
+        document.getElementById(
+            "cancelButton"
+        ).style.display =
             "none";
-
-
-        // RESET EDITING INDEX
-        editingIndex = -1;
 
     }
 
@@ -566,29 +787,52 @@
     function displayStudents() {
 
         const table =
-            document.getElementById("studentTable");
+            document.getElementById(
+                "studentTable"
+            );
 
         const emptyMessage =
-            document.getElementById("emptyMessage");
+            document.getElementById(
+                "emptyMessage"
+            );
 
 
         table.innerHTML = "";
 
 
-        // NO STUDENTS
-        if (students.length === 0) {
+        const ids =
+            Object.keys(students);
 
-            emptyMessage.style.display = "block";
+
+        if (ids.length === 0) {
+
+            emptyMessage.style.display =
+                "block";
 
             return;
         }
 
 
-        emptyMessage.style.display = "none";
+        emptyMessage.style.display =
+            "none";
 
 
-        // DISPLAY EVERY STUDENT
-        students.forEach(function(student, index) {
+        // SORT BY CREATED TIME
+        ids.sort(function(a, b) {
+
+            return (
+                (students[a].createdAt || 0) -
+                (students[b].createdAt || 0)
+            );
+
+        });
+
+
+        ids.forEach(function(id, index) {
+
+            const student =
+                students[id];
+
 
             const row =
                 document.createElement("tr");
@@ -616,14 +860,14 @@
 
                     <button
                         class="edit-btn"
-                        onclick="editStudent(${index})"
+                        onclick="editStudent('${id}')"
                     >
                         ✏️ Edit
                     </button>
 
                     <button
                         class="delete-btn"
-                        onclick="deleteStudent(${index})"
+                        onclick="deleteStudent('${id}')"
                     >
                         🗑️ Delete
                     </button>
@@ -640,35 +884,96 @@
     }
 
 
-    // DELETE STUDENT
-    function deleteStudent(index) {
-
-        if (
-            confirm(
-                "Are you sure you want to delete this student?"
-            )
-        ) {
-
-            students.splice(index, 1);
+    // REALTIME LISTENER
+    showStatus(
+        "🔄 Connecting to Firebase...",
+        "loading"
+    );
 
 
-            localStorage.setItem(
-                "students",
-                JSON.stringify(students)
-            );
+    onValue(
+        studentsRef,
+        function(snapshot) {
+
+            students =
+                snapshot.val() || {};
 
 
             displayStudents();
 
+
+            if (
+                Object.keys(students).length > 0
+            ) {
+
+                showStatus(
+                    "🟢 Connected. Student records loaded from Firebase.",
+                    "success"
+                );
+
+            }
+
+            else {
+
+                showStatus(
+                    "🟢 Connected to Firebase. No students saved yet.",
+                    "success"
+                );
+
+            }
+
+        },
+
+        function(error) {
+
+            console.error(error);
+
+            showStatus(
+                "❌ Could not read Firebase: " +
+                error.message,
+                "error"
+            );
+
         }
-
-    }
-
-
-    // LOAD RECORDS WHEN PAGE OPENS
-    displayStudents();
+    );
 
 </script>
 
 </body>
 </html>
+Perfect. Now we have everything needed. Your Firebase Realtime Database URL is:
+https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com
+Your current page uses localStorage, so we will remove that completely.
+Below is the complete permanent Firebase version of your student-management.html. It will save records under:
+Realtime Database → students
+Each student gets a permanent Firebase ID.
+Replace your entire current student-management.html with this:
+HTML
+What changed
+The important change is that there is no localStorage anymore.
+When you press ➕ Add Student, this happens:
+Your page → Firebase Realtime Database → students
+For example, Firebase will create something like:
+students
+   └── -Oxxxxxxxxxxxx
+        ├── grNumber
+        ├── name
+        ├── father
+        ├── dateOfBirth
+        ├── bForm
+        ├── className
+        ├── roll
+        ├── createdAt
+        └── updatedAt
+And because we're using onValue(), the table also updates when the Firebase data changes.
+Do this now
+Replace the old file with the code above.
+Save it.
+Push/commit it to your GitHub repository.
+Open the Student Management page.
+Add one test student.
+Then open Firebase Console → Realtime Database → Data.
+You should see:
+students
+with the student underneath it.
+Important: your current Realtime Database rules are temporary and publicly writable until September 19, 2026. This code makes the data storage permanent, but after we confirm that saving works, we should secure the database so only your authenticated admin can add/edit/delete students.
