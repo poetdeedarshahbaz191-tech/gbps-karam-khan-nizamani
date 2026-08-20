@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KG Attendance | GBPS Karam Khan Nizamani</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #006a4e;
+            color: white;
+            text-align: center;
+            padding: 18px 15px;
+        }
+
+        header h1 {
+            font-size: 22px;
+        }
+
+        header p {
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .top-box,
+        .table-box {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+        }
+
+        .back {
+            display: inline-block;
+            color: #006a4e;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #006a4e;
+            margin-bottom: 8px;
+        }
+
+        .date-box {
+            margin-top: 15px;
+        }
+
+        .date-box label {
+            font-weight: bold;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 15px 8px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        .summary-box strong {
+            display: block;
+            font-size: 22px;
+            color: #006a4e;
+            margin-bottom: 5px;
+        }
+
+        .status {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 7px;
+            background: #e8f5e9;
+            color: #006a4e;
+            font-weight: bold;
+        }
+
+        .table-box {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 950px;
+        }
+
+        th,
+        td {
+            padding: 10px 7px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #006a4e;
+            color: white;
+        }
+
+        .btn {
+            border: none;
+            padding: 7px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            font-size: 12px;
+        }
+
+        .present {
+            background: #2e7d32;
+        }
+
+        .absent {
+            background: #c62828;
+        }
+
+        .leave {
+            background: #f9a825;
+        }
+
+        .active {
+            outline: 3px solid #222;
+        }
+
+        .empty {
+            padding: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        footer {
+            margin-top: 30px;
+            background: #006a4e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏫 Government Boys Primary School</h1>
+    <p>Karam Khan Nizamani Campus</p>
+</header>
+
+
+<div class="container">
+
+    <div class="top-box">
+
+        <a href="admin.html" class="back">
+            ← Admin Dashboard
+        </a>
+
+        <h2>👶 KG Student Record & Attendance</h2>
+
+        <p>Government Boys Primary School</p>
+
+        <div class="date-box">
+
+            <label for="attendanceDate">
+                Attendance Date:
+            </label>
+
+            <input
+                type="date"
+                id="attendanceDate"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-box">
+            <strong id="totalStudents">0</strong>
+            Total Students
+        </div>
+
+        <div class="summary-box">
+            <strong id="presentStudents">0</strong>
+            Present Students
+        </div>
+
+        <div class="summary-box">
+            <strong id="absentStudents">0</strong>
+            Absent Students
+        </div>
+
+        <div class="summary-box">
+            <strong id="leaveStudents">0</strong>
+            Leave
+        </div>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <div id="connectionStatus" class="status">
+            🟡 Connecting to Firebase...
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>S. No.</th>
+                    <th>Student Name</th>
+                    <th>Father's Name</th>
+                    <th>GR No.</th>
+                    <th>Roll No.</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Leave</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="studentTableBody"></tbody>
+
+        </table>
+
+        <div
+            id="emptyMessage"
+            class="empty"
+            style="display:none;"
+        >
+            No KG students found.
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    <strong>Government Boys Primary School</strong><br>
+    Karam Khan Nizamani Campus<br><br>
+    © 2026 Government Boys Primary School
+</footer>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    set
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =========================================
+   FIREBASE CONFIG
+   USE THE SAME CONFIG AS STUDENTS.HTML
+   ========================================= */
+
+const firebaseConfig = {
+
+    apiKey: "YOUR_API_KEY",
+
+    authDomain:
+        "gbps-karam-khan-nizamani.firebaseapp.com",
+
+    databaseURL:
+        "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
+    projectId:
+        "gbps-karam-khan-nizamani",
+
+    storageBucket:
+        "gbps-karam-khan-nizamani.firebasestorage.app",
+
+    messagingSenderId:
+        "772460890400",
+
+    appId:
+        "YOUR_APP_ID"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const db =
+    getDatabase(app);
+
+
+/* =========================================
+   ELEMENTS
+   ========================================= */
+
+const tableBody =
+    document.getElementById(
+        "studentTableBody"
+    );
+
+
+const emptyMessage =
+    document.getElementById(
+        "emptyMessage"
+    );
+
+
+const connectionStatus =
+    document.getElementById(
+        "connectionStatus"
+    );
+
+
+const dateInput =
+    document.getElementById(
+        "attendanceDate"
+    );
+
+
+/* =========================================
+   TODAY'S DATE
+   ========================================= */
+
+const today =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+dateInput.value = today;
+
+
+/* =========================================
+   STUDENT DATA
+   ========================================= */
+
+let kgStudents = [];
+
+
+/* =========================================
+   ATTENDANCE DATA
+   ========================================= */
+
+let attendanceData = {};
+
+
+/* =========================================
+   LOAD STUDENTS FROM FIREBASE
+   ========================================= */
+
+const studentsRef =
+    ref(db, "students");
+
+
+onValue(
+    studentsRef,
+    (snapshot) => {
+
+        const data =
+            snapshot.val();
+
+
+        if (!data) {
+
+            kgStudents = [];
+
+            renderStudents();
+
+            connectionStatus.textContent =
+                "🟢 Connected. No students found.";
+
+            return;
+        }
+
+
+        const students =
+            Object.values(data);
+
+
+        kgStudents =
+            students.filter(
+                student =>
+                    String(
+                        student.class || ""
+                    )
+                    .trim()
+                    .toUpperCase() === "KG"
+            );
+
+
+        connectionStatus.textContent =
+            "🟢 Connected. KG students loaded from Firebase.";
+
+
+        loadAttendance();
+
+    },
+
+
+    (error) => {
+
+        console.error(error);
+
+        connectionStatus.textContent =
+            "🔴 Firebase connection error.";
+
+    }
+);
+
+
+/* =========================================
+   LOAD ATTENDANCE FOR SELECTED DATE
+   ========================================= */
+
+function loadAttendance() {
+
+    const date =
+        dateInput.value;
+
+
+    const attendanceRef =
+        ref(
+            db,
+            "attendance/KG/" + date
+        );
+
+
+    onValue(
+        attendanceRef,
+        (snapshot) => {
+
+            attendanceData =
+                snapshot.val() || {};
+
+            renderStudents();
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   DATE CHANGE
+   ========================================= */
+
+dateInput.addEventListener(
+    "change",
+    function () {
+
+        loadAttendance();
+
+    }
+);
+
+
+/* =========================================
+   SET ATTENDANCE
+   ========================================= */
+
+window.setAttendance =
+    async function (
+        studentId,
+        status
+    ) {
+
+        const date =
+            dateInput.value;
+
+
+        if (!date) {
+
+            alert(
+                "Please select attendance date."
+            );
+
+            return;
+        }
+
+
+        const attendanceRef =
+            ref(
+                db,
+                "attendance/KG/" +
+                date +
+                "/" +
+                studentId
+            );
+
+
+        await set(
+            attendanceRef,
+            status
+        );
+
+    };
+
+
+/* =========================================
+   DISPLAY STUDENTS
+   ========================================= */
+
+function renderStudents() {
+
+    tableBody.innerHTML = "";
+
+
+    if (kgStudents.length === 0) {
+
+        emptyMessage.style.display =
+            "block";
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    emptyMessage.style.display =
+        "none";
+
+
+    kgStudents.forEach(
+        (student, index) => {
+
+            const row =
+                document.createElement("tr");
+
+
+            const id =
+                student.id ||
+                student.key ||
+                student.grNo ||
+                String(index);
+
+
+            const status =
+                attendanceData[id] ||
+                "none";
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.name || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.fatherName || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.grNo || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.rollNo || "—"
+                    )}
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn present ${
+                            status === "present"
+                                ? "active"
+                                : ""
+                        }"
+                        onclick="
+                            setAttendance(
+                                '${escapeAttribute(id)}',
+                                'present'
+                            )
+                        "
+                    >
+                        ✅
+                    </button>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn absent ${
+                            status === "absent"
+                                ? "active"
+                                : ""
+                        }"
+                        onclick="
+                            setAttendance(
+                                '${escapeAttribute(id)}',
+                                'absent'
+                            )
+                        "
+                    >
+                        ❌
+                    </button>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="btn leave ${
+                            status === "leave"
+                                ? "active"
+                                : ""
+                        }"
+                        onclick="
+                            setAttendance(
+                                '${escapeAttribute(id)}',
+                                'leave'
+                            )
+                        "
+                    >
+                        🟡
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+
+    updateSummary();
+
+}
+
+
+/* =========================================
+   SUMMARY
+   ========================================= */
+
+function updateSummary() {
+
+    const total =
+        kgStudents.length;
+
+
+    let present = 0;
+
+    let absent = 0;
+
+    let leave = 0;
+
+
+    kgStudents.forEach(
+        (student, index) => {
+
+            const id =
+                student.id ||
+                student.key ||
+                student.grNo ||
+                String(index);
+
+
+            const status =
+                attendanceData[id];
+
+
+            if (status === "present") {
+                present++;
+            }
+
+            if (status === "absent") {
+                absent++;
+            }
+
+            if (status === "leave") {
+                leave++;
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "presentStudents"
+    ).textContent = present;
+
+
+    document.getElementById(
+        "absentStudents"
+    ).textContent = absent;
+
+
+    document.getElementById(
+        "leaveStudents"
+    ).textContent = leave;
+
+}
+
+
+/* =========================================
+   SECURITY / DISPLAY HELPERS
+   ========================================= */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(value);
+
+    return div.innerHTML;
+
+}
+
+
+function escapeAttribute(value) {
+
+    return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+
+}
+
+</script>
+
+</body>
+</html>
