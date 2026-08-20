@@ -43,7 +43,6 @@
         }
 
         .top-box,
-        .add-box,
         .table-box {
             background: white;
             padding: 18px;
@@ -73,9 +72,7 @@
             font-weight: bold;
         }
 
-        input[type="date"],
-        input[type="text"],
-        input[type="file"] {
+        input[type="date"] {
             width: 100%;
             padding: 10px;
             margin-top: 6px;
@@ -105,20 +102,14 @@
             margin-bottom: 5px;
         }
 
-        .add-btn {
-            width: 100%;
-            margin-top: 12px;
-            padding: 11px;
-            border: none;
-            border-radius: 7px;
-            background: #006a4e;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        .add-btn:hover {
-            background: #004d39;
+        .status {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background: #e3f2fd;
+            color: #1565c0;
+            text-align: center;
+            font-weight: bold;
         }
 
         .table-box {
@@ -143,13 +134,6 @@
             color: white;
         }
 
-        td img {
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
         .btn {
             border: none;
             padding: 7px 9px;
@@ -171,16 +155,13 @@
             background: #f9a825;
         }
 
-        .edit {
-            background: #1565c0;
-        }
-
-        .remove {
-            background: #8e0000;
-        }
-
         .active {
             outline: 3px solid #222;
+        }
+
+        .none {
+            color: #777;
+            font-size: 12px;
         }
 
         .empty {
@@ -199,9 +180,11 @@
         }
 
         @media (max-width: 650px) {
+
             .summary {
                 grid-template-columns: repeat(2, 1fr);
             }
+
         }
     </style>
 </head>
@@ -217,522 +200,710 @@
 
     <div class="top-box">
 
-        <a href="admin.html" class="back">← Admin Dashboard</a>
+        <a href="admin-dashboard.html" class="back">
+            ← Admin Dashboard
+        </a>
 
         <h2>👨‍🎓 Class 1 Student Record & Attendance</h2>
 
         <p>Government Boys Primary School</p>
 
         <div class="date-box">
+
             <label for="attendanceDate">
                 Attendance Date:
             </label>
 
-            <input type="date" id="attendanceDate">
+            <input
+                type="date"
+                id="attendanceDate"
+            >
+
         </div>
 
     </div>
+
 
     <div class="summary">
 
         <div class="summary-box">
-            <strong id="totalStudents">0</strong>
+
+            <strong id="totalStudents">
+                0
+            </strong>
+
             Total Students
+
         </div>
 
+
         <div class="summary-box">
-            <strong id="presentStudents">0</strong>
+
+            <strong id="presentStudents">
+                0
+            </strong>
+
             Present Students
+
         </div>
 
+
         <div class="summary-box">
-            <strong id="absentStudents">0</strong>
+
+            <strong id="absentStudents">
+                0
+            </strong>
+
             Absent Students
+
         </div>
+
 
         <div class="summary-box">
-            <strong id="leaveStudents">0</strong>
+
+            <strong id="leaveStudents">
+                0
+            </strong>
+
             Leave
+
         </div>
 
     </div>
 
-    <div class="add-box">
 
-        <h2>➕ Add Student</h2>
-
-        <input
-            type="text"
-            id="studentName"
-            placeholder="Student Name"
-        >
-
-        <input
-            type="text"
-            id="grNo"
-            placeholder="GR No."
-        >
-
-        <input
-            type="file"
-            id="studentPicture"
-            accept="image/*"
-        >
-
-        <button class="add-btn" onclick="addStudent()">
-            Add Student
-        </button>
-
+    <div id="statusMessage" class="status">
+        🔄 Connecting to Firebase...
     </div>
+
 
     <div class="table-box">
 
         <table>
 
             <thead>
+
                 <tr>
+
                     <th>S. No.</th>
+
                     <th>Student Name</th>
+
+                    <th>Father's Name</th>
+
                     <th>GR No.</th>
-                    <th>Picture</th>
+
+                    <th>Roll No.</th>
+
                     <th>Present</th>
+
                     <th>Absent</th>
+
                     <th>Leave</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
+
                 </tr>
+
             </thead>
 
-            <tbody id="studentTableBody"></tbody>
+            <tbody id="studentTableBody">
+            </tbody>
 
         </table>
 
+
         <div id="emptyMessage" class="empty">
-            No students added yet.
+            No Class 1 students found.
         </div>
 
     </div>
 
 </div>
 
+
 <footer>
-    <strong>Government Boys Primary School</strong><br>
-    Karam Khan Nizamani Campus<br><br>
+
+    <strong>
+        Government Boys Primary School
+    </strong>
+
+    <br>
+
+    Karam Khan Nizamani Campus
+
+    <br><br>
+
     © 2026 Government Boys Primary School
+
 </footer>
 
-<script>
 
-let students = JSON.parse(
-    localStorage.getItem("class1AttendanceStudents") || "[]"
-);
+<script type="module">
 
-const dateInput =
-    document.getElementById("attendanceDate");
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-dateInput.value =
-    localStorage.getItem("class1AttendanceDate") ||
-    new Date().toISOString().split("T")[0];
 
-dateInput.addEventListener("change", function () {
+    import {
+        getDatabase,
+        ref,
+        onValue,
+        set
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
-    localStorage.setItem(
-        "class1AttendanceDate",
-        this.value
-    );
 
-});
+    // ==========================================
+    // FIREBASE CONFIGURATION
+    // ==========================================
 
-function saveStudents() {
+    const firebaseConfig = {
 
-    localStorage.setItem(
-        "class1AttendanceStudents",
-        JSON.stringify(students)
-    );
+        apiKey:
+            "AIzaSyBoTtizM_SfChAAhvjmZloB-j5wCKLH4Ps",
 
-}
+        authDomain:
+            "gbps-karam-khan-nizamani.firebaseapp.com",
 
-function addStudent() {
+        databaseURL:
+            "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
 
-    const name =
-        document.getElementById("studentName")
-        .value.trim();
+        projectId:
+            "gbps-karam-khan-nizamani",
 
-    const grNo =
-        document.getElementById("grNo")
-        .value.trim();
+        storageBucket:
+            "gbps-karam-khan-nizamani.firebasestorage.app",
 
-    const pictureInput =
-        document.getElementById("studentPicture");
+        messagingSenderId:
+            "772460890400",
 
-    if (!name || !grNo) {
+        appId:
+            "1:772460890400:web:cf2379f4e0d21ebe476f45",
 
-        alert(
-            "Please enter Student Name and GR No."
+        measurementId:
+            "G-KDQ1MQ16WN"
+
+    };
+
+
+    // ==========================================
+    // INITIALIZE FIREBASE
+    // ==========================================
+
+    const app =
+        initializeApp(firebaseConfig);
+
+    const database =
+        getDatabase(app);
+
+
+    // ==========================================
+    // FIREBASE REFERENCES
+    // ==========================================
+
+    const studentsRef =
+        ref(database, "students");
+
+
+    // Attendance will be stored separately
+    const attendanceRef =
+        ref(database, "attendance/class1");
+
+
+    // ==========================================
+    // DATE
+    // ==========================================
+
+    const dateInput =
+        document.getElementById(
+            "attendanceDate"
         );
 
-        return;
-    }
 
-    if (
-        students.some(
-            student => student.grNo === grNo
-        )
-    ) {
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
 
-        alert("This GR No. already exists.");
 
-        return;
-    }
+    dateInput.value =
+        localStorage.getItem(
+            "class1AttendanceDate"
+        ) || today;
 
-    if (pictureInput.files.length > 0) {
 
-        const reader = new FileReader();
+    dateInput.addEventListener(
+        "change",
+        function() {
 
-        reader.onload = function (event) {
-
-            createStudent(
-                name,
-                grNo,
-                event.target.result
+            localStorage.setItem(
+                "class1AttendanceDate",
+                this.value
             );
 
-        };
+            loadAttendance();
 
-        reader.readAsDataURL(
-            pictureInput.files[0]
-        );
+        }
+    );
 
-    } else {
 
-        createStudent(
-            name,
-            grNo,
-            ""
-        );
+    // ==========================================
+    // VARIABLES
+    // ==========================================
 
-    }
+    let students = {};
 
-}
+    let attendance = {};
 
-function createStudent(
-    name,
-    grNo,
-    picture
-) {
 
-    students.push({
+    // ==========================================
+    // STATUS
+    // ==========================================
 
-        id: Date.now(),
-
-        name: name,
-
-        grNo: grNo,
-
-        picture: picture,
-
-        attendance: "none"
-
-    });
-
-    saveStudents();
-
-    document.getElementById("studentName").value = "";
-
-    document.getElementById("grNo").value = "";
-
-    document.getElementById("studentPicture").value = "";
-
-    renderStudents();
-
-}
-
-function setAttendance(
-    id,
-    status
-) {
-
-    const student =
-        students.find(
-            student => student.id === id
-        );
-
-    if (!student) return;
-
-    student.attendance = status;
-
-    saveStudents();
-
-    renderStudents();
-
-}
-
-function editStudent(id) {
-
-    const student =
-        students.find(
-            student => student.id === id
-        );
-
-    if (!student) return;
-
-    const newName =
-        prompt(
-            "Edit Student Name:",
-            student.name
-        );
-
-    if (
-        newName === null ||
-        newName.trim() === ""
-    ) return;
-
-    const newGrNo =
-        prompt(
-            "Edit GR No.:",
-            student.grNo
-        );
-
-    if (
-        newGrNo === null ||
-        newGrNo.trim() === ""
-    ) return;
-
-    if (
-        students.some(
-            s =>
-                s.id !== id &&
-                s.grNo === newGrNo.trim()
-        )
+    function showStatus(
+        message
     ) {
 
-        alert(
-            "This GR No. already exists."
-        );
+        document.getElementById(
+            "statusMessage"
+        ).textContent = message;
 
-        return;
     }
 
-    student.name =
-        newName.trim();
 
-    student.grNo =
-        newGrNo.trim();
+    // ==========================================
+    // LOAD STUDENTS FROM FIREBASE
+    // ==========================================
 
-    saveStudents();
+    onValue(
+        studentsRef,
 
-    renderStudents();
+        function(snapshot) {
 
-}
+            students =
+                snapshot.val() || {};
 
-function removeStudent(id) {
+            renderStudents();
 
-    const student =
-        students.find(
-            student => student.id === id
-        );
+            loadAttendance();
 
-    if (!student) return;
+        },
 
-    if (
-        !confirm(
-            "Remove " +
-            student.name +
-            " from Class 1?"
-        )
-    ) return;
+        function(error) {
 
-    students =
-        students.filter(
-            student => student.id !== id
-        );
+            console.error(error);
 
-    saveStudents();
+            showStatus(
+                "❌ Could not load students: " +
+                error.message
+            );
 
-    renderStudents();
+        }
+    );
 
-}
 
-function renderStudents() {
+    // ==========================================
+    // LOAD ATTENDANCE
+    // ==========================================
 
-    const tableBody =
-        document.getElementById(
-            "studentTableBody"
-        );
+    function loadAttendance() {
 
-    const emptyMessage =
-        document.getElementById(
-            "emptyMessage"
-        );
+        const selectedDate =
+            dateInput.value;
 
-    tableBody.innerHTML = "";
+        const dateRef =
+            ref(
+                database,
+                "attendance/class1/" +
+                selectedDate
+            );
 
-    if (students.length === 0) {
 
-        emptyMessage.style.display =
-            "block";
+        onValue(
+            dateRef,
 
-    } else {
+            function(snapshot) {
 
-        emptyMessage.style.display =
-            "none";
+                attendance =
+                    snapshot.val() || {};
 
-        students.forEach(
-            (student, index) => {
+                renderStudents();
 
-                const row =
-                    document.createElement("tr");
+            },
 
-                const pictureHTML =
-                    student.picture
-                    ? `<img src="${student.picture}" alt="Student">`
-                    : "—";
+            function(error) {
 
-                row.innerHTML = `
+                console.error(error);
 
-                    <td>${index + 1}</td>
-
-                    <td>${student.name}</td>
-
-                    <td>${student.grNo}</td>
-
-                    <td>${pictureHTML}</td>
-
-                    <td>
-                        <button
-                            class="btn present ${
-                                student.attendance === "present"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'present'
-                                )
-                            "
-                        >
-                            ✅
-                        </button>
-                    </td>
-
-                    <td>
-                        <button
-                            class="btn absent ${
-                                student.attendance === "absent"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'absent'
-                                )
-                            "
-                        >
-                            ❌
-                        </button>
-                    </td>
-
-                    <td>
-                        <button
-                            class="btn leave ${
-                                student.attendance === "leave"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'leave'
-                                )
-                            "
-                        >
-                            🟡
-                        </button>
-                    </td>
-
-                    <td>
-                        <button
-                            class="btn edit"
-                            onclick="
-                                editStudent(
-                                    ${student.id}
-                                )
-                            "
-                        >
-                            ✏️ Edit
-                        </button>
-                    </td>
-
-                    <td>
-                        <button
-                            class="btn remove"
-                            onclick="
-                                removeStudent(
-                                    ${student.id}
-                                )
-                            "
-                        >
-                            🗑️
-                        </button>
-                    </td>
-
-                `;
-
-                tableBody.appendChild(row);
+                showStatus(
+                    "❌ Could not load attendance: " +
+                    error.message
+                );
 
             }
         );
 
     }
 
-    updateSummary();
 
-}
+    // ==========================================
+    // SET ATTENDANCE
+    // ==========================================
 
-function updateSummary() {
+    window.setAttendance =
+        async function(
+            studentId,
+            status
+        ) {
 
-    const total =
-        students.length;
+            const selectedDate =
+                dateInput.value;
 
-    const present =
-        students.filter(
-            student =>
-                student.attendance === "present"
-        ).length;
 
-    const absent =
-        students.filter(
-            student =>
-                student.attendance === "absent"
-        ).length;
+            if (!selectedDate) {
 
-    const leave =
-        students.filter(
-            student =>
-                student.attendance === "leave"
-        ).length;
+                alert(
+                    "Please select an attendance date."
+                );
 
-    document.getElementById(
-        "totalStudents"
-    ).textContent = total;
+                return;
 
-    document.getElementById(
-        "presentStudents"
-    ).textContent = present;
+            }
 
-    document.getElementById(
-        "absentStudents"
-    ).textContent = absent;
 
-    document.getElementById(
-        "leaveStudents"
-    ).textContent = leave;
+            try {
 
-}
+                const studentAttendanceRef =
+                    ref(
+                        database,
+                        "attendance/class1/" +
+                        selectedDate +
+                        "/" +
+                        studentId
+                    );
 
-renderStudents();
+
+                await set(
+                    studentAttendanceRef,
+                    status
+                );
+
+
+                showStatus(
+                    "✅ Attendance saved to Firebase."
+                );
+
+            }
+
+            catch(error) {
+
+                console.error(error);
+
+                alert(
+                    "Could not save attendance: " +
+                    error.message
+                );
+
+            }
+
+        };
+
+
+    // ==========================================
+    // RENDER STUDENTS
+    // ==========================================
+
+    function renderStudents() {
+
+        const tableBody =
+            document.getElementById(
+                "studentTableBody"
+            );
+
+
+        const emptyMessage =
+            document.getElementById(
+                "emptyMessage"
+            );
+
+
+        tableBody.innerHTML = "";
+
+
+        // --------------------------------------
+        // GET ONLY CLASS 1 STUDENTS
+        // --------------------------------------
+
+        const class1Students =
+            Object.entries(students)
+            .filter(function([id, student]) {
+
+                return (
+                    student &&
+                    student.className === "Class 1"
+                );
+
+            });
+
+
+        // --------------------------------------
+        // SORT BY ROLL NUMBER
+        // --------------------------------------
+
+        class1Students.sort(
+            function(a, b) {
+
+                const rollA =
+                    parseInt(
+                        a[1].roll || "999999"
+                    );
+
+                const rollB =
+                    parseInt(
+                        b[1].roll || "999999"
+                    );
+
+                return rollA - rollB;
+
+            }
+        );
+
+
+        // --------------------------------------
+        // EMPTY
+        // --------------------------------------
+
+        if (
+            class1Students.length === 0
+        ) {
+
+            emptyMessage.style.display =
+                "block";
+
+            showStatus(
+                "🟢 Connected to Firebase. No Class 1 students found."
+            );
+
+            updateSummary();
+
+            return;
+
+        }
+
+
+        emptyMessage.style.display =
+            "none";
+
+
+        // --------------------------------------
+        // DISPLAY STUDENTS
+        // --------------------------------------
+
+        class1Students.forEach(
+            function([id, student], index) {
+
+                const row =
+                    document.createElement("tr");
+
+
+                const studentAttendance =
+                    attendance[id] || "none";
+
+
+                row.innerHTML = `
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+
+                    <td>
+                        ${student.name || "—"}
+                    </td>
+
+
+                    <td>
+                        ${student.father || "—"}
+                    </td>
+
+
+                    <td>
+                        ${student.grNumber || "—"}
+                    </td>
+
+
+                    <td>
+                        ${student.roll || "—"}
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="btn present ${
+                                studentAttendance === "present"
+                                ? "active"
+                                : ""
+                            }"
+                            onclick="
+                                setAttendance(
+                                    '${id}',
+                                    'present'
+                                )
+                            "
+                        >
+                            ✅
+                        </button>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="btn absent ${
+                                studentAttendance === "absent"
+                                ? "active"
+                                : ""
+                            }"
+                            onclick="
+                                setAttendance(
+                                    '${id}',
+                                    'absent'
+                                )
+                            "
+                        >
+                            ❌
+                        </button>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="btn leave ${
+                                studentAttendance === "leave"
+                                ? "active"
+                                : ""
+                            }"
+                            onclick="
+                                setAttendance(
+                                    '${id}',
+                                    'leave'
+                                )
+                            "
+                        >
+                            🟡
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(row);
+
+            }
+        );
+
+
+        showStatus(
+            "🟢 Connected. Class 1 students loaded from Firebase."
+        );
+
+
+        updateSummary();
+
+    }
+
+
+    // ==========================================
+    // SUMMARY
+    // ==========================================
+
+    function updateSummary() {
+
+        const class1Students =
+            Object.entries(students)
+            .filter(function([id, student]) {
+
+                return (
+                    student &&
+                    student.className === "Class 1"
+                );
+
+            });
+
+
+        const total =
+            class1Students.length;
+
+
+        let present = 0;
+
+        let absent = 0;
+
+        let leave = 0;
+
+
+        class1Students.forEach(
+            function([id]) {
+
+                const status =
+                    attendance[id];
+
+
+                if (
+                    status === "present"
+                ) {
+
+                    present++;
+
+                }
+
+
+                if (
+                    status === "absent"
+                ) {
+
+                    absent++;
+
+                }
+
+
+                if (
+                    status === "leave"
+                ) {
+
+                    leave++;
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "totalStudents"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "presentStudents"
+        ).textContent = present;
+
+
+        document.getElementById(
+            "absentStudents"
+        ).textContent = absent;
+
+
+        document.getElementById(
+            "leaveStudents"
+        ).textContent = leave;
+
+    }
+
 
 </script>
 
