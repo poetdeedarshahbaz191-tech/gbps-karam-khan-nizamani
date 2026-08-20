@@ -68,7 +68,8 @@
             gap: 12px;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
             padding: 11px;
             border: 1px solid #ccc;
@@ -238,39 +239,45 @@
 
         <div class="form-grid">
 
+            <!-- REQUIRED -->
             <input
                 type="text"
                 id="grNumber"
-                placeholder="GR No."
+                placeholder="GR No. *"
             >
 
+            <!-- REQUIRED -->
             <input
                 type="text"
                 id="studentName"
-                placeholder="Student Name"
+                placeholder="Student Name *"
             >
 
+            <!-- REQUIRED -->
             <input
                 type="text"
                 id="fatherName"
-                placeholder="Father's Name"
+                placeholder="Father's Name *"
             >
 
+            <!-- OPTIONAL -->
             <input
                 type="date"
                 id="dateOfBirth"
-                title="Date of Birth"
+                title="Date of Birth (Optional)"
             >
 
+            <!-- OPTIONAL -->
             <input
                 type="text"
                 id="bForm"
-                placeholder="B-Form"
+                placeholder="B-Form (Optional)"
             >
 
+            <!-- REQUIRED -->
             <select id="studentClass">
 
-                <option value="">Select Class</option>
+                <option value="">Select Class *</option>
 
                 <option value="KG">KG</option>
 
@@ -286,10 +293,11 @@
 
             </select>
 
+            <!-- OPTIONAL -->
             <input
                 type="text"
                 id="rollNumber"
-                placeholder="Roll Number"
+                placeholder="Roll Number (Optional)"
             >
 
         </div>
@@ -474,22 +482,25 @@
             document.getElementById("rollNumber").value.trim();
 
 
-        // CHECK REQUIRED FIELDS
-if (
-    grNumber === "" ||
-    name === "" ||
-    father === "" ||
-    studentClass === ""
-) {
+        // ==========================================
+        // ONLY THESE 4 FIELDS ARE REQUIRED
+        // ==========================================
 
-    showStatus(
-        "Please fill in GR No., Student Name, Father's Name and Class.",
-        "error"
-    );
+        if (!grNumber || !name || !father || !studentClass) {
 
-    return;
-}
+            showStatus(
+                "Please fill in GR No., Student Name, Father's Name and Class.",
+                "error"
+            );
 
+            return;
+        }
+
+
+        // ==========================================
+        // STUDENT DATA
+        // OPTIONAL FIELDS MAY BE EMPTY
+        // ==========================================
 
         const student = {
 
@@ -499,13 +510,13 @@ if (
 
             father: father,
 
-            dateOfBirth: dateOfBirth,
+            dateOfBirth: dateOfBirth || "",
 
-            bForm: bForm,
+            bForm: bForm || "",
 
             className: studentClass,
 
-            roll: roll,
+            roll: roll || "",
 
             updatedAt: Date.now()
 
@@ -514,7 +525,10 @@ if (
 
         try {
 
+            // ==========================================
             // UPDATE EXISTING STUDENT
+            // ==========================================
+
             if (editingId) {
 
                 const studentRef =
@@ -536,7 +550,10 @@ if (
 
             }
 
+            // ==========================================
             // ADD NEW STUDENT
+            // ==========================================
+
             else {
 
                 const newStudentRef =
@@ -577,7 +594,10 @@ if (
     };
 
 
+    // ==========================================
     // EDIT STUDENT
+    // ==========================================
+
     window.editStudent = function(id) {
 
         const student = students[id];
@@ -658,7 +678,10 @@ if (
     };
 
 
+    // ==========================================
     // DELETE STUDENT
+    // ==========================================
+
     window.deleteStudent = async function(id) {
 
         const student = students[id];
@@ -711,7 +734,10 @@ if (
     };
 
 
+    // ==========================================
     // CANCEL EDIT
+    // ==========================================
+
     window.cancelEdit = function() {
 
         clearForm();
@@ -719,7 +745,10 @@ if (
     };
 
 
+    // ==========================================
     // CLEAR FORM
+    // ==========================================
+
     function clearForm() {
 
         document.getElementById(
@@ -780,7 +809,10 @@ if (
     }
 
 
+    // ==========================================
     // DISPLAY STUDENTS
+    // ==========================================
+
     function displayStudents() {
 
         const table =
@@ -881,7 +913,10 @@ if (
     }
 
 
-    // REALTIME LISTENER
+    // ==========================================
+    // REALTIME FIREBASE LISTENER
+    // ==========================================
+
     showStatus(
         "🔄 Connecting to Firebase...",
         "loading"
@@ -890,6 +925,7 @@ if (
 
     onValue(
         studentsRef,
+
         function(snapshot) {
 
             students =
@@ -938,4 +974,3 @@ if (
 
 </body>
 </html>
-
