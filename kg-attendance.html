@@ -1,1 +1,1048 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KG Daily Attendance | GBPS Karam Khan Nizamani</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f2f6f9;
+    color:#222;
+}
+
+header{
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:18px 15px;
+}
+
+header h1{
+    font-size:22px;
+}
+
+header p{
+    margin-top:6px;
+    font-size:14px;
+}
+
+.container{
+    max-width:1200px;
+    margin:20px auto;
+    padding:15px;
+}
+
+.box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
+
+.back{
+    display:inline-block;
+    color:#006a4e;
+    text-decoration:none;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+h2{
+    color:#006a4e;
+    margin-bottom:8px;
+}
+
+.date-box{
+    margin-top:15px;
+}
+
+.date-box label{
+    font-weight:bold;
+}
+
+input[type="date"]{
+    width:100%;
+    padding:11px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+}
+
+.status{
+    padding:11px;
+    margin-bottom:15px;
+    border-radius:7px;
+    background:#e8f5e9;
+    color:#006a4e;
+    font-weight:bold;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.summary-box{
+    background:white;
+    padding:15px 8px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.summary-box strong{
+    display:block;
+    font-size:24px;
+    color:#006a4e;
+    margin-bottom:5px;
+}
+
+.save-box{
+    text-align:center;
+}
+
+.save-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#006a4e;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.save-btn:disabled{
+    background:#999;
+}
+
+.table-box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
+
+th,td{
+    padding:10px 7px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
+
+th{
+    background:#006a4e;
+    color:white;
+}
+
+.btn{
+    border:none;
+    padding:8px 11px;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+    font-size:13px;
+}
+
+.present{
+    background:#2e7d32;
+}
+
+.absent{
+    background:#c62828;
+}
+
+.leave{
+    background:#f9a825;
+}
+
+.btn.active{
+    outline:3px solid #222;
+    transform:scale(1.05);
+}
+
+.pending{
+    background:#fff3cd;
+}
+
+.empty{
+    padding:20px;
+    text-align:center;
+    color:#777;
+}
+
+footer{
+    margin-top:30px;
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:13px;
+}
+
+@media(max-width:650px){
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    header h1{
+        font-size:18px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏫 Government Boys Primary School</h1>
+    <p>Karam Khan Nizamani Campus</p>
+</header>
+
+<div class="container">
+
+    <div class="box">
+
+        <a href="admin.html" class="back">
+            ← Admin Dashboard
+        </a>
+
+        <h2>👶 KG Daily Attendance</h2>
+
+        <p>
+            Select the attendance date and mark each KG student.
+        </p>
+
+        <div class="date-box">
+
+            <label for="attendanceDate">
+                Attendance Date:
+            </label>
+
+            <input
+                type="date"
+                id="attendanceDate"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="summary">
+
+        <div class="summary-box">
+            <strong id="totalStudents">0</strong>
+            Total Students
+        </div>
+
+        <div class="summary-box">
+            <strong id="presentStudents">0</strong>
+            Present
+        </div>
+
+        <div class="summary-box">
+            <strong id="absentStudents">0</strong>
+            Absent
+        </div>
+
+        <div class="summary-box">
+            <strong id="leaveStudents">0</strong>
+            Leave
+        </div>
+
+    </div>
+
+
+    <div class="box save-box">
+
+        <button
+            id="saveButton"
+            class="save-btn"
+            disabled
+        >
+            💾 Save Today's Attendance
+        </button>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <div id="connectionStatus" class="status">
+            🟡 Connecting to Firebase...
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>S. No.</th>
+                    <th>Student Name</th>
+                    <th>Father's Name</th>
+                    <th>GR No.</th>
+                    <th>Roll No.</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Leave</th>
+                </tr>
+            </thead>
+
+            <tbody id="studentTableBody"></tbody>
+
+        </table>
+
+        <div
+            id="emptyMessage"
+            class="empty"
+            style="display:none;"
+        >
+            No KG students found.
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    <strong>Government Boys Primary School</strong><br>
+    Karam Khan Nizamani Campus<br><br>
+    © 2026 Government Boys Primary School
+</footer>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue,
+    set
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+
+   IMPORTANT:
+   Use the SAME apiKey and appId from your working
+   students.html / Firebase configuration.
+   ===================================================== */
+
+const firebaseConfig = {
+
+    apiKey: "YOUR_API_KEY",
+
+    authDomain:
+        "gbps-karam-khan-nizamani.firebaseapp.com",
+
+    databaseURL:
+        "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
+    projectId:
+        "gbps-karam-khan-nizamani",
+
+    storageBucket:
+        "gbps-karam-khan-nizamani.firebasestorage.app",
+
+    messagingSenderId:
+        "772460890400",
+
+    appId:
+        "YOUR_APP_ID"
+
+};
+
+
+/* =====================================================
+   FIREBASE
+   ===================================================== */
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+
+/* =====================================================
+   ELEMENTS
+   ===================================================== */
+
+const tableBody =
+    document.getElementById("studentTableBody");
+
+const emptyMessage =
+    document.getElementById("emptyMessage");
+
+const connectionStatus =
+    document.getElementById("connectionStatus");
+
+const dateInput =
+    document.getElementById("attendanceDate");
+
+const saveButton =
+    document.getElementById("saveButton");
+
+
+/* =====================================================
+   DATE
+   ===================================================== */
+
+function getLocalDate(){
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+
+    const month =
+        String(now.getMonth() + 1).padStart(2,"0");
+
+    const day =
+        String(now.getDate()).padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+dateInput.value = getLocalDate();
+
+
+/* =====================================================
+   DATA
+   ===================================================== */
+
+let kgStudents = [];
+
+let attendanceData = {};
+
+let pendingAttendance = {};
+
+let attendanceLoaded = false;
+
+
+/* =====================================================
+   LOAD STUDENTS
+   ===================================================== */
+
+const studentsRef = ref(db,"students");
+
+
+onValue(
+    studentsRef,
+
+    (snapshot) => {
+
+        const data = snapshot.val();
+
+        if(!data){
+
+            kgStudents = [];
+
+            renderStudents();
+
+            connectionStatus.textContent =
+                "🟢 Connected, but no students were found.";
+
+            return;
+        }
+
+
+        /*
+         * Keep the Firebase key with every student.
+         * This is important because attendance will use
+         * the SAME student key every day.
+         */
+
+        kgStudents = Object.entries(data)
+
+            .map(([key,student]) => {
+
+                return {
+                    ...student,
+                    firebaseKey:key
+                };
+
+            })
+
+            .filter(student => {
+
+                return String(
+                    student.class || ""
+                )
+                .trim()
+                .toUpperCase() === "KG";
+
+            });
+
+
+        connectionStatus.textContent =
+            "🟢 Connected. " +
+            kgStudents.length +
+            " KG student(s) loaded.";
+
+
+        loadAttendance();
+
+    },
+
+    (error) => {
+
+        console.error(error);
+
+        connectionStatus.textContent =
+            "🔴 Firebase connection error: " +
+            error.message;
+
+    }
+);
+
+
+/* =====================================================
+   LOAD ATTENDANCE
+   ===================================================== */
+
+function loadAttendance(){
+
+    const date = dateInput.value;
+
+    if(!date){
+        return;
+    }
+
+
+    attendanceLoaded = false;
+
+    pendingAttendance = {};
+
+    const attendanceRef =
+        ref(
+            db,
+            "attendance/KG/" + date
+        );
+
+
+    onValue(
+
+        attendanceRef,
+
+        (snapshot) => {
+
+            attendanceData =
+                snapshot.val() || {};
+
+            attendanceLoaded = true;
+
+            pendingAttendance = {};
+
+            renderStudents();
+
+            saveButton.disabled = false;
+
+        },
+
+        (error) => {
+
+            console.error(error);
+
+            connectionStatus.textContent =
+                "🔴 Could not load attendance.";
+
+        },
+
+        {
+            onlyOnce:true
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   DATE CHANGE
+   ===================================================== */
+
+dateInput.addEventListener(
+    "change",
+    function(){
+
+        attendanceData = {};
+
+        pendingAttendance = {};
+
+        loadAttendance();
+
+    }
+);
+
+
+/* =====================================================
+   SELECT ATTENDANCE
+   ===================================================== */
+
+window.setAttendance =
+function(studentId,status){
+
+    if(!dateInput.value){
+
+        alert(
+            "Please select an attendance date first."
+        );
+
+        return;
+
+    }
+
+
+    pendingAttendance[studentId] = status;
+
+    /*
+     * Update screen immediately.
+     * It will be saved when Save button is pressed.
+     */
+
+    renderStudents();
+
+};
+
+
+/* =====================================================
+   SAVE ALL ATTENDANCE
+   ===================================================== */
+
+saveButton.addEventListener(
+    "click",
+    async function(){
+
+        const date = dateInput.value;
+
+        if(!date){
+
+            alert(
+                "Please select attendance date."
+            );
+
+            return;
+
+        }
+
+
+        if(kgStudents.length === 0){
+
+            alert(
+                "No KG students found."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Combine already-saved attendance with the
+         * changes made on this screen.
+         */
+
+        const finalAttendance = {
+            ...attendanceData,
+            ...pendingAttendance
+        };
+
+
+        const markedCount =
+            Object.keys(finalAttendance).length;
+
+
+        if(markedCount < kgStudents.length){
+
+            const remaining =
+                kgStudents.length - markedCount;
+
+
+            const answer = confirm(
+
+                remaining +
+                " student(s) have not been marked.\n\n" +
+                "Do you still want to save?"
+
+            );
+
+
+            if(!answer){
+                return;
+            }
+
+        }
+
+
+        saveButton.disabled = true;
+
+        saveButton.textContent =
+            "⏳ Saving Attendance...";
+
+
+        try{
+
+            const attendanceRef =
+                ref(
+                    db,
+                    "attendance/KG/" + date
+                );
+
+
+            await set(
+                attendanceRef,
+                finalAttendance
+            );
+
+
+            attendanceData =
+                finalAttendance;
+
+            pendingAttendance = {};
+
+
+            connectionStatus.textContent =
+                "🟢 Attendance saved successfully for " +
+                date + ".";
+
+
+            saveButton.textContent =
+                "✅ Attendance Saved";
+
+
+            updateSummary();
+
+
+            setTimeout(
+                () => {
+
+                    saveButton.disabled = false;
+
+                    saveButton.textContent =
+                        "💾 Save Today's Attendance";
+
+                },
+                1500
+            );
+
+
+        }
+        catch(error){
+
+            console.error(error);
+
+            connectionStatus.textContent =
+                "🔴 Error saving attendance: " +
+                error.message;
+
+
+            saveButton.disabled = false;
+
+            saveButton.textContent =
+                "💾 Save Today's Attendance";
+
+            alert(
+                "Attendance could not be saved.\n\n" +
+                error.message
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   RENDER STUDENTS
+   ===================================================== */
+
+function renderStudents(){
+
+    tableBody.innerHTML = "";
+
+
+    if(kgStudents.length === 0){
+
+        emptyMessage.style.display =
+            "block";
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    emptyMessage.style.display =
+        "none";
+
+
+    kgStudents.forEach(
+        (student,index) => {
+
+            const row =
+                document.createElement("tr");
+
+
+            /*
+             * Firebase key is now the permanent ID.
+             */
+
+            const id =
+                student.firebaseKey;
+
+
+            /*
+             * Pending selection gets priority over
+             * already saved attendance.
+             */
+
+            const status =
+                pendingAttendance[id] ||
+                attendanceData[id] ||
+                "none";
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.name || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.fatherName ||
+                        student.father ||
+                        "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.grNo || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.rollNo || "—"
+                    )}
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="btn present ${
+                            status === "present"
+                            ? "active"
+                            : ""
+                        }"
+
+                        onclick="setAttendance(
+                            ${JSON.stringify(id)},
+                            'present'
+                        )"
+                    >
+                        ✅ Present
+                    </button>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="btn absent ${
+                            status === "absent"
+                            ? "active"
+                            : ""
+                        }"
+
+                        onclick="setAttendance(
+                            ${JSON.stringify(id)},
+                            'absent'
+                        )"
+                    >
+                        ❌ Absent
+                    </button>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        class="btn leave ${
+                            status === "leave"
+                            ? "active"
+                            : ""
+                        }"
+
+                        onclick="setAttendance(
+                            ${JSON.stringify(id)},
+                            'leave'
+                        )"
+                    >
+                        🟡 Leave
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+
+    updateSummary();
+
+}
+
+
+/* =====================================================
+   SUMMARY
+   ===================================================== */
+
+function updateSummary(){
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent =
+        kgStudents.length;
+
+
+    let present = 0;
+
+    let absent = 0;
+
+    let leave = 0;
+
+
+    kgStudents.forEach(
+        student => {
+
+            const id =
+                student.firebaseKey;
+
+
+            const status =
+                pendingAttendance[id] ||
+                attendanceData[id];
+
+
+            if(status === "present"){
+                present++;
+            }
+
+            else if(status === "absent"){
+                absent++;
+            }
+
+            else if(status === "leave"){
+                leave++;
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "presentStudents"
+    ).textContent =
+        present;
+
+
+    document.getElementById(
+        "absentStudents"
+    ).textContent =
+        absent;
+
+
+    document.getElementById(
+        "leaveStudents"
+    ).textContent =
+        leave;
+
+}
+
+
+/* =====================================================
+   SECURITY / DISPLAY HELPERS
+   ===================================================== */
+
+function escapeHTML(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(value);
+
+    return div.innerHTML;
+
+}
+
+</script>
+
+</body>
+</html>
+Yes. I can see the problem now. Your KG page already has the Present/Absent/Leave buttons, but the attendance system needs to be made more reliable so that:
+Select date → select status for every child → Firebase saves it → KG totals update → main Summary reads the same records.
+Your current code also has a serious issue: loadAttendance() creates a new Firebase listener every time the date changes. We can clean that up.
+Replace your entire kg-attendance.html with this
+Important: In the Firebase config, keep the real apiKey and appId from your working students.html. Do not leave YOUR_API_KEY or YOUR_APP_ID.
+HTML
+After saving, test only these 5 things
+Open KG Attendance.
+Confirm it shows 57 students.
+Select Present for one student.
+Select Absent for another and Leave for another.
+Press 💾 Save Today's Attendance.
+The KG page should then show something like:
+57 Total | 1 Present | 1 Absent | 1 Leave
+And the records will be stored under:
+attendance → KG → selected date
+One very important thing
+Your code currently contains:
+apiKey: "YOUR_API_KEY"
+appId: "YOUR_APP_ID"
+Do not use those placeholders. Copy the actual values from the Firebase config that is already working in your students.html.
+Once this KG page works, don't change anything else tonight. Then we can connect the exact same attendance structure to Class 1–5 and finally make the Summary read it.
