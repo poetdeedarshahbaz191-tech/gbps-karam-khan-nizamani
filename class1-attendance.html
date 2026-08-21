@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Class 1 Daily Attendance | GBPS Karam Khan Nizamani</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -81,8 +79,6 @@ input[type="date"]{
     font-size:16px;
 }
 
-/* CONNECTION MESSAGE */
-
 .status{
     padding:11px;
     margin-bottom:15px;
@@ -92,8 +88,6 @@ input[type="date"]{
     font-weight:bold;
     text-align:center;
 }
-
-/* SUMMARY */
 
 .summary{
     display:grid;
@@ -117,8 +111,6 @@ input[type="date"]{
     margin-bottom:5px;
 }
 
-/* SAVE */
-
 .save-box{
     text-align:center;
 }
@@ -133,16 +125,12 @@ input[type="date"]{
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
-    pointer-events:auto;
     touch-action:manipulation;
 }
 
 .save-btn:disabled{
     background:#999;
-    cursor:not-allowed;
 }
-
-/* TABLE */
 
 .table-box{
     background:white;
@@ -158,8 +146,7 @@ table{
     min-width:850px;
 }
 
-th,
-td{
+th,td{
     padding:10px 7px;
     border-bottom:1px solid #ddd;
     text-align:center;
@@ -175,37 +162,38 @@ td{
     white-space:nowrap;
 }
 
-/* =====================================================
-   ATTENDANCE BUTTONS
-===================================================== */
+/* BUTTONS */
 
 .attendance-btn{
-    position:relative;
-    z-index:10;
-    display:inline-block;
-    border:2px solid transparent;
-    padding:9px 11px;
-    border-radius:7px;
-    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    min-width:95px;
+    min-height:44px;
+
+    padding:10px 12px;
+
+    border:2px solid;
+    border-radius:8px;
+
     font-size:13px;
     font-weight:bold;
-    transition:transform .15s, box-shadow .15s;
-    min-width:95px;
-    pointer-events:auto;
-    touch-action:manipulation;
-    -webkit-tap-highlight-color:transparent;
-    user-select:none;
-}
 
-.attendance-btn:hover{
-    transform:scale(1.03);
+    cursor:pointer;
+
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:rgba(0,0,0,.15);
+
+    user-select:none;
+
+    position:relative;
+    z-index:20;
 }
 
 .attendance-btn:active{
-    transform:scale(.96);
+    transform:scale(.94);
 }
-
-/* UNSELECTED */
 
 .present-btn{
     background:#e8f5e9;
@@ -225,45 +213,29 @@ td{
     border-color:#ffcc80;
 }
 
-/* SELECTED */
-
-.attendance-btn.selected{
-    color:white;
-    transform:scale(1.04);
-    box-shadow:0 2px 6px rgba(0,0,0,.25);
-}
-
 .present-btn.selected{
     background:#2e7d32;
+    color:white;
     border-color:#1b5e20;
 }
 
 .absent-btn.selected{
     background:#c62828;
+    color:white;
     border-color:#8e0000;
 }
 
 .leave-btn.selected{
     background:#f9a825;
+    color:white;
     border-color:#f57f17;
 }
-
-/* NOT MARKED */
-
-.not-marked{
-    background:#f5f5f5;
-    color:#777;
-}
-
-/* EMPTY */
 
 .empty{
     padding:20px;
     text-align:center;
     color:#777;
 }
-
-/* FOOTER */
 
 footer{
     margin-top:30px;
@@ -273,8 +245,6 @@ footer{
     padding:20px;
     font-size:13px;
 }
-
-/* MOBILE */
 
 @media(max-width:650px){
 
@@ -291,51 +261,35 @@ footer{
     }
 
     .attendance-btn{
+        min-width:88px;
+        min-height:45px;
         padding:10px 8px;
         font-size:12px;
-        min-width:88px;
-        min-height:42px;
     }
 
     table{
         min-width:850px;
     }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
     <h1>🏫 Government Boys Primary School</h1>
-
-    <p>
-        Karam Khan Nizamani Campus
-    </p>
-
+    <p>Karam Khan Nizamani Campus</p>
 </header>
-
 
 <div class="container">
 
-    <!-- TOP BOX -->
-
     <div class="box">
 
-        <a
-            href="admin-dashboard.html"
-            class="back"
-        >
+        <a href="admin-dashboard.html" class="back">
             ← Admin Dashboard
         </a>
 
-        <h2>
-            👨‍🎓 Class 1 Daily Attendance
-        </h2>
+        <h2>👨‍🎓 Class 1 Daily Attendance</h2>
 
         <p>
             Select the attendance date and mark each Class 1 student.
@@ -355,9 +309,6 @@ footer{
         </div>
 
     </div>
-
-
-    <!-- SUMMARY -->
 
     <div class="summary">
 
@@ -383,12 +334,10 @@ footer{
 
     </div>
 
-
-    <!-- SAVE -->
-
     <div class="box save-box">
 
         <button
+            type="button"
             id="saveButton"
             class="save-btn"
             disabled
@@ -398,15 +347,9 @@ footer{
 
     </div>
 
-
-    <!-- STUDENT TABLE -->
-
     <div class="table-box">
 
-        <div
-            id="connectionStatus"
-            class="status"
-        >
+        <div id="connectionStatus" class="status">
             🟡 Connecting to Firebase...
         </div>
 
@@ -415,23 +358,14 @@ footer{
             <thead>
 
                 <tr>
-
                     <th>S. No.</th>
-
                     <th>Student Name</th>
-
                     <th>Father's Name</th>
-
                     <th>GR No.</th>
-
                     <th>Roll No.</th>
-
                     <th>Present</th>
-
                     <th>Absent</th>
-
                     <th>Leave</th>
-
                 </tr>
 
             </thead>
@@ -452,12 +386,9 @@ footer{
 
 </div>
 
-
 <footer>
 
-    <strong>
-        Government Boys Primary School
-    </strong>
+    <strong>Government Boys Primary School</strong>
 
     <br>
 
@@ -472,10 +403,6 @@ footer{
 
 <script type="module">
 
-/* =====================================================
-   FIREBASE IMPORTS
-===================================================== */
-
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
@@ -488,9 +415,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 
-/* =====================================================
-   FIREBASE CONFIGURATION
-===================================================== */
+/* ===============================
+   FIREBASE
+================================ */
 
 const firebaseConfig = {
 
@@ -517,87 +444,60 @@ const firebaseConfig = {
 
     measurementId:
         "G-KDQ1MQ16WN"
-
 };
 
 
-/* =====================================================
-   INITIALIZE FIREBASE
-===================================================== */
+const app = initializeApp(firebaseConfig);
 
-const app =
-    initializeApp(firebaseConfig);
-
-const db =
-    getDatabase(app);
+const db = getDatabase(app);
 
 
-/* =====================================================
+/* ===============================
    ELEMENTS
-===================================================== */
+================================ */
 
 const tableBody =
-    document.getElementById(
-        "studentTableBody"
-    );
+    document.getElementById("studentTableBody");
 
 const emptyMessage =
-    document.getElementById(
-        "emptyMessage"
-    );
+    document.getElementById("emptyMessage");
 
 const connectionStatus =
-    document.getElementById(
-        "connectionStatus"
-    );
+    document.getElementById("connectionStatus");
 
 const dateInput =
-    document.getElementById(
-        "attendanceDate"
-    );
+    document.getElementById("attendanceDate");
 
 const saveButton =
-    document.getElementById(
-        "saveButton"
-    );
+    document.getElementById("saveButton");
 
 
-/* =====================================================
-   LOCAL DATE
-===================================================== */
+/* ===============================
+   DATE
+================================ */
 
 function getLocalDate(){
 
     const now = new Date();
 
-    const year =
-        now.getFullYear();
-
-    const month =
-        String(
-            now.getMonth() + 1
-        ).padStart(2,"0");
-
-    const day =
-        String(
-            now.getDate()
-        ).padStart(2,"0");
-
-    return `${year}-${month}-${day}`;
-
+    return (
+        now.getFullYear() +
+        "-" +
+        String(now.getMonth()+1).padStart(2,"0") +
+        "-" +
+        String(now.getDate()).padStart(2,"0")
+    );
 }
 
 
 dateInput.value =
-    localStorage.getItem(
-        "class1AttendanceDate"
-    ) ||
+    localStorage.getItem("class1AttendanceDate") ||
     getLocalDate();
 
 
-/* =====================================================
-   DATA
-===================================================== */
+/* ===============================
+   VARIABLES
+================================ */
 
 let class1Students = [];
 
@@ -606,15 +506,12 @@ let attendanceData = {};
 let pendingAttendance = {};
 
 
-/* =====================================================
+/* ===============================
    LOAD STUDENTS
-===================================================== */
+================================ */
 
 const studentsRef =
-    ref(
-        db,
-        "students"
-    );
+    ref(db,"students");
 
 
 onValue(
@@ -623,9 +520,7 @@ onValue(
 
     function(snapshot){
 
-        const data =
-            snapshot.val();
-
+        const data = snapshot.val();
 
         if(!data){
 
@@ -637,56 +532,54 @@ onValue(
                 "🟢 Connected, but no students were found.";
 
             return;
-
         }
 
 
         class1Students =
-
             Object.entries(data)
+            .map(function([key,student]){
 
-            .map(
-                function([key,student]){
+                return {
+                    ...student,
+                    firebaseKey:key
+                };
 
-                    return {
+            })
+            .filter(function(student){
 
-                        ...student,
-
-                        firebaseKey:key
-
-                    };
-
-                }
-            )
-
-            .filter(
-                function(student){
-
-                    return String(
-                        student.className || ""
+                const classValue =
+                    String(
+                        student.className ||
+                        student.class ||
+                        ""
                     )
                     .trim()
-                    .toLowerCase()
-                    ===
-                    "class 1";
+                    .toLowerCase();
 
-                }
-            );
+                return (
+                    classValue === "class 1" ||
+                    classValue === "1" ||
+                    classValue === "class1"
+                );
 
+            });
 
-        /* SORT BY ROLL NUMBER */
 
         class1Students.sort(
             function(a,b){
 
                 const rollA =
                     parseInt(
-                        a.roll || "999999"
+                        a.roll ||
+                        a.rollNo ||
+                        "999999"
                     );
 
                 const rollB =
                     parseInt(
-                        b.roll || "999999"
+                        b.roll ||
+                        b.rollNo ||
+                        "999999"
                     );
 
                 return rollA - rollB;
@@ -718,29 +611,24 @@ onValue(
 );
 
 
-/* =====================================================
+/* ===============================
    LOAD ATTENDANCE
-===================================================== */
+================================ */
 
 function loadAttendance(){
 
     const date =
         dateInput.value;
 
-
     if(!date){
         return;
     }
 
 
-    pendingAttendance = {};
-
-
     const attendanceRef =
         ref(
             db,
-            "attendance/Class1/" +
-            date
+            "attendance/Class1/" + date
         );
 
 
@@ -757,17 +645,7 @@ function loadAttendance(){
 
             renderStudents();
 
-            saveButton.disabled =
-                false;
-
-
-            if(class1Students.length > 0){
-
-                connectionStatus.textContent =
-                    "🟢 Attendance loaded for " +
-                    date + ".";
-
-            }
+            saveButton.disabled = false;
 
         },
 
@@ -779,8 +657,7 @@ function loadAttendance(){
                 "🔴 Could not load attendance: " +
                 error.message;
 
-            saveButton.disabled =
-                true;
+            saveButton.disabled = true;
 
         },
 
@@ -793,9 +670,9 @@ function loadAttendance(){
 }
 
 
-/* =====================================================
+/* ===============================
    DATE CHANGE
-===================================================== */
+================================ */
 
 dateInput.addEventListener(
     "change",
@@ -816,24 +693,20 @@ dateInput.addEventListener(
 );
 
 
-/* =====================================================
+/* ===============================
    MARK ATTENDANCE
-===================================================== */
+================================ */
 
 function markAttendance(
     studentId,
     status
 ){
 
-    if(!dateInput.value){
-
-        alert(
-            "Please select an attendance date first."
-        );
-
-        return;
-
-    }
+    console.log(
+        "Attendance button clicked:",
+        studentId,
+        status
+    );
 
 
     pendingAttendance[studentId] =
@@ -845,9 +718,9 @@ function markAttendance(
 }
 
 
-/* =====================================================
-   RENDER STUDENTS
-===================================================== */
+/* ===============================
+   RENDER
+================================ */
 
 function renderStudents(){
 
@@ -856,28 +729,19 @@ function renderStudents(){
 
     if(class1Students.length === 0){
 
-        emptyMessage.style.display =
-            "block";
+        emptyMessage.style.display = "block";
 
         updateSummary();
 
         return;
-
     }
 
 
-    emptyMessage.style.display =
-        "none";
+    emptyMessage.style.display = "none";
 
 
     class1Students.forEach(
         function(student,index){
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
 
             const id =
                 student.firebaseKey;
@@ -889,100 +753,100 @@ function renderStudents(){
                 "none";
 
 
+            const row =
+                document.createElement("tr");
+
+
             row.innerHTML = `
 
-                <td>
-                    ${index + 1}
-                </td>
+                <td>${index + 1}</td>
 
                 <td>
                     ${escapeHTML(
-                        student.name || "—"
+                        student.name ||
+                        student.studentName ||
+                        "—"
                     )}
                 </td>
 
                 <td>
                     ${escapeHTML(
-                        student.father || "—"
+                        student.father ||
+                        student.fatherName ||
+                        "—"
                     )}
                 </td>
 
                 <td>
                     ${escapeHTML(
-                        student.grNumber || "—"
+                        student.grNumber ||
+                        student.grNo ||
+                        "—"
                     )}
                 </td>
 
                 <td>
                     ${escapeHTML(
-                        student.roll || "—"
+                        student.roll ||
+                        student.rollNo ||
+                        "—"
                     )}
                 </td>
 
-                <td>
-
-                    <button
-                        type="button"
-                        class="attendance-btn present-btn ${
-                            status === "present"
-                            ? "selected"
-                            : ""
-                        }"
-                        data-student="${escapeAttribute(id)}"
-                        data-status="present"
-                    >
-                        ${
-                            status === "present"
-                            ? "✅ Present ✓"
-                            : "✅ Present"
-                        }
-                    </button>
-
-                </td>
-
-                <td>
-
-                    <button
-                        type="button"
-                        class="attendance-btn absent-btn ${
-                            status === "absent"
-                            ? "selected"
-                            : ""
-                        }"
-                        data-student="${escapeAttribute(id)}"
-                        data-status="absent"
-                    >
-                        ${
-                            status === "absent"
-                            ? "❌ Absent ✓"
-                            : "❌ Absent"
-                        }
-                    </button>
-
-                </td>
-
-                <td>
-
-                    <button
-                        type="button"
-                        class="attendance-btn leave-btn ${
-                            status === "leave"
-                            ? "selected"
-                            : ""
-                        }"
-                        data-student="${escapeAttribute(id)}"
-                        data-status="leave"
-                    >
-                        ${
-                            status === "leave"
-                            ? "🟡 Leave ✓"
-                            : "🟡 Leave"
-                        }
-                    </button>
-
-                </td>
+                <td></td>
+                <td></td>
+                <td></td>
 
             `;
+
+
+            /* =========================
+               PRESENT BUTTON
+            ========================== */
+
+            const presentButton =
+                createAttendanceButton(
+                    "present",
+                    "✅ Present",
+                    id,
+                    status === "present"
+                );
+
+
+            /* =========================
+               ABSENT BUTTON
+            ========================== */
+
+            const absentButton =
+                createAttendanceButton(
+                    "absent",
+                    "❌ Absent",
+                    id,
+                    status === "absent"
+                );
+
+
+            /* =========================
+               LEAVE BUTTON
+            ========================== */
+
+            const leaveButton =
+                createAttendanceButton(
+                    "leave",
+                    "🟡 Leave",
+                    id,
+                    status === "leave"
+                );
+
+
+            row.children[5]
+                .appendChild(presentButton);
+
+            row.children[6]
+                .appendChild(absentButton);
+
+            row.children[7]
+                .appendChild(leaveButton);
 
 
             tableBody.appendChild(row);
@@ -996,51 +860,82 @@ function renderStudents(){
 }
 
 
-/* =====================================================
-   PERMANENT BUTTON CLICK HANDLER
-   ===================================================== */
+/* ===============================
+   CREATE BUTTON
+================================ */
 
-tableBody.addEventListener(
-    "click",
-    function(event){
+function createAttendanceButton(
+    status,
+    text,
+    studentId,
+    selected
+){
 
-        const button =
-            event.target.closest(
-                ".attendance-btn"
+    const button =
+        document.createElement("button");
+
+
+    button.type = "button";
+
+    button.className =
+        "attendance-btn " +
+        status + "-btn" +
+        (selected ? " selected" : "");
+
+
+    button.textContent =
+        selected
+        ? text + " ✓"
+        : text;
+
+
+    /*
+       IMPORTANT:
+       Direct click listener.
+    */
+
+    button.addEventListener(
+        "click",
+        function(event){
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            markAttendance(
+                studentId,
+                status
             );
 
-        if(!button){
-            return;
         }
+    );
 
 
-        event.preventDefault();
+    /*
+       Extra mobile touch support.
+    */
 
+    button.addEventListener(
+        "touchend",
+        function(event){
 
-        const studentId =
-            button.dataset.student;
+            event.preventDefault();
 
-        const status =
-            button.dataset.status;
-
-
-        if(!studentId || !status){
-            return;
+        },
+        {
+            passive:false
         }
+    );
 
 
-        markAttendance(
-            studentId,
-            status
-        );
+    return button;
 
-    }
-);
+}
 
 
-/* =====================================================
+/* ===============================
    SUMMARY
-===================================================== */
+================================ */
 
 function updateSummary(){
 
@@ -1073,11 +968,11 @@ function updateSummary(){
                 present++;
             }
 
-            else if(status === "absent"){
+            if(status === "absent"){
                 absent++;
             }
 
-            else if(status === "leave"){
+            if(status === "leave"){
                 leave++;
             }
 
@@ -1105,9 +1000,9 @@ function updateSummary(){
 }
 
 
-/* =====================================================
-   SAVE ATTENDANCE
-===================================================== */
+/* ===============================
+   SAVE
+================================ */
 
 saveButton.addEventListener(
     "click",
@@ -1124,7 +1019,6 @@ saveButton.addEventListener(
             );
 
             return;
-
         }
 
 
@@ -1135,29 +1029,20 @@ saveButton.addEventListener(
             );
 
             return;
-
         }
 
 
         const finalAttendance = {
-
             ...attendanceData,
-
             ...pendingAttendance
-
         };
 
 
         const markedCount =
-            Object.keys(
-                finalAttendance
-            ).length;
+            Object.keys(finalAttendance).length;
 
 
-        if(
-            markedCount <
-            class1Students.length
-        ){
+        if(markedCount < class1Students.length){
 
             const remaining =
                 class1Students.length -
@@ -1166,11 +1051,9 @@ saveButton.addEventListener(
 
             const answer =
                 confirm(
-
                     remaining +
-                    " student(s) have not been marked.\n\n" +
+                    " student(s) are not marked.\n\n" +
                     "Do you still want to save?"
-
                 );
 
 
@@ -1181,8 +1064,7 @@ saveButton.addEventListener(
         }
 
 
-        saveButton.disabled =
-            true;
+        saveButton.disabled = true;
 
         saveButton.textContent =
             "⏳ Saving Attendance...";
@@ -1193,8 +1075,7 @@ saveButton.addEventListener(
             const attendanceRef =
                 ref(
                     db,
-                    "attendance/Class1/" +
-                    date
+                    "attendance/Class1/" + date
                 );
 
 
@@ -1206,6 +1087,7 @@ saveButton.addEventListener(
 
             attendanceData =
                 finalAttendance;
+
 
             pendingAttendance = {};
 
@@ -1225,8 +1107,7 @@ saveButton.addEventListener(
             setTimeout(
                 function(){
 
-                    saveButton.disabled =
-                        false;
+                    saveButton.disabled = false;
 
                     saveButton.textContent =
                         "💾 Save Today's Attendance";
@@ -1241,14 +1122,12 @@ saveButton.addEventListener(
 
             console.error(error);
 
-
             connectionStatus.textContent =
                 "🔴 Error saving attendance: " +
                 error.message;
 
 
-            saveButton.disabled =
-                false;
+            saveButton.disabled = false;
 
             saveButton.textContent =
                 "💾 Save Today's Attendance";
@@ -1265,34 +1144,19 @@ saveButton.addEventListener(
 );
 
 
-/* =====================================================
-   SAFE HTML
-===================================================== */
+/* ===============================
+   SAFE TEXT
+================================ */
 
 function escapeHTML(value){
 
     const div =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     div.textContent =
         String(value);
 
-
     return div.innerHTML;
-
-}
-
-
-function escapeAttribute(value){
-
-    return String(value)
-        .replace(/&/g,"&amp;")
-        .replace(/"/g,"&quot;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;");
 
 }
 
