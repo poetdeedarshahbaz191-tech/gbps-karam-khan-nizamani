@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +7,7 @@
     <title>School Attendance Summary | GBPS Karam Khan Nizamani</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -195,219 +195,399 @@
         }
 
         @media (max-width: 650px) {
+
             .school-summary {
                 grid-template-columns: repeat(2, 1fr);
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
+
 <header>
-    <h1>🏫 Government Boys Primary School</h1>
-    <p>Karam Khan Nizamani Campus</p>
+
+    <h1>
+        🏫 Government Boys Primary School
+    </h1>
+
+    <p>
+        Karam Khan Nizamani Campus
+    </p>
+
 </header>
+
 
 <div class="container">
 
+
     <div class="top-box">
 
-        <a href="admin.html" class="back">
+
+        <a
+            href="admin.html"
+            class="back"
+        >
             ← Admin Dashboard
         </a>
 
-        <h2>📊 School Attendance Summary</h2>
+
+        <h2>
+            📊 School Attendance Summary
+        </h2>
+
 
         <p>
             View attendance totals for KG and Classes 1–5.
         </p>
 
+
         <div class="date-box">
+
 
             <label for="attendanceDate">
                 Attendance Date:
             </label>
+
 
             <input
                 type="date"
                 id="attendanceDate"
             >
 
+
         </div>
 
+
     </div>
 
-    <div id="connectionStatus" class="status">
+
+
+    <div
+        id="connectionStatus"
+        class="status"
+    >
+
         🟡 Loading student and attendance data...
+
     </div>
+
+
 
     <div class="school-summary">
 
+
         <div class="summary-box total">
-            <strong id="schoolTotal">0</strong>
+
+            <strong id="schoolTotal">
+                0
+            </strong>
+
             Total Students
+
         </div>
+
+
 
         <div class="summary-box present">
-            <strong id="schoolPresent">0</strong>
+
+            <strong id="schoolPresent">
+                0
+            </strong>
+
             Present
+
         </div>
+
+
 
         <div class="summary-box absent">
-            <strong id="schoolAbsent">0</strong>
+
+            <strong id="schoolAbsent">
+                0
+            </strong>
+
             Absent
+
         </div>
 
+
+
         <div class="summary-box leave">
-            <strong id="schoolLeave">0</strong>
+
+            <strong id="schoolLeave">
+                0
+            </strong>
+
             Leave
+
         </div>
+
 
     </div>
 
+
+
     <div class="table-box">
 
-        <h2>📚 Class-wise Attendance</h2>
+
+        <h2>
+            📚 Class-wise Attendance
+        </h2>
+
 
         <table>
+
 
             <thead>
 
                 <tr>
-                    <th>Class</th>
-                    <th>Total Students</th>
-                    <th>Present</th>
-                    <th>Absent</th>
-                    <th>Leave</th>
+
+                    <th>
+                        Class
+                    </th>
+
+                    <th>
+                        Total Students
+                    </th>
+
+                    <th>
+                        Present
+                    </th>
+
+                    <th>
+                        Absent
+                    </th>
+
+                    <th>
+                        Leave
+                    </th>
+
                 </tr>
 
             </thead>
 
+
             <tbody id="summaryTable">
 
                 <tr>
-                    <td colspan="5" class="loading">
+
+                    <td
+                        colspan="5"
+                        class="loading"
+                    >
                         Loading...
                     </td>
+
                 </tr>
 
             </tbody>
 
+
         </table>
+
 
     </div>
 
+
 </div>
 
+
+
 <footer>
-    <strong>Government Boys Primary School</strong><br>
-    Karam Khan Nizamani Campus<br><br>
+
+    <strong>
+        Government Boys Primary School
+    </strong>
+
+    <br>
+
+    Karam Khan Nizamani Campus
+
+    <br><br>
+
     © 2026 Government Boys Primary School
+
 </footer>
+
 
 
 <script type="module">
 
+
 import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
 import {
+
     getDatabase,
     ref,
     get
+
 }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 
-/* =========================================
-   FIREBASE CONFIG
-   ========================================= */
+
+// =========================================
+// FIREBASE CONFIGURATION
+// =========================================
 
 const firebaseConfig = {
 
-    apiKey: "YOUR_API_KEY",
+
+    apiKey:
+        "AIzaSyBoTtizM_SfChAAhvjmZloB-j5wCKLH4Ps",
+
 
     authDomain:
         "gbps-karam-khan-nizamani.firebaseapp.com",
 
+
     databaseURL:
         "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
 
     projectId:
         "gbps-karam-khan-nizamani",
 
+
     storageBucket:
         "gbps-karam-khan-nizamani.firebasestorage.app",
+
 
     messagingSenderId:
         "772460890400",
 
+
     appId:
-        "YOUR_APP_ID"
+        "1:772460890400:web:cf2379f4e0d21ebe476f45",
+
+
+    measurementId:
+        "G-KDQ1MQ16WN"
 
 };
 
 
+
+// =========================================
+// INITIALIZE FIREBASE
+// =========================================
+
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
+
 
 const db =
-    getDatabase(app);
+    getDatabase(
+        app
+    );
 
 
-/* =========================================
-   CLASSES
-   ========================================= */
+
+// =========================================
+// CLASSES
+// =========================================
+//
+// IMPORTANT:
+//
+// Daily attendance pages save records as:
+//
+// attendance/class1/DATE/STUDENT_ID
+//
+// attendance/kg/DATE/STUDENT_ID
+//
+// etc.
+//
 
 const classes = [
 
+
     {
         name: "👶 KG",
-        firebaseName: "KG"
+
+        firebaseName: "KG",
+
+        attendancePath: "kg"
     },
+
 
     {
         name: "1️⃣ Class 1",
-        firebaseName: "Class 1"
+
+        firebaseName: "Class 1",
+
+        attendancePath: "class1"
     },
+
 
     {
         name: "2️⃣ Class 2",
-        firebaseName: "Class 2"
+
+        firebaseName: "Class 2",
+
+        attendancePath: "class2"
     },
+
 
     {
         name: "3️⃣ Class 3",
-        firebaseName: "Class 3"
+
+        firebaseName: "Class 3",
+
+        attendancePath: "class3"
     },
+
 
     {
         name: "4️⃣ Class 4",
-        firebaseName: "Class 4"
+
+        firebaseName: "Class 4",
+
+        attendancePath: "class4"
     },
+
 
     {
         name: "5️⃣ Class 5",
-        firebaseName: "Class 5"
+
+        firebaseName: "Class 5",
+
+        attendancePath: "class5"
     }
 
 ];
 
 
-/* =========================================
-   ELEMENTS
-   ========================================= */
+
+// =========================================
+// ELEMENTS
+// =========================================
 
 const dateInput =
     document.getElementById(
         "attendanceDate"
     );
 
+
 const summaryTable =
     document.getElementById(
         "summaryTable"
     );
+
 
 const connectionStatus =
     document.getElementById(
@@ -415,178 +595,313 @@ const connectionStatus =
     );
 
 
-/* =========================================
-   TODAY
-   ========================================= */
 
-const today =
-    new Date()
-        .toISOString()
-        .split("T")[0];
+// =========================================
+// TODAY
+// =========================================
 
-dateInput.value = today;
+function getToday() {
 
 
-/* =========================================
-   LOAD SCHOOL SUMMARY
-   ========================================= */
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day
+    );
+
+}
+
+
+
+dateInput.value =
+
+    localStorage.getItem(
+        "schoolAttendanceDate"
+    ) ||
+
+    getToday();
+
+
+
+// =========================================
+// LOAD SCHOOL SUMMARY
+// =========================================
 
 async function loadSchoolSummary() {
+
 
     const date =
         dateInput.value;
 
+
     if (!date) {
+
         return;
+
     }
 
+
+
     summaryTable.innerHTML = `
+
         <tr>
-            <td colspan="5" class="loading">
+
+            <td
+                colspan="5"
+                class="loading"
+            >
+
                 🟡 Loading attendance...
+
             </td>
+
         </tr>
+
     `;
+
+
 
     connectionStatus.textContent =
         "🟡 Loading students and attendance...";
 
 
+
     try {
 
-        /* =====================================
-           LOAD ALL STUDENTS
-           ===================================== */
+
+        // =====================================
+        // LOAD ALL STUDENTS
+        // =====================================
 
         const studentsSnapshot =
+
             await get(
-                ref(db, "students")
+
+                ref(
+                    db,
+                    "students"
+                )
+
             );
 
+
         const studentsData =
+
             studentsSnapshot.val() || {};
 
 
+
         /*
-         * IMPORTANT:
-         * Keep the Firebase record key AND
-         * the student's own id/key.
+         * Keep the Firebase key.
+         *
+         * Example:
+         *
+         * students
+         * └── -OABC123
+         *
+         * attendance
+         * └── class1
+         *     └── 2026-08-21
+         *         └── -OABC123: "present"
+         *
          */
 
+
         const students =
+
             Object.entries(
                 studentsData
             ).map(
+
                 ([firebaseKey, student]) => ({
+
                     firebaseKey,
+
                     ...student
+
                 })
+
             );
 
 
+
         let schoolTotal = 0;
+
         let schoolPresent = 0;
+
         let schoolAbsent = 0;
+
         let schoolLeave = 0;
+
+
 
         const results = [];
 
 
-        /* =====================================
-           PROCESS EACH CLASS
-           ===================================== */
+
+        // =====================================
+        // PROCESS EACH CLASS
+        // =====================================
 
         for (
             const classInfo of classes
         ) {
 
-            /* =================================
-               FIND CLASS STUDENTS
-               ================================= */
+
+            // =================================
+            // FIND CLASS STUDENTS
+            // =================================
 
             const classStudents =
+
                 students.filter(
+
                     student => {
 
+
                         const studentClass =
+
                             String(
-                                student.class ||
+
                                 student.className ||
+
+                                student.class ||
+
                                 ""
+
                             )
                             .trim()
                             .toUpperCase();
 
+
+
                         return (
+
                             studentClass ===
+
                             classInfo.firebaseName
                                 .toUpperCase()
+
                         );
 
                     }
+
                 );
+
 
 
             const total =
+
                 classStudents.length;
 
 
-            /* =================================
-               LOAD ATTENDANCE
-               ================================= */
 
-            const attendanceRef =
-                ref(
-                    db,
-                    "attendance/" +
-                    classInfo.firebaseName +
-                    "/" +
-                    date
-                );
+            // =================================
+            // ATTENDANCE PATH
+            // =================================
 
+            const attendancePath =
+
+                "attendance/" +
+
+                classInfo.attendancePath +
+
+                "/" +
+
+                date;
+
+
+
+            // =================================
+            // LOAD ATTENDANCE
+            // =================================
 
             const attendanceSnapshot =
+
                 await get(
-                    attendanceRef
+
+                    ref(
+                        db,
+                        attendancePath
+                    )
+
                 );
+
 
 
             const attendanceData =
+
                 attendanceSnapshot.val() || {};
 
 
+
             let present = 0;
+
             let absent = 0;
+
             let leave = 0;
 
 
-            /* =================================
-               MATCH STUDENT ID
-               SAME METHOD AS KG PAGE
-               ================================= */
+
+            // =================================
+            // MATCH STUDENT FIREBASE KEY
+            // =================================
 
             classStudents.forEach(
-                (student, index) => {
+
+                student => {
+
 
                     const studentId =
-                        student.id ||
-                        student.key ||
-                        student.grNo ||
-                        student.firebaseKey ||
-                        String(index);
+
+                        student.firebaseKey;
+
 
 
                     const status =
-                        attendanceData[
-                            studentId
-                        ];
+
+                        String(
+
+                            attendanceData[
+                                studentId
+                            ] || ""
+
+                        )
+                        .trim()
+                        .toLowerCase();
+
 
 
                     if (
-                        String(status)
-                            .toLowerCase()
-                            .trim()
-                            === "present"
+                        status === "present"
                     ) {
 
                         present++;
@@ -594,11 +909,8 @@ async function loadSchoolSummary() {
                     }
 
 
-                    if (
-                        String(status)
-                            .toLowerCase()
-                            .trim()
-                            === "absent"
+                    else if (
+                        status === "absent"
                     ) {
 
                         absent++;
@@ -606,11 +918,8 @@ async function loadSchoolSummary() {
                     }
 
 
-                    if (
-                        String(status)
-                            .toLowerCase()
-                            .trim()
-                            === "leave"
+                    else if (
+                        status === "leave"
                     ) {
 
                         leave++;
@@ -618,14 +927,35 @@ async function loadSchoolSummary() {
                     }
 
                 }
+
             );
 
 
-            schoolTotal += total;
-            schoolPresent += present;
-            schoolAbsent += absent;
-            schoolLeave += leave;
 
+            // =================================
+            // SCHOOL TOTALS
+            // =================================
+
+            schoolTotal +=
+                total;
+
+
+            schoolPresent +=
+                present;
+
+
+            schoolAbsent +=
+                absent;
+
+
+            schoolLeave +=
+                leave;
+
+
+
+            // =================================
+            // RESULT
+            // =================================
 
             results.push({
 
@@ -646,34 +976,42 @@ async function loadSchoolSummary() {
 
             });
 
+
         }
 
 
-        /* =====================================
-           DISPLAY CLASS RESULTS
-           ===================================== */
 
-        displayResults(results);
+        // =====================================
+        // DISPLAY CLASS RESULTS
+        // =====================================
+
+        displayResults(
+            results
+        );
 
 
-        /* =====================================
-           DISPLAY SCHOOL TOTALS
-           ===================================== */
+
+        // =====================================
+        // DISPLAY SCHOOL TOTALS
+        // =====================================
 
         document.getElementById(
             "schoolTotal"
         ).textContent =
             schoolTotal;
 
+
         document.getElementById(
             "schoolPresent"
         ).textContent =
             schoolPresent;
 
+
         document.getElementById(
             "schoolAbsent"
         ).textContent =
             schoolAbsent;
+
 
         document.getElementById(
             "schoolLeave"
@@ -681,27 +1019,44 @@ async function loadSchoolSummary() {
             schoolLeave;
 
 
+
         connectionStatus.textContent =
+
             "🟢 Connected. Attendance summary loaded from Firebase.";
+
 
     }
 
+
     catch (error) {
 
+
         console.error(
-            "Attendance summary error:",
+            "Attendance Summary Error:",
             error
         );
 
+
         connectionStatus.textContent =
+
             "🔴 Unable to load attendance data from Firebase.";
 
+
         summaryTable.innerHTML = `
+
             <tr>
-                <td colspan="5" class="loading">
-                    Error loading attendance data.
+
+                <td
+                    colspan="5"
+                    class="loading"
+                >
+
+                    ❌ Error loading attendance data.
+
                 </td>
+
             </tr>
+
         `;
 
     }
@@ -709,120 +1064,191 @@ async function loadSchoolSummary() {
 }
 
 
-/* =========================================
-   DISPLAY RESULTS
-   ========================================= */
+
+// =========================================
+// DISPLAY RESULTS
+// =========================================
 
 function displayResults(results) {
+
 
     summaryTable.innerHTML = "";
 
 
+
     results.forEach(
+
         result => {
 
+
             const row =
-                document.createElement("tr");
+
+                document.createElement(
+                    "tr"
+                );
+
 
 
             row.innerHTML = `
 
                 <td class="class-name">
+
                     ${result.name}
+
                 </td>
+
 
                 <td>
+
                     ${result.total}
+
                 </td>
+
 
                 <td class="present-number">
+
                     ${result.present}
+
                 </td>
+
 
                 <td class="absent-number">
+
                     ${result.absent}
+
                 </td>
 
+
                 <td class="leave-number">
+
                     ${result.leave}
+
                 </td>
 
             `;
 
 
-            summaryTable.appendChild(row);
+
+            summaryTable.appendChild(
+                row
+            );
 
         }
+
     );
 
 
-    /* =====================================
-       ALL CLASSES
-       ===================================== */
+
+    // =====================================
+    // ALL CLASSES TOTAL
+    // =====================================
 
     const total =
+
         results.reduce(
+
             (sum, item) =>
+
                 sum + item.total,
+
             0
+
         );
+
 
 
     const present =
+
         results.reduce(
+
             (sum, item) =>
+
                 sum + item.present,
+
             0
+
         );
+
 
 
     const absent =
+
         results.reduce(
+
             (sum, item) =>
+
                 sum + item.absent,
+
             0
+
         );
+
 
 
     const leave =
+
         results.reduce(
+
             (sum, item) =>
+
                 sum + item.leave,
+
             0
+
         );
 
 
+
     const totalRow =
-        document.createElement("tr");
+
+        document.createElement(
+            "tr"
+        );
 
 
     totalRow.className =
         "grand-total";
 
 
+
     totalRow.innerHTML = `
 
         <td class="class-name">
+
             🏫 ALL CLASSES
+
         </td>
+
 
         <td>
+
             ${total}
+
         </td>
+
 
         <td class="present-number">
+
             ${present}
+
         </td>
+
 
         <td class="absent-number">
+
             ${absent}
+
         </td>
 
+
         <td class="leave-number">
+
             ${leave}
+
         </td>
 
     `;
+
 
 
     summaryTable.appendChild(
@@ -832,23 +1258,40 @@ function displayResults(results) {
 }
 
 
-/* =========================================
-   DATE CHANGE
-   ========================================= */
+
+// =========================================
+// DATE CHANGE
+// =========================================
 
 dateInput.addEventListener(
+
     "change",
-    loadSchoolSummary
+
+    function() {
+
+
+        localStorage.setItem(
+
+            "schoolAttendanceDate",
+
+            this.value
+
+        );
+
+
+        loadSchoolSummary();
+
+    }
+
 );
 
 
-/* =========================================
-   START
-   ========================================= */
+
+// =========================================
+// START
+// =========================================
 
 loadSchoolSummary();
 
-</script>
 
-</body>
-</html>
+</script>
