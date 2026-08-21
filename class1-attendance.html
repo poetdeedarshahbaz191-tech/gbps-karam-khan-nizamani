@@ -133,6 +133,8 @@ input[type="date"]{
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
+    pointer-events:auto;
+    touch-action:manipulation;
 }
 
 .save-btn:disabled{
@@ -173,24 +175,37 @@ td{
     white-space:nowrap;
 }
 
-/* ATTENDANCE BUTTONS */
+/* =====================================================
+   ATTENDANCE BUTTONS
+===================================================== */
 
 .attendance-btn{
+    position:relative;
+    z-index:10;
+    display:inline-block;
     border:2px solid transparent;
     padding:9px 11px;
     border-radius:7px;
     cursor:pointer;
     font-size:13px;
     font-weight:bold;
-    transition:.15s;
+    transition:transform .15s, box-shadow .15s;
     min-width:95px;
+    pointer-events:auto;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+}
+
+.attendance-btn:hover{
+    transform:scale(1.03);
 }
 
 .attendance-btn:active{
     transform:scale(.96);
 }
 
-/* UNSELECTED BUTTONS */
+/* UNSELECTED */
 
 .present-btn{
     background:#e8f5e9;
@@ -210,7 +225,7 @@ td{
     border-color:#ffcc80;
 }
 
-/* SELECTED BUTTON */
+/* SELECTED */
 
 .attendance-btn.selected{
     color:white;
@@ -279,6 +294,7 @@ footer{
         padding:10px 8px;
         font-size:12px;
         min-width:88px;
+        min-height:42px;
     }
 
     table{
@@ -479,7 +495,7 @@ import {
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyBoTtizM_SfChAAhvjmZloB-j5wCKLH4Ps",
+        "AIzaSy0TboTizM_SfChAAhvjmZloB-j5wCKLH4Ps",
 
     authDomain:
         "gbps-karam-khan-nizamani.firebaseapp.com",
@@ -589,10 +605,6 @@ let attendanceData = {};
 
 let pendingAttendance = {};
 
-let studentsLoaded = false;
-
-let attendanceLoaded = false;
-
 
 /* =====================================================
    LOAD STUDENTS
@@ -618,8 +630,6 @@ onValue(
         if(!data){
 
             class1Students = [];
-
-            studentsLoaded = true;
 
             renderStudents();
 
@@ -685,9 +695,6 @@ onValue(
         );
 
 
-        studentsLoaded = true;
-
-
         connectionStatus.textContent =
             "🟢 Connected. " +
             class1Students.length +
@@ -712,7 +719,7 @@ onValue(
 
 
 /* =====================================================
-   LOAD ATTENDANCE FOR SELECTED DATE
+   LOAD ATTENDANCE
 ===================================================== */
 
 function loadAttendance(){
@@ -725,8 +732,6 @@ function loadAttendance(){
         return;
     }
 
-
-    attendanceLoaded = false;
 
     pendingAttendance = {};
 
@@ -748,14 +753,9 @@ function loadAttendance(){
             attendanceData =
                 snapshot.val() || {};
 
-
-            attendanceLoaded = true;
-
             pendingAttendance = {};
 
-
             renderStudents();
-
 
             saveButton.disabled =
                 false;
@@ -806,11 +806,9 @@ dateInput.addEventListener(
             this.value
         );
 
-
         attendanceData = {};
 
         pendingAttendance = {};
-
 
         loadAttendance();
 
@@ -885,13 +883,6 @@ function renderStudents(){
                 student.firebaseKey;
 
 
-            /*
-             * IMPORTANT:
-             * No default status.
-             * If the student has not been
-             * marked, status is "none".
-             */
-
             const status =
                 pendingAttendance[id] ??
                 attendanceData[id] ??
@@ -928,7 +919,6 @@ function renderStudents(){
                     )}
                 </td>
 
-
                 <td>
 
                     <button
@@ -950,7 +940,6 @@ function renderStudents(){
 
                 </td>
 
-
                 <td>
 
                     <button
@@ -971,7 +960,6 @@ function renderStudents(){
                     </button>
 
                 </td>
-
 
                 <td>
 
@@ -1003,46 +991,51 @@ function renderStudents(){
     );
 
 
-    /*
-     * Attach real click events
-     * AFTER the rows are created.
-     */
-
-    const buttons =
-        tableBody.querySelectorAll(
-            ".attendance-btn"
-        );
-
-
-    buttons.forEach(
-        function(button){
-
-            button.addEventListener(
-                "click",
-                function(){
-
-                    const studentId =
-                        this.dataset.student;
-
-                    const status =
-                        this.dataset.status;
-
-
-                    markAttendance(
-                        studentId,
-                        status
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
     updateSummary();
 
 }
+
+
+/* =====================================================
+   PERMANENT BUTTON CLICK HANDLER
+   ===================================================== */
+
+tableBody.addEventListener(
+    "click",
+    function(event){
+
+        const button =
+            event.target.closest(
+                ".attendance-btn"
+            );
+
+        if(!button){
+            return;
+        }
+
+
+        event.preventDefault();
+
+
+        const studentId =
+            button.dataset.student;
+
+        const status =
+            button.dataset.status;
+
+
+        if(!studentId || !status){
+            return;
+        }
+
+
+        markAttendance(
+            studentId,
+            status
+        );
+
+    }
+);
 
 
 /* =====================================================
@@ -1191,7 +1184,6 @@ saveButton.addEventListener(
         saveButton.disabled =
             true;
 
-
         saveButton.textContent =
             "⏳ Saving Attendance...";
 
@@ -1214,7 +1206,6 @@ saveButton.addEventListener(
 
             attendanceData =
                 finalAttendance;
-
 
             pendingAttendance = {};
 
@@ -1258,7 +1249,6 @@ saveButton.addEventListener(
 
             saveButton.disabled =
                 false;
-
 
             saveButton.textContent =
                 "💾 Save Today's Attendance";
