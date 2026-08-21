@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -238,7 +239,7 @@
     </div>
 
     <div id="connectionStatus" class="status">
-        🟡 Loading attendance data...
+        🟡 Loading student and attendance data...
     </div>
 
     <!-- SCHOOL TOTALS -->
@@ -267,8 +268,7 @@
 
     </div>
 
-
-    <!-- CLASS-BY-CLASS TABLE -->
+    <!-- CLASS TABLE -->
 
     <div class="table-box">
 
@@ -304,7 +304,6 @@
 
 </div>
 
-
 <footer>
     <strong>Government Boys Primary School</strong><br>
     Karam Khan Nizamani Campus<br><br>
@@ -327,7 +326,7 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 /* =========================================
    FIREBASE CONFIG
-   USE THE SAME CONFIG AS YOUR OTHER PAGES
+   USE YOUR REAL CONFIG
    ========================================= */
 
 const firebaseConfig = {
@@ -349,7 +348,8 @@ const firebaseConfig = {
     messagingSenderId:
         "772460890400",
 
-    appId: "YOUR_APP_ID"
+    appId:
+        "YOUR_APP_ID"
 
 };
 
@@ -422,7 +422,7 @@ const connectionStatus =
 
 
 /* =========================================
-   TODAY
+   TODAY'S DATE
    ========================================= */
 
 const today =
@@ -456,18 +456,87 @@ async function loadSchoolSummary() {
     `;
 
 
-    let schoolTotal = 0;
-    let schoolPresent = 0;
-    let schoolAbsent = 0;
-    let schoolLeave = 0;
-
-
-    const results = [];
-
-
     try {
 
-        for (const classInfo of classes) {
+        /*
+         * FIRST:
+         * Load ALL students.
+         */
+
+        const studentsSnapshot =
+            await get(
+                ref(db, "students")
+            );
+
+
+        const studentsData =
+            studentsSnapshot.val() || {};
+
+
+        /*
+         * Convert Firebase object
+         * into an array while keeping
+         * the Firebase student ID.
+         */
+
+        const students =
+            Object.entries(
+                studentsData
+            )
+            .map(
+                ([id, student]) => ({
+                    id,
+                    ...student
+                })
+            );
+
+
+        let schoolTotal = 0;
+        let schoolPresent = 0;
+        let schoolAbsent = 0;
+        let schoolLeave = 0;
+
+
+        const results = [];
+
+
+        /*
+         * PROCESS EACH CLASS
+         */
+
+        for (
+            const classInfo of classes
+        ) {
+
+
+            /*
+             * FIND STUDENTS IN THIS CLASS
+             */
+
+            const classStudents =
+                students.filter(
+                    student =>
+
+                        String(
+                            student.className || ""
+                        )
+                        .trim()
+                        .toUpperCase()
+
+                        ===
+
+                        classInfo.firebaseName
+                            .toUpperCase()
+                );
+
+
+            const total =
+                classStudents.length;
+
+
+            /*
+             * LOAD ATTENDANCE
+             */
 
             const attendanceRef =
                 ref(
@@ -479,12 +548,14 @@ async function loadSchoolSummary() {
                 );
 
 
-            const snapshot =
-                await get(attendanceRef);
+            const attendanceSnapshot =
+                await get(
+                    attendanceRef
+                );
 
 
-            const data =
-                snapshot.val() || {};
+            const attendanceData =
+                attendanceSnapshot.val() || {};
 
 
             let present = 0;
@@ -492,58 +563,85 @@ async function loadSchoolSummary() {
             let leave = 0;
 
 
-            Object.values(data).forEach(
-                status => {
+            /*
+             * COUNT ATTENDANCE ONLY
+             * FOR STUDENTS WHO BELONG
+             * TO THIS CLASS.
+             */
 
-                    if (status === "present") {
+            classStudents.forEach(
+                student => {
+
+                    const status =
+                        attendanceData[
+                            student.id
+                        ];
+
+
+                    if (
+                        status === "present"
+                    ) {
+
                         present++;
+
                     }
 
-                    if (status === "absent") {
+
+                    if (
+                        status === "absent"
+                    ) {
+
                         absent++;
+
                     }
 
-                    if (status === "leave") {
+
+                    if (
+                        status === "leave"
+                    ) {
+
                         leave++;
+
                     }
 
                 }
             );
 
 
-            /*
-             * Students with an attendance record
-             * are counted here.
-             */
-
-            const total =
-                present +
-                absent +
-                leave;
-
-
             schoolTotal += total;
+
             schoolPresent += present;
+
             schoolAbsent += absent;
+
             schoolLeave += leave;
 
 
             results.push({
 
-                name: classInfo.name,
+                name:
+                    classInfo.name,
 
-                total: total,
+                total:
+                    total,
 
-                present: present,
+                present:
+                    present,
 
-                absent: absent,
+                absent:
+                    absent,
 
-                leave: leave
+                leave:
+                    leave
 
             });
 
         }
 
+
+        /*
+         * DISPLAY RESULTS
+         */
 
         displayResults(results);
 
@@ -573,15 +671,20 @@ async function loadSchoolSummary() {
 
 
         connectionStatus.textContent =
-            "🟢 Connected. Attendance summary loaded from Firebase.";
+            "🟢 Connected. Student and attendance summary loaded from Firebase.";
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Attendance summary error:",
+            error
+        );
+
 
         connectionStatus.textContent =
-            "🔴 Unable to load attendance from Firebase.";
+            "🔴 Unable to load data from Firebase.";
+
 
         summaryTable.innerHTML = `
             <tr>
@@ -597,7 +700,7 @@ async function loadSchoolSummary() {
 
 
 /* =========================================
-   DISPLAY CLASS RESULTS
+   DISPLAY RESULTS
    ========================================= */
 
 function displayResults(results) {
@@ -605,43 +708,47 @@ function displayResults(results) {
     summaryTable.innerHTML = "";
 
 
-    results.forEach(result => {
+    results.forEach(
+        result => {
 
-        const row =
-            document.createElement("tr");
-
-
-        row.innerHTML = `
-
-            <td class="class-name">
-                ${result.name}
-            </td>
-
-            <td>
-                ${result.total}
-            </td>
-
-            <td class="present-number">
-                ${result.present}
-            </td>
-
-            <td class="absent-number">
-                ${result.absent}
-            </td>
-
-            <td class="leave-number">
-                ${result.leave}
-            </td>
-
-        `;
+            const row =
+                document.createElement("tr");
 
 
-        summaryTable.appendChild(row);
+            row.innerHTML = `
 
-    });
+                <td class="class-name">
+                    ${result.name}
+                </td>
+
+                <td>
+                    ${result.total}
+                </td>
+
+                <td class="present-number">
+                    ${result.present}
+                </td>
+
+                <td class="absent-number">
+                    ${result.absent}
+                </td>
+
+                <td class="leave-number">
+                    ${result.leave}
+                </td>
+
+            `;
 
 
-    /* GRAND TOTAL */
+            summaryTable.appendChild(row);
+
+        }
+    );
+
+
+    /*
+     * GRAND TOTAL
+     */
 
     const total =
         results.reduce(
@@ -708,7 +815,9 @@ function displayResults(results) {
     `;
 
 
-    summaryTable.appendChild(totalRow);
+    summaryTable.appendChild(
+        totalRow
+    );
 
 }
 
