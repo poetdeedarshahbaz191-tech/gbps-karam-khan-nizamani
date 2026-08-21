@@ -1024,25 +1024,4 @@ function escapeHTML(value){
 
 </body>
 </html>
-Yes. I can see the problem now. Your KG page already has the Present/Absent/Leave buttons, but the attendance system needs to be made more reliable so that:
-Select date → select status for every child → Firebase saves it → KG totals update → main Summary reads the same records.
-Your current code also has a serious issue: loadAttendance() creates a new Firebase listener every time the date changes. We can clean that up.
-Replace your entire kg-attendance.html with this
-Important: In the Firebase config, keep the real apiKey and appId from your working students.html. Do not leave YOUR_API_KEY or YOUR_APP_ID.
-HTML
-After saving, test only these 5 things
-Open KG Attendance.
-Confirm it shows 57 students.
-Select Present for one student.
-Select Absent for another and Leave for another.
-Press 💾 Save Today's Attendance.
-The KG page should then show something like:
-57 Total | 1 Present | 1 Absent | 1 Leave
-And the records will be stored under:
-attendance → KG → selected date
-One very important thing
-Your code currently contains:
-apiKey: "YOUR_API_KEY"
-appId: "YOUR_APP_ID"
-Do not use those placeholders. Copy the actual values from the Firebase config that is already working in your students.html.
-Once this KG page works, don't change anything else tonight. Then we can connect the exact same attendance structure to Class 1–5 and finally make the Summary read it.
+
