@@ -81,6 +81,8 @@ input[type="date"]{
     font-size:16px;
 }
 
+/* CONNECTION MESSAGE */
+
 .status{
     padding:11px;
     margin-bottom:15px;
@@ -90,6 +92,8 @@ input[type="date"]{
     font-weight:bold;
     text-align:center;
 }
+
+/* SUMMARY */
 
 .summary{
     display:grid;
@@ -113,6 +117,8 @@ input[type="date"]{
     margin-bottom:5px;
 }
 
+/* SAVE */
+
 .save-box{
     text-align:center;
 }
@@ -133,6 +139,8 @@ input[type="date"]{
     background:#999;
     cursor:not-allowed;
 }
+
+/* TABLE */
 
 .table-box{
     background:white;
@@ -165,38 +173,82 @@ td{
     white-space:nowrap;
 }
 
-.btn{
-    border:none;
-    padding:8px 11px;
-    border-radius:6px;
+/* ATTENDANCE BUTTONS */
+
+.attendance-btn{
+    border:2px solid transparent;
+    padding:9px 11px;
+    border-radius:7px;
     cursor:pointer;
-    color:white;
     font-size:13px;
     font-weight:bold;
+    transition:.15s;
+    min-width:95px;
 }
 
-.present{
+.attendance-btn:active{
+    transform:scale(.96);
+}
+
+/* UNSELECTED BUTTONS */
+
+.present-btn{
+    background:#e8f5e9;
+    color:#2e7d32;
+    border-color:#81c784;
+}
+
+.absent-btn{
+    background:#ffebee;
+    color:#c62828;
+    border-color:#ef9a9a;
+}
+
+.leave-btn{
+    background:#fff8e1;
+    color:#f57f17;
+    border-color:#ffcc80;
+}
+
+/* SELECTED BUTTON */
+
+.attendance-btn.selected{
+    color:white;
+    transform:scale(1.04);
+    box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+
+.present-btn.selected{
     background:#2e7d32;
+    border-color:#1b5e20;
 }
 
-.absent{
+.absent-btn.selected{
     background:#c62828;
+    border-color:#8e0000;
 }
 
-.leave{
+.leave-btn.selected{
     background:#f9a825;
+    border-color:#f57f17;
 }
 
-.btn.active{
-    outline:3px solid #222;
-    transform:scale(1.05);
+/* NOT MARKED */
+
+.not-marked{
+    background:#f5f5f5;
+    color:#777;
 }
+
+/* EMPTY */
 
 .empty{
     padding:20px;
     text-align:center;
     color:#777;
 }
+
+/* FOOTER */
 
 footer{
     margin-top:30px;
@@ -206,6 +258,8 @@ footer{
     padding:20px;
     font-size:13px;
 }
+
+/* MOBILE */
 
 @media(max-width:650px){
 
@@ -221,9 +275,14 @@ footer{
         padding:15px;
     }
 
-    .btn{
-        padding:8px 9px;
+    .attendance-btn{
+        padding:10px 8px;
         font-size:12px;
+        min-width:88px;
+    }
+
+    table{
+        min-width:850px;
     }
 
 }
@@ -232,9 +291,7 @@ footer{
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -249,7 +306,6 @@ footer{
 
 <div class="container">
 
-
     <!-- TOP BOX -->
 
     <div class="box">
@@ -261,23 +317,19 @@ footer{
             ← Admin Dashboard
         </a>
 
-
         <h2>
             👨‍🎓 Class 1 Daily Attendance
         </h2>
 
-
         <p>
             Select the attendance date and mark each Class 1 student.
         </p>
-
 
         <div class="date-box">
 
             <label for="attendanceDate">
                 Attendance Date:
             </label>
-
 
             <input
                 type="date"
@@ -289,58 +341,31 @@ footer{
     </div>
 
 
-
     <!-- SUMMARY -->
 
     <div class="summary">
 
-
         <div class="summary-box">
-
-            <strong id="totalStudents">
-                0
-            </strong>
-
+            <strong id="totalStudents">0</strong>
             Total Students
-
         </div>
 
-
         <div class="summary-box">
-
-            <strong id="presentStudents">
-                0
-            </strong>
-
+            <strong id="presentStudents">0</strong>
             Present
-
         </div>
 
-
         <div class="summary-box">
-
-            <strong id="absentStudents">
-                0
-            </strong>
-
+            <strong id="absentStudents">0</strong>
             Absent
-
         </div>
-
 
         <div class="summary-box">
-
-            <strong id="leaveStudents">
-                0
-            </strong>
-
+            <strong id="leaveStudents">0</strong>
             Leave
-
         </div>
-
 
     </div>
-
 
 
     <!-- SAVE -->
@@ -358,11 +383,9 @@ footer{
     </div>
 
 
-
     <!-- STUDENT TABLE -->
 
     <div class="table-box">
-
 
         <div
             id="connectionStatus"
@@ -371,59 +394,35 @@ footer{
             🟡 Connecting to Firebase...
         </div>
 
-
         <table>
-
 
             <thead>
 
                 <tr>
 
-                    <th>
-                        S. No.
-                    </th>
+                    <th>S. No.</th>
 
-                    <th>
-                        Student Name
-                    </th>
+                    <th>Student Name</th>
 
-                    <th>
-                        Father's Name
-                    </th>
+                    <th>Father's Name</th>
 
-                    <th>
-                        GR No.
-                    </th>
+                    <th>GR No.</th>
 
-                    <th>
-                        Roll No.
-                    </th>
+                    <th>Roll No.</th>
 
-                    <th>
-                        Present
-                    </th>
+                    <th>Present</th>
 
-                    <th>
-                        Absent
-                    </th>
+                    <th>Absent</th>
 
-                    <th>
-                        Leave
-                    </th>
+                    <th>Leave</th>
 
                 </tr>
 
             </thead>
 
-
-            <tbody
-                id="studentTableBody"
-            >
-            </tbody>
-
+            <tbody id="studentTableBody"></tbody>
 
         </table>
-
 
         <div
             id="emptyMessage"
@@ -433,12 +432,9 @@ footer{
             No Class 1 students found.
         </div>
 
-
     </div>
 
-
 </div>
-
 
 
 <footer>
@@ -458,9 +454,7 @@ footer{
 </footer>
 
 
-
 <script type="module">
-
 
 /* =====================================================
    FIREBASE IMPORTS
@@ -470,14 +464,12 @@ import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-
 import {
     getDatabase,
     ref,
     onValue,
     set
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
-
 
 
 /* =====================================================
@@ -513,7 +505,6 @@ const firebaseConfig = {
 };
 
 
-
 /* =====================================================
    INITIALIZE FIREBASE
 ===================================================== */
@@ -525,7 +516,6 @@ const db =
     getDatabase(app);
 
 
-
 /* =====================================================
    ELEMENTS
 ===================================================== */
@@ -535,30 +525,25 @@ const tableBody =
         "studentTableBody"
     );
 
-
 const emptyMessage =
     document.getElementById(
         "emptyMessage"
     );
-
 
 const connectionStatus =
     document.getElementById(
         "connectionStatus"
     );
 
-
 const dateInput =
     document.getElementById(
         "attendanceDate"
     );
 
-
 const saveButton =
     document.getElementById(
         "saveButton"
     );
-
 
 
 /* =====================================================
@@ -567,8 +552,7 @@ const saveButton =
 
 function getLocalDate(){
 
-    const now =
-        new Date();
+    const now = new Date();
 
     const year =
         now.getFullYear();
@@ -583,13 +567,7 @@ function getLocalDate(){
             now.getDate()
         ).padStart(2,"0");
 
-    return (
-        year +
-        "-" +
-        month +
-        "-" +
-        day
-    );
+    return `${year}-${month}-${day}`;
 
 }
 
@@ -599,7 +577,6 @@ dateInput.value =
         "class1AttendanceDate"
     ) ||
     getLocalDate();
-
 
 
 /* =====================================================
@@ -617,9 +594,8 @@ let studentsLoaded = false;
 let attendanceLoaded = false;
 
 
-
 /* =====================================================
-   STUDENTS
+   LOAD STUDENTS
 ===================================================== */
 
 const studentsRef =
@@ -735,9 +711,8 @@ onValue(
 );
 
 
-
 /* =====================================================
-   LOAD ATTENDANCE
+   LOAD ATTENDANCE FOR SELECTED DATE
 ===================================================== */
 
 function loadAttendance(){
@@ -818,7 +793,6 @@ function loadAttendance(){
 }
 
 
-
 /* =====================================================
    DATE CHANGE
 ===================================================== */
@@ -844,13 +818,11 @@ dateInput.addEventListener(
 );
 
 
-
 /* =====================================================
-   SELECT ATTENDANCE
+   MARK ATTENDANCE
 ===================================================== */
 
-window.setAttendance =
-function(
+function markAttendance(
     studentId,
     status
 ){
@@ -866,16 +838,278 @@ function(
     }
 
 
-    pendingAttendance[
-        studentId
-    ] =
+    pendingAttendance[studentId] =
         status;
 
 
     renderStudents();
 
-};
+}
 
+
+/* =====================================================
+   RENDER STUDENTS
+===================================================== */
+
+function renderStudents(){
+
+    tableBody.innerHTML = "";
+
+
+    if(class1Students.length === 0){
+
+        emptyMessage.style.display =
+            "block";
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+    emptyMessage.style.display =
+        "none";
+
+
+    class1Students.forEach(
+        function(student,index){
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const id =
+                student.firebaseKey;
+
+
+            /*
+             * IMPORTANT:
+             * No default status.
+             * If the student has not been
+             * marked, status is "none".
+             */
+
+            const status =
+                pendingAttendance[id] ??
+                attendanceData[id] ??
+                "none";
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.name || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.father || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.grNumber || "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.roll || "—"
+                    )}
+                </td>
+
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="attendance-btn present-btn ${
+                            status === "present"
+                            ? "selected"
+                            : ""
+                        }"
+                        data-student="${escapeAttribute(id)}"
+                        data-status="present"
+                    >
+                        ${
+                            status === "present"
+                            ? "✅ Present ✓"
+                            : "✅ Present"
+                        }
+                    </button>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="attendance-btn absent-btn ${
+                            status === "absent"
+                            ? "selected"
+                            : ""
+                        }"
+                        data-student="${escapeAttribute(id)}"
+                        data-status="absent"
+                    >
+                        ${
+                            status === "absent"
+                            ? "❌ Absent ✓"
+                            : "❌ Absent"
+                        }
+                    </button>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="attendance-btn leave-btn ${
+                            status === "leave"
+                            ? "selected"
+                            : ""
+                        }"
+                        data-student="${escapeAttribute(id)}"
+                        data-status="leave"
+                    >
+                        ${
+                            status === "leave"
+                            ? "🟡 Leave ✓"
+                            : "🟡 Leave"
+                        }
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+
+    /*
+     * Attach real click events
+     * AFTER the rows are created.
+     */
+
+    const buttons =
+        tableBody.querySelectorAll(
+            ".attendance-btn"
+        );
+
+
+    buttons.forEach(
+        function(button){
+
+            button.addEventListener(
+                "click",
+                function(){
+
+                    const studentId =
+                        this.dataset.student;
+
+                    const status =
+                        this.dataset.status;
+
+
+                    markAttendance(
+                        studentId,
+                        status
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    updateSummary();
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function updateSummary(){
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent =
+        class1Students.length;
+
+
+    let present = 0;
+
+    let absent = 0;
+
+    let leave = 0;
+
+
+    class1Students.forEach(
+        function(student){
+
+            const id =
+                student.firebaseKey;
+
+
+            const status =
+                pendingAttendance[id] ??
+                attendanceData[id];
+
+
+            if(status === "present"){
+                present++;
+            }
+
+            else if(status === "absent"){
+                absent++;
+            }
+
+            else if(status === "leave"){
+                leave++;
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "presentStudents"
+    ).textContent =
+        present;
+
+
+    document.getElementById(
+        "absentStudents"
+    ).textContent =
+        absent;
+
+
+    document.getElementById(
+        "leaveStudents"
+    ).textContent =
+        leave;
+
+}
 
 
 /* =====================================================
@@ -964,7 +1198,6 @@ saveButton.addEventListener(
 
         try{
 
-
             const attendanceRef =
                 ref(
                     db,
@@ -995,7 +1228,7 @@ saveButton.addEventListener(
                 "✅ Attendance Saved";
 
 
-            updateSummary();
+            renderStudents();
 
 
             setTimeout(
@@ -1011,8 +1244,8 @@ saveButton.addEventListener(
                 1500
             );
 
-
         }
+
         catch(error){
 
             console.error(error);
@@ -1042,229 +1275,6 @@ saveButton.addEventListener(
 );
 
 
-
-/* =====================================================
-   RENDER STUDENTS
-===================================================== */
-
-function renderStudents(){
-
-    tableBody.innerHTML = "";
-
-
-    if(class1Students.length === 0){
-
-        emptyMessage.style.display =
-            "block";
-
-        updateSummary();
-
-        return;
-
-    }
-
-
-    emptyMessage.style.display =
-        "none";
-
-
-    class1Students.forEach(
-        function(student,index){
-
-            const row =
-                document.createElement(
-                    "tr"
-                );
-
-
-            const id =
-                student.firebaseKey;
-
-
-            const status =
-
-                pendingAttendance[id] ||
-
-                attendanceData[id] ||
-
-                "none";
-
-
-            row.innerHTML = `
-
-                <td>
-                    ${index + 1}
-                </td>
-
-                <td>
-                    ${escapeHTML(
-                        student.name || "—"
-                    )}
-                </td>
-
-                <td>
-                    ${escapeHTML(
-                        student.father || "—"
-                    )}
-                </td>
-
-                <td>
-                    ${escapeHTML(
-                        student.grNumber || "—"
-                    )}
-                </td>
-
-                <td>
-                    ${escapeHTML(
-                        student.roll || "—"
-                    )}
-                </td>
-
-
-                <td>
-
-                    <button
-                        class="btn present ${
-                            status === "present"
-                            ? "active"
-                            : ""
-                        }"
-
-                        onclick="setAttendance(
-                            ${JSON.stringify(id)},
-                            'present'
-                        )"
-                    >
-                        ✅ Present
-                    </button>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        class="btn absent ${
-                            status === "absent"
-                            ? "active"
-                            : ""
-                        }"
-
-                        onclick="setAttendance(
-                            ${JSON.stringify(id)},
-                            'absent'
-                        )"
-                    >
-                        ❌ Absent
-                    </button>
-
-                </td>
-
-
-                <td>
-
-                    <button
-                        class="btn leave ${
-                            status === "leave"
-                            ? "active"
-                            : ""
-                        }"
-
-                        onclick="setAttendance(
-                            ${JSON.stringify(id)},
-                            'leave'
-                        )"
-                    >
-                        🟡 Leave
-                    </button>
-
-                </td>
-
-            `;
-
-
-            tableBody.appendChild(row);
-
-        }
-    );
-
-
-    updateSummary();
-
-}
-
-
-
-/* =====================================================
-   SUMMARY
-===================================================== */
-
-function updateSummary(){
-
-    document.getElementById(
-        "totalStudents"
-    ).textContent =
-        class1Students.length;
-
-
-    let present = 0;
-
-    let absent = 0;
-
-    let leave = 0;
-
-
-    class1Students.forEach(
-        function(student){
-
-            const id =
-                student.firebaseKey;
-
-
-            const status =
-
-                pendingAttendance[id] ||
-
-                attendanceData[id];
-
-
-            if(status === "present"){
-                present++;
-            }
-
-            else if(status === "absent"){
-                absent++;
-            }
-
-            else if(status === "leave"){
-                leave++;
-            }
-
-        }
-    );
-
-
-    document.getElementById(
-        "presentStudents"
-    ).textContent =
-        present;
-
-
-    document.getElementById(
-        "absentStudents"
-    ).textContent =
-        absent;
-
-
-    document.getElementById(
-        "leaveStudents"
-    ).textContent =
-        leave;
-
-}
-
-
-
 /* =====================================================
    SAFE HTML
 ===================================================== */
@@ -1285,6 +1295,16 @@ function escapeHTML(value){
 
 }
 
+
+function escapeAttribute(value){
+
+    return String(value)
+        .replace(/&/g,"&amp;")
+        .replace(/"/g,"&quot;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;");
+
+}
 
 </script>
 
