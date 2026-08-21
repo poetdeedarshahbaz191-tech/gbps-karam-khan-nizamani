@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>School Attendance Summary | GBPS Karam Khan Nizamani</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #006a4e;
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+        }
+
+        header h1 {
+            font-size: 23px;
+        }
+
+        header p {
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .top-box,
+        .table-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 18px;
+        }
+
+        .back {
+            display: inline-block;
+            color: #006a4e;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #006a4e;
+            margin-bottom: 8px;
+        }
+
+        .date-box {
+            margin-top: 18px;
+        }
+
+        .date-box label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .status {
+            padding: 11px;
+            margin-bottom: 18px;
+            border-radius: 7px;
+            background: #e8f5e9;
+            color: #006a4e;
+            font-weight: bold;
+        }
+
+        .school-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 18px 10px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        }
+
+        .summary-box strong {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .summary-box.total strong {
+            color: #006a4e;
+        }
+
+        .summary-box.present strong {
+            color: #2e7d32;
+        }
+
+        .summary-box.absent strong {
+            color: #c62828;
+        }
+
+        .summary-box.leave strong {
+            color: #f9a825;
+        }
+
+        .table-box {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th,
+        td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #006a4e;
+            color: white;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .class-name {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .present-number {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .absent-number {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .leave-number {
+            color: #f9a825;
+            font-weight: bold;
+        }
+
+        .grand-total {
+            background: #e8f5e9;
+            font-weight: bold;
+        }
+
+        .loading {
+            padding: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        footer {
+            margin-top: 30px;
+            background: #006a4e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            .school-summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🏫 Government Boys Primary School</h1>
+    <p>Karam Khan Nizamani Campus</p>
+</header>
+
+<div class="container">
+
+    <div class="top-box">
+
+        <a href="admin.html" class="back">
+            ← Admin Dashboard
+        </a>
+
+        <h2>📊 School Attendance Summary</h2>
+
+        <p>
+            View attendance totals for KG and Classes 1–5.
+        </p>
+
+        <div class="date-box">
+
+            <label for="attendanceDate">
+                Attendance Date:
+            </label>
+
+            <input
+                type="date"
+                id="attendanceDate"
+            >
+
+        </div>
+
+    </div>
+
+    <div id="connectionStatus" class="status">
+        🟡 Loading attendance data...
+    </div>
+
+    <!-- SCHOOL TOTALS -->
+
+    <div class="school-summary">
+
+        <div class="summary-box total">
+            <strong id="schoolTotal">0</strong>
+            Total Students
+        </div>
+
+        <div class="summary-box present">
+            <strong id="schoolPresent">0</strong>
+            Present
+        </div>
+
+        <div class="summary-box absent">
+            <strong id="schoolAbsent">0</strong>
+            Absent
+        </div>
+
+        <div class="summary-box leave">
+            <strong id="schoolLeave">0</strong>
+            Leave
+        </div>
+
+    </div>
+
+
+    <!-- CLASS-BY-CLASS TABLE -->
+
+    <div class="table-box">
+
+        <h2>📚 Class-wise Attendance</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Class</th>
+                    <th>Total Students</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Leave</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="summaryTable">
+
+                <tr>
+                    <td colspan="5" class="loading">
+                        Loading...
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<footer>
+    <strong>Government Boys Primary School</strong><br>
+    Karam Khan Nizamani Campus<br><br>
+    © 2026 Government Boys Primary School
+</footer>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    get
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+/* =========================================
+   FIREBASE CONFIG
+   USE THE SAME CONFIG AS YOUR OTHER PAGES
+   ========================================= */
+
+const firebaseConfig = {
+
+    apiKey: "YOUR_API_KEY",
+
+    authDomain:
+        "gbps-karam-khan-nizamani.firebaseapp.com",
+
+    databaseURL:
+        "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
+    projectId:
+        "gbps-karam-khan-nizamani",
+
+    storageBucket:
+        "gbps-karam-khan-nizamani.firebasestorage.app",
+
+    messagingSenderId:
+        "772460890400",
+
+    appId: "YOUR_APP_ID"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const db =
+    getDatabase(app);
+
+
+/* =========================================
+   CLASSES
+   ========================================= */
+
+const classes = [
+
+    {
+        name: "👶 KG",
+        firebaseName: "KG"
+    },
+
+    {
+        name: "1️⃣ Class 1",
+        firebaseName: "Class 1"
+    },
+
+    {
+        name: "2️⃣ Class 2",
+        firebaseName: "Class 2"
+    },
+
+    {
+        name: "3️⃣ Class 3",
+        firebaseName: "Class 3"
+    },
+
+    {
+        name: "4️⃣ Class 4",
+        firebaseName: "Class 4"
+    },
+
+    {
+        name: "5️⃣ Class 5",
+        firebaseName: "Class 5"
+    }
+
+];
+
+
+/* =========================================
+   ELEMENTS
+   ========================================= */
+
+const dateInput =
+    document.getElementById(
+        "attendanceDate"
+    );
+
+const summaryTable =
+    document.getElementById(
+        "summaryTable"
+    );
+
+const connectionStatus =
+    document.getElementById(
+        "connectionStatus"
+    );
+
+
+/* =========================================
+   TODAY
+   ========================================= */
+
+const today =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+dateInput.value = today;
+
+
+/* =========================================
+   LOAD SUMMARY
+   ========================================= */
+
+async function loadSchoolSummary() {
+
+    const date =
+        dateInput.value;
+
+    if (!date) {
+        return;
+    }
+
+
+    summaryTable.innerHTML = `
+        <tr>
+            <td colspan="5" class="loading">
+                🟡 Loading attendance...
+            </td>
+        </tr>
+    `;
+
+
+    let schoolTotal = 0;
+    let schoolPresent = 0;
+    let schoolAbsent = 0;
+    let schoolLeave = 0;
+
+
+    const results = [];
+
+
+    try {
+
+        for (const classInfo of classes) {
+
+            const attendanceRef =
+                ref(
+                    db,
+                    "attendance/" +
+                    classInfo.firebaseName +
+                    "/" +
+                    date
+                );
+
+
+            const snapshot =
+                await get(attendanceRef);
+
+
+            const data =
+                snapshot.val() || {};
+
+
+            let present = 0;
+            let absent = 0;
+            let leave = 0;
+
+
+            Object.values(data).forEach(
+                status => {
+
+                    if (status === "present") {
+                        present++;
+                    }
+
+                    if (status === "absent") {
+                        absent++;
+                    }
+
+                    if (status === "leave") {
+                        leave++;
+                    }
+
+                }
+            );
+
+
+            /*
+             * Students with an attendance record
+             * are counted here.
+             */
+
+            const total =
+                present +
+                absent +
+                leave;
+
+
+            schoolTotal += total;
+            schoolPresent += present;
+            schoolAbsent += absent;
+            schoolLeave += leave;
+
+
+            results.push({
+
+                name: classInfo.name,
+
+                total: total,
+
+                present: present,
+
+                absent: absent,
+
+                leave: leave
+
+            });
+
+        }
+
+
+        displayResults(results);
+
+
+        document.getElementById(
+            "schoolTotal"
+        ).textContent =
+            schoolTotal;
+
+
+        document.getElementById(
+            "schoolPresent"
+        ).textContent =
+            schoolPresent;
+
+
+        document.getElementById(
+            "schoolAbsent"
+        ).textContent =
+            schoolAbsent;
+
+
+        document.getElementById(
+            "schoolLeave"
+        ).textContent =
+            schoolLeave;
+
+
+        connectionStatus.textContent =
+            "🟢 Connected. Attendance summary loaded from Firebase.";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        connectionStatus.textContent =
+            "🔴 Unable to load attendance from Firebase.";
+
+        summaryTable.innerHTML = `
+            <tr>
+                <td colspan="5" class="loading">
+                    Error loading attendance data.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   DISPLAY CLASS RESULTS
+   ========================================= */
+
+function displayResults(results) {
+
+    summaryTable.innerHTML = "";
+
+
+    results.forEach(result => {
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td class="class-name">
+                ${result.name}
+            </td>
+
+            <td>
+                ${result.total}
+            </td>
+
+            <td class="present-number">
+                ${result.present}
+            </td>
+
+            <td class="absent-number">
+                ${result.absent}
+            </td>
+
+            <td class="leave-number">
+                ${result.leave}
+            </td>
+
+        `;
+
+
+        summaryTable.appendChild(row);
+
+    });
+
+
+    /* GRAND TOTAL */
+
+    const total =
+        results.reduce(
+            (sum, item) =>
+                sum + item.total,
+            0
+        );
+
+
+    const present =
+        results.reduce(
+            (sum, item) =>
+                sum + item.present,
+            0
+        );
+
+
+    const absent =
+        results.reduce(
+            (sum, item) =>
+                sum + item.absent,
+            0
+        );
+
+
+    const leave =
+        results.reduce(
+            (sum, item) =>
+                sum + item.leave,
+            0
+        );
+
+
+    const totalRow =
+        document.createElement("tr");
+
+
+    totalRow.className =
+        "grand-total";
+
+
+    totalRow.innerHTML = `
+
+        <td class="class-name">
+            🏫 ALL CLASSES
+        </td>
+
+        <td>
+            ${total}
+        </td>
+
+        <td class="present-number">
+            ${present}
+        </td>
+
+        <td class="absent-number">
+            ${absent}
+        </td>
+
+        <td class="leave-number">
+            ${leave}
+        </td>
+
+    `;
+
+
+    summaryTable.appendChild(totalRow);
+
+}
+
+
+/* =========================================
+   DATE CHANGE
+   ========================================= */
+
+dateInput.addEventListener(
+    "change",
+    loadSchoolSummary
+);
+
+
+/* =========================================
+   START
+   ========================================= */
+
+loadSchoolSummary();
+
+</script>
+
+</body>
+</html>
