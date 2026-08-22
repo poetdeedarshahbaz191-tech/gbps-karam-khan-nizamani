@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>KG Daily Attendance | GBPS Karam Khan Nizamani</title>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -32,14 +26,8 @@ header{
     padding:18px 15px;
 }
 
-header h1{
-    font-size:22px;
-}
-
-header p{
-    margin-top:6px;
-    font-size:14px;
-}
+header h1{font-size:22px;}
+header p{margin-top:6px;font-size:14px;}
 
 .container{
     max-width:1200px;
@@ -47,7 +35,7 @@ header p{
     padding:15px;
 }
 
-.box{
+.box,.table-box{
     background:white;
     padding:18px;
     border-radius:12px;
@@ -88,11 +76,6 @@ input[type="date"]{
     border:1px solid #ccc;
     border-radius:7px;
     font-size:16px;
-}
-
-input[type="date"]:focus{
-    outline:none;
-    border-color:#006a4e;
 }
 
 .status{
@@ -136,9 +119,7 @@ input[type="date"]:focus{
     margin-bottom:5px;
 }
 
-.save-box{
-    text-align:center;
-}
+.save-box{text-align:center;}
 
 .save-btn{
     width:100%;
@@ -152,21 +133,11 @@ input[type="date"]:focus{
     cursor:pointer;
 }
 
-.save-btn:hover{
-    background:#004d39;
-}
+.save-btn:hover{background:#004d39;}
 
 .save-btn:disabled{
     background:#999;
     cursor:not-allowed;
-}
-
-.table-box{
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    box-shadow:0 3px 10px rgba(0,0,0,.08);
-    overflow-x:auto;
 }
 
 table{
@@ -175,8 +146,7 @@ table{
     min-width:850px;
 }
 
-th,
-td{
+th,td{
     padding:10px 7px;
     border-bottom:1px solid #ddd;
     text-align:center;
@@ -188,13 +158,9 @@ th{
     white-space:nowrap;
 }
 
-td{
-    white-space:nowrap;
-}
+td{white-space:nowrap;}
 
-tr:hover{
-    background:#f5f5f5;
-}
+tr:hover{background:#f5f5f5;}
 
 .btn{
     border:none;
@@ -206,21 +172,11 @@ tr:hover{
     font-weight:bold;
 }
 
-.present{
-    background:#2e7d32;
-}
+.present{background:#2e7d32;}
+.absent{background:#c62828;}
+.leave{background:#f9a825;}
 
-.absent{
-    background:#c62828;
-}
-
-.leave{
-    background:#f9a825;
-}
-
-.btn:hover{
-    opacity:.9;
-}
+.btn:hover{opacity:.9;}
 
 .btn.active{
     outline:3px solid #222;
@@ -252,160 +208,84 @@ footer{
 }
 
 @media(max-width:650px){
-
     .summary{
         grid-template-columns:repeat(2,1fr);
     }
 
-    header h1{
-        font-size:18px;
-    }
+    header h1{font-size:18px;}
 
-    .box{
-        padding:15px;
-    }
+    .box{padding:15px;}
 
     .btn{
         padding:8px 9px;
         font-size:12px;
     }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
-    <h1>
-        🏫 Government Boys Primary School
-    </h1>
-
-    <p>
-        Karam Khan Nizamani Campus
-    </p>
-
+    <h1>🏫 Government Boys Primary School</h1>
+    <p>Karam Khan Nizamani Campus</p>
 </header>
-
 
 <div class="container">
 
-
-    <!-- ============================= -->
-    <!-- PAGE HEADER -->
-    <!-- ============================= -->
-
     <div class="box">
 
-        <a
-            href="admin-dashboard.html"
-            class="back"
-        >
+        <a href="admin-dashboard.html" class="back">
             ← Admin Dashboard
         </a>
 
-        <h2>
-            👶 KG Daily Attendance
-        </h2>
+        <h2>👶 KG Daily Attendance</h2>
 
         <p class="description">
             Select the attendance date and mark each KG
             student as Present, Absent or Leave.
         </p>
 
-
         <div class="date-box">
-
             <label for="attendanceDate">
                 Attendance Date:
             </label>
 
-            <input
-                type="date"
-                id="attendanceDate"
-            >
-
+            <input type="date" id="attendanceDate">
         </div>
 
     </div>
 
-
-    <!-- ============================= -->
-    <!-- INFORMATION -->
-    <!-- ============================= -->
-
     <div class="info-box">
-
         💡 <strong>Attendance tip:</strong>
-        Select a student status and then press
-        <strong>Save Attendance</strong>.
-        Previously saved attendance will automatically
-        appear when you select that date again.
-
+        Select Present, Absent or Leave for each student,
+        then press <strong>Save Attendance</strong>.
+        Saved attendance will remain after refreshing the page.
     </div>
-
-
-    <!-- ============================= -->
-    <!-- SUMMARY -->
-    <!-- ============================= -->
 
     <div class="summary">
 
-
         <div class="summary-box">
-
-            <strong id="totalStudents">
-                0
-            </strong>
-
+            <strong id="totalStudents">0</strong>
             Total Students
-
         </div>
 
-
         <div class="summary-box">
-
-            <strong id="presentStudents">
-                0
-            </strong>
-
+            <strong id="presentStudents">0</strong>
             Present
-
         </div>
 
-
         <div class="summary-box">
-
-            <strong id="absentStudents">
-                0
-            </strong>
-
+            <strong id="absentStudents">0</strong>
             Absent
-
         </div>
 
-
         <div class="summary-box">
-
-            <strong id="leaveStudents">
-                0
-            </strong>
-
+            <strong id="leaveStudents">0</strong>
             Leave
-
         </div>
 
     </div>
-
-
-    <!-- ============================= -->
-    <!-- SAVE -->
-    <!-- ============================= -->
 
     <div class="box save-box">
 
@@ -419,13 +299,7 @@ footer{
 
     </div>
 
-
-    <!-- ============================= -->
-    <!-- STUDENT TABLE -->
-    <!-- ============================= -->
-
     <div class="table-box">
-
 
         <div
             id="connectionStatus"
@@ -434,57 +308,24 @@ footer{
             🟡 Connecting to Firebase...
         </div>
 
-
         <table>
 
             <thead>
-
                 <tr>
-
-                    <th>
-                        S. No.
-                    </th>
-
-                    <th>
-                        Student Name
-                    </th>
-
-                    <th>
-                        Father's Name
-                    </th>
-
-                    <th>
-                        GR No.
-                    </th>
-
-                    <th>
-                        Roll No.
-                    </th>
-
-                    <th>
-                        Present
-                    </th>
-
-                    <th>
-                        Absent
-                    </th>
-
-                    <th>
-                        Leave
-                    </th>
-
+                    <th>S. No.</th>
+                    <th>Student Name</th>
+                    <th>Father's Name</th>
+                    <th>GR No.</th>
+                    <th>Roll No.</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Leave</th>
                 </tr>
-
             </thead>
 
-
-            <tbody
-                id="studentTableBody"
-            >
-            </tbody>
+            <tbody id="studentTableBody"></tbody>
 
         </table>
-
 
         <div
             id="emptyMessage"
@@ -498,30 +339,16 @@ footer{
 
 </div>
 
-
 <footer>
-
-    <strong>
-        Government Boys Primary School
-    </strong>
-
+    <strong>Government Boys Primary School</strong>
     <br>
-
     Karam Khan Nizamani Campus
-
     <br><br>
-
     © 2026 Government Boys Primary School
-
 </footer>
 
 
-<!-- ========================================== -->
-<!-- FIREBASE -->
-<!-- ========================================== -->
-
 <script type="module">
-
 
 import {
     initializeApp
@@ -529,22 +356,19 @@ import {
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-
 import {
     getDatabase,
     ref,
-    onValue,
+    get,
     set
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 
-/* =====================================================
+/* ==========================================
    FIREBASE CONFIGURATION
-
-   SAME CONFIGURATION AS YOUR STUDENTS PAGE
-   ===================================================== */
+========================================== */
 
 const firebaseConfig = {
 
@@ -571,105 +395,65 @@ const firebaseConfig = {
 
     measurementId:
         "G-KDQ1MQ16WN"
-
 };
 
 
-/* =====================================================
-   INITIALIZE FIREBASE
-   ===================================================== */
+/* ==========================================
+   FIREBASE
+========================================== */
 
-const app =
-    initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db =
-    getDatabase(app);
+const db = getDatabase(app);
 
 
-/* =====================================================
+/* ==========================================
    ELEMENTS
-   ===================================================== */
+========================================== */
 
 const tableBody =
-    document.getElementById(
-        "studentTableBody"
-    );
-
+    document.getElementById("studentTableBody");
 
 const emptyMessage =
-    document.getElementById(
-        "emptyMessage"
-    );
-
+    document.getElementById("emptyMessage");
 
 const connectionStatus =
-    document.getElementById(
-        "connectionStatus"
-    );
-
+    document.getElementById("connectionStatus");
 
 const dateInput =
-    document.getElementById(
-        "attendanceDate"
-    );
-
+    document.getElementById("attendanceDate");
 
 const saveButton =
-    document.getElementById(
-        "saveButton"
-    );
+    document.getElementById("saveButton");
 
 
-/* =====================================================
+/* ==========================================
    LOCAL DATE
-   ===================================================== */
+========================================== */
 
 function getLocalDate(){
 
-    const now =
-        new Date();
+    const now = new Date();
 
-
-    const year =
-        now.getFullYear();
-
+    const year = now.getFullYear();
 
     const month =
-        String(
-            now.getMonth() + 1
-        ).padStart(
-            2,
-            "0"
-        );
-
+        String(now.getMonth() + 1)
+        .padStart(2,"0");
 
     const day =
-        String(
-            now.getDate()
-        ).padStart(
-            2,
-            "0"
-        );
+        String(now.getDate())
+        .padStart(2,"0");
 
-
-    return (
-        year +
-        "-" +
-        month +
-        "-" +
-        day
-    );
-
+    return `${year}-${month}-${day}`;
 }
 
-
-dateInput.value =
-    getLocalDate();
+dateInput.value = getLocalDate();
 
 
-/* =====================================================
+/* ==========================================
    DATA
-   ===================================================== */
+========================================== */
 
 let kgStudents = [];
 
@@ -678,22 +462,40 @@ let attendanceData = {};
 let pendingAttendance = {};
 
 
-/* =====================================================
-   LOAD STUDENTS FROM FIREBASE
-   ===================================================== */
+/* ==========================================
+   NORMALIZE CLASS NAME
+========================================== */
 
-const studentsRef =
-    ref(
-        db,
-        "students"
-    );
+function normalizeClass(value){
+
+    return String(value || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\./g,"")
+        .replace(/\s+/g,"");
+}
 
 
-onValue(
+/* ==========================================
+   LOAD STUDENTS
+========================================== */
 
-    studentsRef,
+async function loadStudents(){
 
-    function(snapshot){
+    try{
+
+        connectionStatus.textContent =
+            "🔄 Loading KG students from Firebase...";
+
+        connectionStatus.className =
+            "status loading";
+
+
+        const snapshot =
+            await get(
+                ref(db,"students")
+            );
+
 
         const data =
             snapshot.val();
@@ -706,85 +508,55 @@ onValue(
             renderStudents();
 
             connectionStatus.textContent =
-                "🟢 Connected, but no students were found.";
+                "🟡 Connected, but no students were found.";
 
             connectionStatus.className =
                 "status";
 
-            saveButton.disabled =
-                true;
+            saveButton.disabled = true;
 
             return;
-
         }
 
 
-        /*
-         * IMPORTANT:
-         *
-         * Your Student Management page uses:
-         *
-         * className
-         * grNumber
-         * roll
-         * father
-         * name
-         *
-         * Therefore this page uses those SAME fields.
-         */
-
-
-        kgStudents = Object.entries(data)
+        kgStudents =
+            Object.entries(data)
 
             .map(
-                function([firebaseKey, student]){
+                ([firebaseKey,student]) => ({
 
-                    return {
+                    ...student,
 
-                        ...student,
+                    firebaseKey
 
-                        firebaseKey:
-                            firebaseKey
-
-                    };
-
-                }
+                })
             )
 
             .filter(
-                function(student){
+                student => {
 
-                    return String(
-                        student.className || ""
-                    )
-                    .trim()
-                    .toUpperCase()
-                    === "KG";
+                    const className =
+                        normalizeClass(
+                            student.className
+                        );
+
+                    return (
+                        className === "KG" ||
+                        className === "KINDERGARTEN"
+                    );
 
                 }
             );
 
 
-        /*
-         * Sort KG students by GR number
-         * where a GR number exists.
-         */
-
         kgStudents.sort(
-            function(a,b){
+            (a,b) => {
 
                 const grA =
-                    parseInt(
-                        a.grNumber,
-                        10
-                    );
-
+                    parseInt(a.grNumber,10);
 
                 const grB =
-                    parseInt(
-                        b.grNumber,
-                        10
-                    );
+                    parseInt(b.grNumber,10);
 
 
                 if(
@@ -797,14 +569,9 @@ onValue(
                 }
 
 
-                if(!isNaN(grA)){
-                    return -1;
-                }
+                if(!isNaN(grA)) return -1;
 
-
-                if(!isNaN(grB)){
-                    return 1;
-                }
+                if(!isNaN(grB)) return 1;
 
 
                 return String(
@@ -820,50 +587,43 @@ onValue(
 
 
         connectionStatus.textContent =
-            "🟢 Connected. " +
-            kgStudents.length +
-            " KG student(s) loaded from Firebase.";
-
+            `🟢 Connected. ${kgStudents.length} KG student(s) loaded from Firebase.`;
 
         connectionStatus.className =
             "status";
 
 
-        loadAttendance();
+        await loadAttendance();
 
-    },
 
-    function(error){
+    }
+    catch(error){
 
         console.error(error);
 
-
         connectionStatus.textContent =
-            "🔴 Firebase connection error: " +
+            "🔴 Firebase error: " +
             error.message;
-
 
         connectionStatus.className =
             "status error";
 
     }
 
-);
+}
 
 
-/* =====================================================
-   LOAD ATTENDANCE FOR SELECTED DATE
-   ===================================================== */
+/* ==========================================
+   LOAD SAVED ATTENDANCE
+========================================== */
 
-function loadAttendance(){
+async function loadAttendance(){
 
     const date =
         dateInput.value;
 
 
-    if(!date){
-        return;
-    }
+    if(!date) return;
 
 
     attendanceData = {};
@@ -871,114 +631,80 @@ function loadAttendance(){
     pendingAttendance = {};
 
 
-    saveButton.disabled =
-        true;
+    saveButton.disabled = true;
 
 
     connectionStatus.textContent =
         "🔄 Loading attendance for " +
-        date +
-        "...";
-
+        date + "...";
 
     connectionStatus.className =
         "status loading";
 
 
-    const attendanceRef =
-        ref(
-            db,
-            "attendance/KG/" +
-            date
-        );
+    try{
+
+        const snapshot =
+            await get(
+                ref(
+                    db,
+                    `attendance/KG/${date}`
+                )
+            );
 
 
-    /*
-     * One-time read for the selected date.
-     */
-
-    onValue(
-
-        attendanceRef,
-
-        function(snapshot){
-
-            attendanceData =
-                snapshot.val() || {};
+        attendanceData =
+            snapshot.val() || {};
 
 
-            pendingAttendance = {};
+        renderStudents();
 
 
-            renderStudents();
+        saveButton.disabled =
+            kgStudents.length === 0;
 
 
-            saveButton.disabled =
-                kgStudents.length === 0;
+        connectionStatus.textContent =
+            `🟢 Attendance loaded for ${date}.`;
 
+        connectionStatus.className =
+            "status";
 
-            connectionStatus.textContent =
-                "🟢 Ready. Attendance for " +
-                date +
-                " loaded.";
+    }
+    catch(error){
 
+        console.error(error);
 
-            connectionStatus.className =
-                "status";
+        connectionStatus.textContent =
+            "🔴 Could not load attendance: " +
+            error.message;
 
-        },
+        connectionStatus.className =
+            "status error";
 
-        function(error){
+        saveButton.disabled = true;
 
-            console.error(error);
-
-
-            connectionStatus.textContent =
-                "🔴 Could not load attendance: " +
-                error.message;
-
-
-            connectionStatus.className =
-                "status error";
-
-
-            saveButton.disabled =
-                true;
-
-        },
-
-        {
-            onlyOnce:true
-        }
-
-    );
+    }
 
 }
 
 
-/* =====================================================
+/* ==========================================
    DATE CHANGE
-   ===================================================== */
+========================================== */
 
 dateInput.addEventListener(
     "change",
-    function(){
-
-        loadAttendance();
-
-    }
+    loadAttendance
 );
 
 
-/* =====================================================
-   SET ATTENDANCE
-   ===================================================== */
+/* ==========================================
+   MARK ATTENDANCE
+========================================== */
 
 window.setAttendance =
-function(
-    studentId,
-    status
-){
+function(studentId,status){
 
     if(!dateInput.value){
 
@@ -987,7 +713,6 @@ function(
         );
 
         return;
-
     }
 
 
@@ -1000,9 +725,9 @@ function(
 };
 
 
-/* =====================================================
+/* ==========================================
    SAVE ATTENDANCE
-   ===================================================== */
+========================================== */
 
 saveButton.addEventListener(
     "click",
@@ -1019,7 +744,6 @@ saveButton.addEventListener(
             );
 
             return;
-
         }
 
 
@@ -1030,14 +754,8 @@ saveButton.addEventListener(
             );
 
             return;
-
         }
 
-
-        /*
-         * Combine previously saved attendance
-         * with the changes made now.
-         */
 
         const finalAttendance = {
 
@@ -1054,11 +772,6 @@ saveButton.addEventListener(
             ).length;
 
 
-        /*
-         * Warn if some students have not
-         * been marked.
-         */
-
         if(
             markedCount <
             kgStudents.length
@@ -1071,24 +784,18 @@ saveButton.addEventListener(
 
             const confirmed =
                 confirm(
-
                     remaining +
                     " KG student(s) are not marked.\n\n" +
-                    "Do you still want to save the attendance?"
-
+                    "Do you still want to save?"
                 );
 
 
-            if(!confirmed){
-                return;
-            }
+            if(!confirmed) return;
 
         }
 
 
-        saveButton.disabled =
-            true;
-
+        saveButton.disabled = true;
 
         saveButton.textContent =
             "⏳ Saving Attendance...";
@@ -1096,16 +803,11 @@ saveButton.addEventListener(
 
         try{
 
-            const attendanceRef =
+            await set(
                 ref(
                     db,
-                    "attendance/KG/" +
-                    date
-                );
-
-
-            await set(
-                attendanceRef,
+                    `attendance/KG/${date}`
+                ),
                 finalAttendance
             );
 
@@ -1121,9 +823,7 @@ saveButton.addEventListener(
 
 
             connectionStatus.textContent =
-                "🟢 Attendance saved permanently for " +
-                date + ".";
-
+                `🟢 Attendance saved permanently for ${date}.`;
 
             connectionStatus.className =
                 "status";
@@ -1134,11 +834,9 @@ saveButton.addEventListener(
 
 
             setTimeout(
-                function(){
+                () => {
 
-                    saveButton.disabled =
-                        false;
-
+                    saveButton.disabled = false;
 
                     saveButton.textContent =
                         "💾 Save Attendance";
@@ -1147,8 +845,8 @@ saveButton.addEventListener(
                 1500
             );
 
-        }
 
+        }
         catch(error){
 
             console.error(error);
@@ -1158,14 +856,11 @@ saveButton.addEventListener(
                 "🔴 Error saving attendance: " +
                 error.message;
 
-
             connectionStatus.className =
                 "status error";
 
 
-            saveButton.disabled =
-                false;
-
+            saveButton.disabled = false;
 
             saveButton.textContent =
                 "💾 Save Attendance";
@@ -1182,9 +877,9 @@ saveButton.addEventListener(
 );
 
 
-/* =====================================================
+/* ==========================================
    RENDER STUDENTS
-   ===================================================== */
+========================================== */
 
 function renderStudents(){
 
@@ -1198,11 +893,9 @@ function renderStudents(){
         emptyMessage.style.display =
             "block";
 
-
         updateSummary();
 
         return;
-
     }
 
 
@@ -1211,51 +904,20 @@ function renderStudents(){
 
 
     kgStudents.forEach(
-        function(student,index){
+        (student,index) => {
 
             const row =
-                document.createElement(
-                    "tr"
-                );
+                document.createElement("tr");
 
 
             const id =
                 student.firebaseKey;
 
 
-            /*
-             * Pending changes have priority.
-             * Otherwise use Firebase-saved status.
-             */
-
             const status =
                 pendingAttendance[id] ||
                 attendanceData[id] ||
                 "";
-
-
-            const studentName =
-                escapeHTML(
-                    student.name || "—"
-                );
-
-
-            const fatherName =
-                escapeHTML(
-                    student.father || "—"
-                );
-
-
-            const grNumber =
-                escapeHTML(
-                    student.grNumber || "—"
-                );
-
-
-            const roll =
-                escapeHTML(
-                    student.roll || "—"
-                );
 
 
             row.innerHTML = `
@@ -1264,26 +926,29 @@ function renderStudents(){
                     ${index + 1}
                 </td>
 
-
                 <td>
-                    ${studentName}
+                    ${escapeHTML(
+                        student.name || "—"
+                    )}
                 </td>
 
-
                 <td>
-                    ${fatherName}
+                    ${escapeHTML(
+                        student.father || "—"
+                    )}
                 </td>
 
-
                 <td>
-                    ${grNumber}
+                    ${escapeHTML(
+                        student.grNumber || "—"
+                    )}
                 </td>
 
-
                 <td>
-                    ${roll}
+                    ${escapeHTML(
+                        student.roll || "—"
+                    )}
                 </td>
-
 
                 <td>
 
@@ -1303,7 +968,6 @@ function renderStudents(){
 
                 </td>
 
-
                 <td>
 
                     <button
@@ -1321,7 +985,6 @@ function renderStudents(){
                     </button>
 
                 </td>
-
 
                 <td>
 
@@ -1344,9 +1007,7 @@ function renderStudents(){
             `;
 
 
-            tableBody.appendChild(
-                row
-            );
+            tableBody.appendChild(row);
 
         }
     );
@@ -1357,9 +1018,9 @@ function renderStudents(){
 }
 
 
-/* =====================================================
-   UPDATE SUMMARY
-   ===================================================== */
+/* ==========================================
+   SUMMARY
+========================================== */
 
 function updateSummary(){
 
@@ -1377,7 +1038,7 @@ function updateSummary(){
 
 
     kgStudents.forEach(
-        function(student){
+        student => {
 
             const id =
                 student.firebaseKey;
@@ -1389,29 +1050,14 @@ function updateSummary(){
                 "";
 
 
-            if(
-                status === "present"
-            ){
-
+            if(status === "present")
                 present++;
 
-            }
-
-            else if(
-                status === "absent"
-            ){
-
+            if(status === "absent")
                 absent++;
 
-            }
-
-            else if(
-                status === "leave"
-            ){
-
+            if(status === "leave")
                 leave++;
-
-            }
 
         }
     );
@@ -1437,26 +1083,28 @@ function updateSummary(){
 }
 
 
-/* =====================================================
+/* ==========================================
    ESCAPE HTML
-   ===================================================== */
+========================================== */
 
 function escapeHTML(value){
 
     const div =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     div.textContent =
         String(value);
-
 
     return div.innerHTML;
 
 }
 
+
+/* ==========================================
+   START
+========================================== */
+
+loadStudents();
 
 </script>
 
