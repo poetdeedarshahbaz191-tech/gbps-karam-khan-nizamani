@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Class 1 Daily Attendance | GBPS Karam Khan Nizamani</title>
+<title>Class 2 Daily Attendance | GBPS Karam Khan Nizamani</title>
 
 <style>
 
@@ -367,11 +367,11 @@ footer{
         </a>
 
         <h2>
-            👨‍🎓 Class 1 Daily Attendance
+            👨‍🎓 Class 2 Daily Attendance
         </h2>
 
         <p>
-            Select the attendance date and mark each Class 1 student.
+            Select the attendance date and mark each Class 2 student.
         </p>
 
 
@@ -508,7 +508,7 @@ footer{
             class="empty"
             style="display:none;"
         >
-            No Class 1 students found.
+            No Class 2 students found.
         </div>
 
     </div>
@@ -672,7 +672,7 @@ function getLocalDate(){
 
 dateInput.value =
     localStorage.getItem(
-        "class1AttendanceDate"
+        "class2AttendanceDate"
     ) ||
     getLocalDate();
 
@@ -682,7 +682,7 @@ dateInput.value =
    VARIABLES
 ===================================================== */
 
-let class1Students = [];
+let class2Students = [];
 
 let attendanceData = {};
 
@@ -713,7 +713,7 @@ onValue(
 
         if(!data){
 
-            class1Students = [];
+            class2Students = [];
 
             renderStudents();
 
@@ -725,7 +725,7 @@ onValue(
         }
 
 
-        class1Students =
+        class2Students =
 
             Object.entries(data)
 
@@ -759,17 +759,16 @@ onValue(
                         )
 
                         .trim()
-
                         .toLowerCase();
 
 
                     return (
 
-                        classValue === "class 1" ||
+                        classValue === "class 2" ||
 
-                        classValue === "1" ||
+                        classValue === "2" ||
 
-                        classValue === "class1"
+                        classValue === "class2"
 
                     );
 
@@ -777,7 +776,7 @@ onValue(
             );
 
 
-        class1Students.sort(
+        class2Students.sort(
 
             function(a,b){
 
@@ -816,9 +815,9 @@ onValue(
 
             "🟢 Connected. " +
 
-            class1Students.length +
+            class2Students.length +
 
-            " Class 1 student(s) loaded.";
+            " Class 2 student(s) loaded.";
 
 
         loadAttendance();
@@ -866,7 +865,7 @@ function loadAttendance(){
 
             db,
 
-            "attendance/Class1/" +
+            "attendance/Class2/" +
             date
 
         );
@@ -934,7 +933,7 @@ dateInput.addEventListener(
 
         localStorage.setItem(
 
-            "class1AttendanceDate",
+            "class2AttendanceDate",
 
             this.value
 
@@ -967,7 +966,7 @@ function renderStudents(){
     tableBody.innerHTML = "";
 
 
-    if(class1Students.length === 0){
+    if(class2Students.length === 0){
 
         emptyMessage.style.display =
             "block";
@@ -984,7 +983,7 @@ function renderStudents(){
         "none";
 
 
-    class1Students.forEach(
+    class2Students.forEach(
 
         function(student,index){
 
@@ -1408,7 +1407,7 @@ function updateSummary(){
     document.getElementById(
         "totalStudents"
     ).textContent =
-        class1Students.length;
+        class2Students.length;
 
 
     let present = 0;
@@ -1418,7 +1417,7 @@ function updateSummary(){
     let leave = 0;
 
 
-    class1Students.forEach(
+    class2Students.forEach(
 
         function(student){
 
@@ -1504,10 +1503,10 @@ saveButton.addEventListener(
         }
 
 
-        if(class1Students.length === 0){
+        if(class2Students.length === 0){
 
             alert(
-                "No Class 1 students found."
+                "No Class 2 students found."
             );
 
             return;
@@ -1533,12 +1532,12 @@ saveButton.addEventListener(
 
         if(
             markedCount <
-            class1Students.length
+            class2Students.length
         ){
 
             const remaining =
 
-                class1Students.length -
+                class2Students.length -
                 markedCount;
 
 
@@ -1580,7 +1579,7 @@ saveButton.addEventListener(
 
                     db,
 
-                    "attendance/Class1/" +
+                    "attendance/Class2/" +
                     date
 
                 );
