@@ -1,229 +1,332 @@
+Writing
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Class 2 Attendance | GBPS Karam Khan Nizamani</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<title>Class 2 Daily Attendance | GBPS Karam Khan Nizamani</title>
 
-        body {
-            background: #f2f6f9;
-            color: #222;
-        }
+<style>
 
-        header {
-            background: #0d47a1;
-            color: white;
-            text-align: center;
-            padding: 18px 15px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-        header h1 {
-            font-size: 22px;
-        }
+body{
+    background:#f2f6f9;
+    color:#222;
+}
 
-        header p {
-            margin-top: 6px;
-            font-size: 14px;
-        }
+header{
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:18px 15px;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 20px auto;
-            padding: 15px;
-        }
+header h1{
+    font-size:22px;
+}
 
-        .top-box,
-        .add-box,
-        .table-box {
-            background: white;
-            padding: 18px;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            margin-bottom: 15px;
-        }
+header p{
+    margin-top:6px;
+    font-size:14px;
+}
 
-        .back {
-            display: inline-block;
-            color: #0d47a1;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+.container{
+    max-width:1200px;
+    margin:20px auto;
+    padding:15px;
+}
 
-        h2 {
-            color: #0d47a1;
-            margin-bottom: 8px;
-        }
+.box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
 
-        .date-box {
-            margin-top: 15px;
-        }
+.back{
+    display:inline-block;
+    color:#006a4e;
+    text-decoration:none;
+    font-weight:bold;
+    margin-bottom:15px;
+}
 
-        .date-box label {
-            font-weight: bold;
-        }
+h2{
+    color:#006a4e;
+    margin-bottom:8px;
+}
 
-        input[type="date"],
-        input[type="text"],
-        input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-        }
+.date-box{
+    margin-top:15px;
+}
 
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+.date-box label{
+    font-weight:bold;
+}
 
-        .summary-box {
-            background: white;
-            padding: 15px 8px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-        }
+input[type="date"]{
+    width:100%;
+    padding:11px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+}
 
-        .summary-box strong {
-            display: block;
-            font-size: 22px;
-            color: #0d47a1;
-            margin-bottom: 5px;
-        }
+.status{
+    padding:11px;
+    margin-bottom:15px;
+    border-radius:7px;
+    background:#e8f5e9;
+    color:#006a4e;
+    font-weight:bold;
+    text-align:center;
+}
 
-        .add-btn {
-            width: 100%;
-            margin-top: 12px;
-            padding: 11px;
-            border: none;
-            border-radius: 7px;
-            background: #0d47a1;
-            color: white;
-            font-size: 15px;
-            cursor: pointer;
-        }
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
 
-        .add-btn:hover {
-            background: #08306b;
-        }
+.summary-box{
+    background:white;
+    padding:15px 8px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
 
-        .table-box {
-            overflow-x: auto;
-        }
+.summary-box strong{
+    display:block;
+    font-size:24px;
+    color:#006a4e;
+    margin-bottom:5px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 850px;
-        }
+.save-box{
+    text-align:center;
+}
 
-        th,
-        td {
-            padding: 10px 7px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
+.save-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#006a4e;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation;
+}
 
-        th {
-            background: #0d47a1;
-            color: white;
-        }
+.save-btn:disabled{
+    background:#999;
+}
 
-        td img {
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 50%;
-        }
+.table-box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
 
-        .btn {
-            border: none;
-            padding: 7px 9px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-            font-size: 12px;
-        }
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
 
-        .present {
-            background: #2e7d32;
-        }
+th,
+td{
+    padding:10px 7px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
 
-        .absent {
-            background: #c62828;
-        }
+th{
+    background:#006a4e;
+    color:white;
+    white-space:nowrap;
+}
 
-        .leave {
-            background: #f9a825;
-        }
+td{
+    white-space:nowrap;
+}
 
-        .edit {
-            background: #1565c0;
-        }
+/* ===============================
+   ATTENDANCE BUTTONS
+================================ */
 
-        .remove {
-            background: #8e0000;
-        }
+.attendance-btn{
 
-        .active {
-            outline: 3px solid #222;
-        }
+    display:inline-flex;
 
-        .empty {
-            padding: 20px;
-            text-align: center;
-            color: #777;
-        }
+    align-items:center;
 
-        footer {
-            margin-top: 30px;
-            background: #0d47a1;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 13px;
-        }
+    justify-content:center;
 
-        @media (max-width: 650px) {
+    min-width:95px;
 
-            .summary {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
+    min-height:45px;
+
+    padding:10px 12px;
+
+    border:2px solid;
+
+    border-radius:8px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    touch-action:manipulation;
+
+    -webkit-tap-highlight-color:rgba(0,0,0,.15);
+
+    user-select:none;
+
+    -webkit-user-select:none;
+
+    position:relative;
+
+    z-index:20;
+
+    pointer-events:auto;
+
+    transition:transform .08s ease,
+               background .15s ease;
+
+}
+
+.attendance-btn:active{
+    transform:scale(.94);
+}
+
+.present-btn{
+    background:#e8f5e9;
+    color:#2e7d32;
+    border-color:#81c784;
+}
+
+.absent-btn{
+    background:#ffebee;
+    color:#c62828;
+    border-color:#ef9a9a;
+}
+
+.leave-btn{
+    background:#fff8e1;
+    color:#f57f17;
+    border-color:#ffcc80;
+}
+
+.present-btn.selected{
+    background:#2e7d32;
+    color:white;
+    border-color:#1b5e20;
+}
+
+.absent-btn.selected{
+    background:#c62828;
+    color:white;
+    border-color:#8e0000;
+}
+
+.leave-btn.selected{
+    background:#f9a825;
+    color:white;
+    border-color:#f57f17;
+}
+
+.empty{
+    padding:20px;
+    text-align:center;
+    color:#777;
+}
+
+footer{
+    margin-top:30px;
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:13px;
+}
+
+@media(max-width:650px){
+
+    header h1{
+        font-size:18px;
+    }
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .box{
+        padding:15px;
+    }
+
+    .attendance-btn{
+        min-width:88px;
+        min-height:45px;
+        padding:10px 8px;
+        font-size:12px;
+    }
+
+    table{
+        min-width:850px;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
+
     <h1>🏫 Government Boys Primary School</h1>
+
     <p>Karam Khan Nizamani Campus</p>
+
 </header>
 
 <div class="container">
 
-    <div class="top-box">
+    <div class="box">
 
-        <a href="admin.html" class="back">
+        <a
+            href="admin-dashboard.html"
+            class="back"
+        >
             ← Admin Dashboard
         </a>
 
-        <h2>👨‍🎓 Class 2 Student Record & Attendance</h2>
+        <h2>
+            👨‍🎓 Class 2 Daily Attendance
+        </h2>
 
-        <p>Government Boys Primary School</p>
+        <p>
+            Select the attendance date and mark each Class 2 student.
+        </p>
 
         <div class="date-box">
 
@@ -240,648 +343,1165 @@
 
     </div>
 
-
     <div class="summary">
 
         <div class="summary-box">
-            <strong id="totalStudents">0</strong>
+
+            <strong id="totalStudents">
+                0
+            </strong>
+
             Total Students
+
         </div>
 
         <div class="summary-box">
-            <strong id="presentStudents">0</strong>
-            Present Students
+
+            <strong id="presentStudents">
+                0
+            </strong>
+
+            Present
+
         </div>
 
         <div class="summary-box">
-            <strong id="absentStudents">0</strong>
-            Absent Students
+
+            <strong id="absentStudents">
+                0
+            </strong>
+
+            Absent
+
         </div>
 
         <div class="summary-box">
-            <strong id="leaveStudents">0</strong>
+
+            <strong id="leaveStudents">
+                0
+            </strong>
+
             Leave
+
         </div>
 
     </div>
 
-
-    <div class="add-box">
-
-        <h2>➕ Add Class 2 Student</h2>
-
-        <input
-            type="text"
-            id="studentName"
-            placeholder="Student Name"
-        >
-
-        <input
-            type="text"
-            id="grNo"
-            placeholder="GR No."
-        >
-
-        <input
-            type="file"
-            id="studentPicture"
-            accept="image/*"
-        >
+    <div class="box save-box">
 
         <button
-            class="add-btn"
-            onclick="addStudent()"
+            type="button"
+            id="saveButton"
+            class="save-btn"
+            disabled
         >
-            Add Student
+            💾 Save Today's Attendance
         </button>
 
     </div>
 
-
     <div class="table-box">
+
+        <div
+            id="connectionStatus"
+            class="status"
+        >
+            🟡 Connecting to Firebase...
+        </div>
 
         <table>
 
             <thead>
 
                 <tr>
+
                     <th>S. No.</th>
+
                     <th>Student Name</th>
+
+                    <th>Father's Name</th>
+
                     <th>GR No.</th>
-                    <th>Picture</th>
+
+                    <th>Roll No.</th>
+
                     <th>Present</th>
+
                     <th>Absent</th>
+
                     <th>Leave</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
+
                 </tr>
 
             </thead>
 
-            <tbody id="studentTableBody"></tbody>
+            <tbody
+                id="studentTableBody"
+            ></tbody>
 
         </table>
 
         <div
             id="emptyMessage"
             class="empty"
+            style="display:none;"
         >
-            No Class 2 students added yet.
+            No Class 2 students found.
         </div>
 
     </div>
 
 </div>
 
-
 <footer>
-    <strong>Government Boys Primary School</strong><br>
-    Karam Khan Nizamani Campus<br><br>
+
+    <strong>
+        Government Boys Primary School
+    </strong>
+
+    <br>
+
+    Karam Khan Nizamani Campus
+
+    <br><br>
+
     © 2026 Government Boys Primary School
+
 </footer>
 
+<script type="module">
 
-<script>
+/* =====================================================
+   FIREBASE IMPORTS
+===================================================== */
 
-let students = JSON.parse(
-    localStorage.getItem(
-        "class2AttendanceStudents"
-    ) || "[]"
-);
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
+import {
+    getDatabase,
+    ref,
+    onValue,
+    set
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSy0TboTizM_SfChAAhvjmZloB-j5wCKLH4Ps",
+
+    authDomain:
+        "gbps-karam-khan-nizamani.firebaseapp.com",
+
+    databaseURL:
+        "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
+    projectId:
+        "gbps-karam-khan-nizamani",
+
+    storageBucket:
+        "gbps-karam-khan-nizamani.firebasestorage.app",
+
+    messagingSenderId:
+        "772460890400",
+
+    appId:
+        "1:772460890400:web:cf2379f4e0d21ebe476f45",
+
+    measurementId:
+        "G-KDQ1MQ16WN"
+
+};
+
+
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getDatabase(app);
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const tableBody =
+    document.getElementById(
+        "studentTableBody"
+    );
+
+const emptyMessage =
+    document.getElementById(
+        "emptyMessage"
+    );
+
+const connectionStatus =
+    document.getElementById(
+        "connectionStatus"
+    );
 
 const dateInput =
     document.getElementById(
         "attendanceDate"
     );
 
+const saveButton =
+    document.getElementById(
+        "saveButton"
+    );
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function getLocalDate(){
+
+    const now =
+        new Date();
+
+    return (
+
+        now.getFullYear() +
+
+        "-" +
+
+        String(
+            now.getMonth() + 1
+        ).padStart(2,"0") +
+
+        "-" +
+
+        String(
+            now.getDate()
+        ).padStart(2,"0")
+
+    );
+
+}
 
 dateInput.value =
     localStorage.getItem(
         "class2AttendanceDate"
     ) ||
-    new Date()
-        .toISOString()
-        .split("T")[0];
+    getLocalDate();
 
 
-dateInput.addEventListener(
-    "change",
-    function () {
+/* =====================================================
+   VARIABLES
+===================================================== */
 
-        localStorage.setItem(
-            "class2AttendanceDate",
-            this.value
+let class2Students = [];
+
+let attendanceData = {};
+
+let pendingAttendance = {};
+
+
+/* =====================================================
+   LOAD STUDENTS
+===================================================== */
+
+const studentsRef =
+    ref(
+        db,
+        "students"
+    );
+
+onValue(
+
+    studentsRef,
+
+    function(snapshot){
+
+        const data =
+            snapshot.val();
+
+        if(!data){
+
+            class2Students = [];
+
+            renderStudents();
+
+            connectionStatus.textContent =
+                "🟢 Connected, but no students were found.";
+
+            return;
+
+        }
+
+        class2Students =
+
+            Object.entries(data)
+
+            .map(
+                function([key,student]){
+
+                    return {
+
+                        ...student,
+
+                        firebaseKey:key
+
+                    };
+
+                }
+            )
+
+            .filter(
+                function(student){
+
+                    const classValue =
+
+                        String(
+
+                            student.className ||
+
+                            student.class ||
+
+                            ""
+
+                        )
+
+                        .trim()
+
+                        .toLowerCase();
+
+                    return (
+
+                        classValue === "class 2" ||
+
+                        classValue === "2" ||
+
+                        classValue === "class2"
+
+                    );
+
+                }
+            );
+
+        class2Students.sort(
+
+            function(a,b){
+
+                const rollA =
+                    parseInt(
+
+                        a.roll ||
+
+                        a.rollNo ||
+
+                        "999999"
+
+                    );
+
+                const rollB =
+                    parseInt(
+
+                        b.roll ||
+
+                        b.rollNo ||
+
+                        "999999"
+
+                    );
+
+                return rollA - rollB;
+
+            }
+
         );
 
+        connectionStatus.textContent =
+
+            "🟢 Connected. " +
+
+            class2Students.length +
+
+            " Class 2 student(s) loaded.";
+
+        loadAttendance();
+
+    },
+
+    function(error){
+
+        console.error(error);
+
+        connectionStatus.textContent =
+
+            "🔴 Firebase connection error: " +
+
+            error.message;
+
     }
+
 );
 
 
-function saveStudents() {
+/* =====================================================
+   LOAD ATTENDANCE
+===================================================== */
 
-    localStorage.setItem(
-        "class2AttendanceStudents",
-        JSON.stringify(students)
+function loadAttendance(){
+
+    const date =
+        dateInput.value;
+
+    if(!date){
+
+        return;
+
+    }
+
+    const attendanceRef =
+
+        ref(
+
+            db,
+
+            "attendance/Class2/" +
+            date
+
+        );
+
+    onValue(
+
+        attendanceRef,
+
+        function(snapshot){
+
+            attendanceData =
+                snapshot.val() || {};
+
+            pendingAttendance = {};
+
+            renderStudents();
+
+            saveButton.disabled =
+                false;
+
+        },
+
+        function(error){
+
+            console.error(error);
+
+            connectionStatus.textContent =
+
+                "🔴 Could not load attendance: " +
+
+                error.message;
+
+            saveButton.disabled =
+                true;
+
+        },
+
+        {
+            onlyOnce:true
+        }
+
     );
 
 }
 
 
-function addStudent() {
+/* =====================================================
+   DATE CHANGE
+===================================================== */
 
-    const name =
-        document
-            .getElementById("studentName")
-            .value
-            .trim();
+dateInput.addEventListener(
 
+    "change",
 
-    const grNo =
-        document
-            .getElementById("grNo")
-            .value
-            .trim();
+    function(){
 
+        localStorage.setItem(
 
-    const pictureInput =
-        document.getElementById(
-            "studentPicture"
+            "class2AttendanceDate",
+
+            this.value
+
         );
 
+        attendanceData = {};
 
-    if (!name || !grNo) {
+        pendingAttendance = {};
 
-        alert(
-            "Please enter Student Name and GR No."
-        );
+        saveButton.disabled =
+            true;
 
-        return;
-    }
-
-
-    if (
-        students.some(
-            student =>
-                student.grNo === grNo
-        )
-    ) {
-
-        alert(
-            "This GR No. already exists."
-        );
-
-        return;
-    }
-
-
-    if (
-        pictureInput.files.length > 0
-    ) {
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function (event) {
-
-                createStudent(
-                    name,
-                    grNo,
-                    event.target.result
-                );
-
-            };
-
-
-        reader.readAsDataURL(
-            pictureInput.files[0]
-        );
-
-    } else {
-
-        createStudent(
-            name,
-            grNo,
-            ""
-        );
+        loadAttendance();
 
     }
 
-}
+);
 
 
-function createStudent(
-    name,
-    grNo,
-    picture
-) {
+/* =====================================================
+   RENDER STUDENTS
+===================================================== */
 
-    students.push({
-
-        id: Date.now(),
-
-        name: name,
-
-        grNo: grNo,
-
-        picture: picture,
-
-        attendance: "none"
-
-    });
-
-
-    saveStudents();
-
-
-    document.getElementById(
-        "studentName"
-    ).value = "";
-
-
-    document.getElementById(
-        "grNo"
-    ).value = "";
-
-
-    document.getElementById(
-        "studentPicture"
-    ).value = "";
-
-
-    renderStudents();
-
-}
-
-
-function setAttendance(
-    id,
-    status
-) {
-
-    const student =
-        students.find(
-            student =>
-                student.id === id
-        );
-
-
-    if (!student) return;
-
-
-    student.attendance =
-        status;
-
-
-    saveStudents();
-
-    renderStudents();
-
-}
-
-
-function editStudent(id) {
-
-    const student =
-        students.find(
-            student =>
-                student.id === id
-        );
-
-
-    if (!student) return;
-
-
-    const newName =
-        prompt(
-            "Edit Student Name:",
-            student.name
-        );
-
-
-    if (
-        newName === null ||
-        newName.trim() === ""
-    ) return;
-
-
-    const newGrNo =
-        prompt(
-            "Edit GR No.:",
-            student.grNo
-        );
-
-
-    if (
-        newGrNo === null ||
-        newGrNo.trim() === ""
-    ) return;
-
-
-    if (
-        students.some(
-            student =>
-                student.id !== id &&
-                student.grNo ===
-                newGrNo.trim()
-        )
-    ) {
-
-        alert(
-            "This GR No. already exists."
-        );
-
-        return;
-    }
-
-
-    student.name =
-        newName.trim();
-
-
-    student.grNo =
-        newGrNo.trim();
-
-
-    saveStudents();
-
-    renderStudents();
-
-}
-
-
-function removeStudent(id) {
-
-    const student =
-        students.find(
-            student =>
-                student.id === id
-        );
-
-
-    if (!student) return;
-
-
-    if (
-        !confirm(
-            "Remove " +
-            student.name +
-            " from Class 2?"
-        )
-    ) return;
-
-
-    students =
-        students.filter(
-            student =>
-                student.id !== id
-        );
-
-
-    saveStudents();
-
-    renderStudents();
-
-}
-
-
-function renderStudents() {
-
-    const tableBody =
-        document.getElementById(
-            "studentTableBody"
-        );
-
-
-    const emptyMessage =
-        document.getElementById(
-            "emptyMessage"
-        );
-
+function renderStudents(){
 
     tableBody.innerHTML = "";
 
-
-    if (students.length === 0) {
+    if(class2Students.length === 0){
 
         emptyMessage.style.display =
             "block";
 
-    } else {
+        updateSummary();
 
-        emptyMessage.style.display =
-            "none";
-
-
-        students.forEach(
-            (student, index) => {
-
-                const row =
-                    document.createElement(
-                        "tr"
-                    );
-
-
-                const pictureHTML =
-                    student.picture
-                    ? `<img src="${student.picture}" alt="Student">`
-                    : "—";
-
-
-                row.innerHTML = `
-
-                    <td>
-                        ${index + 1}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(student.name)}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(student.grNo)}
-                    </td>
-
-                    <td>
-                        ${pictureHTML}
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn present ${
-                                student.attendance ===
-                                "present"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'present'
-                                )
-                            "
-                        >
-                            ✅
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn absent ${
-                                student.attendance ===
-                                "absent"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'absent'
-                                )
-                            "
-                        >
-                            ❌
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn leave ${
-                                student.attendance ===
-                                "leave"
-                                ? "active"
-                                : ""
-                            }"
-                            onclick="
-                                setAttendance(
-                                    ${student.id},
-                                    'leave'
-                                )
-                            "
-                        >
-                            🟡
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn edit"
-                            onclick="
-                                editStudent(
-                                    ${student.id}
-                                )
-                            "
-                        >
-                            ✏️ Edit
-                        </button>
-
-                    </td>
-
-                    <td>
-
-                        <button
-                            class="btn remove"
-                            onclick="
-                                removeStudent(
-                                    ${student.id}
-                                )
-                            "
-                        >
-                            🗑️
-                        </button>
-
-                    </td>
-
-                `;
-
-
-                tableBody.appendChild(row);
-
-            }
-        );
+        return;
 
     }
 
+    emptyMessage.style.display =
+        "none";
+
+    class2Students.forEach(
+
+        function(student,index){
+
+            const id =
+                student.firebaseKey;
+
+            const status =
+
+                pendingAttendance[id] ??
+
+                attendanceData[id] ??
+
+                "none";
+
+            const row =
+                document.createElement("tr");
+
+            row.dataset.studentId =
+                id;
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.name ||
+                        student.studentName ||
+                        "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.father ||
+                        student.fatherName ||
+                        "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.grNumber ||
+                        student.grNo ||
+                        "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.roll ||
+                        student.rollNo ||
+                        "—"
+                    )}
+                </td>
+
+                <td class="present-cell"></td>
+
+                <td class="absent-cell"></td>
+
+                <td class="leave-cell"></td>
+
+            `;
+
+            const presentButton =
+
+                createAttendanceButton(
+
+                    "present",
+
+                    "✅ Present",
+
+                    id,
+
+                    status === "present"
+
+                );
+
+            const absentButton =
+
+                createAttendanceButton(
+
+                    "absent",
+
+                    "❌ Absent",
+
+                    id,
+
+                    status === "absent"
+
+                );
+
+            const leaveButton =
+
+                createAttendanceButton(
+
+                    "leave",
+
+                    "🟡 Leave",
+
+                    id,
+
+                    status === "leave"
+
+                );
+
+            row.querySelector(
+                ".present-cell"
+            ).appendChild(
+                presentButton
+            );
+
+            row.querySelector(
+                ".absent-cell"
+            ).appendChild(
+                absentButton
+            );
+
+            row.querySelector(
+                ".leave-cell"
+            ).appendChild(
+                leaveButton
+            );
+
+            tableBody.appendChild(row);
+
+        }
+
+    );
 
     updateSummary();
 
 }
 
 
-function updateSummary() {
+/* =====================================================
+   CREATE BUTTON
+===================================================== */
 
-    const total =
-        students.length;
+function createAttendanceButton(
 
+    status,
 
-    const present =
-        students.filter(
-            student =>
-                student.attendance ===
-                "present"
-        ).length;
+    text,
 
+    studentId,
 
-    const absent =
-        students.filter(
-            student =>
-                student.attendance ===
-                "absent"
-        ).length;
+    selected
 
+){
 
-    const leave =
-        students.filter(
-            student =>
-                student.attendance ===
-                "leave"
-        ).length;
+    const button =
+        document.createElement("button");
 
+    button.type =
+        "button";
 
-    document.getElementById(
-        "totalStudents"
-    ).textContent = total;
+    button.className =
 
+        "attendance-btn " +
 
-    document.getElementById(
-        "presentStudents"
-    ).textContent = present;
+        status +
 
+        "-btn" +
 
-    document.getElementById(
-        "absentStudents"
-    ).textContent = absent;
+        (
+            selected
+            ? " selected"
+            : ""
+        );
 
+    button.dataset.studentId =
+        studentId;
 
-    document.getElementById(
-        "leaveStudents"
-    ).textContent = leave;
+    button.dataset.status =
+        status;
+
+    button.textContent =
+
+        selected
+
+        ? text + " ✓"
+
+        : text;
+
+    return button;
 
 }
 
 
-function escapeHTML(text) {
+/* =====================================================
+   SINGLE TABLE CLICK HANDLER
+===================================================== */
+
+tableBody.addEventListener(
+
+    "click",
+
+    function(event){
+
+        const button =
+
+            event.target.closest(
+                ".attendance-btn"
+            );
+
+        if(!button){
+
+            return;
+
+        }
+
+        event.preventDefault();
+
+        const studentId =
+            button.dataset.studentId;
+
+        const status =
+            button.dataset.status;
+
+        if(!studentId || !status){
+
+            return;
+
+        }
+
+        markAttendance(
+
+            studentId,
+
+            status
+
+        );
+
+    }
+
+);
+
+
+/* =====================================================
+   MARK ATTENDANCE
+===================================================== */
+
+function markAttendance(
+
+    studentId,
+
+    status
+
+){
+
+    console.log(
+
+        "Attendance clicked:",
+
+        studentId,
+
+        status
+
+    );
+
+    pendingAttendance[studentId] =
+        status;
+
+    updateButtonSelection(
+
+        studentId,
+
+        status
+
+    );
+
+    updateSummary();
+
+}
+
+
+/* =====================================================
+   UPDATE SELECTED BUTTONS
+===================================================== */
+
+function updateButtonSelection(
+
+    studentId,
+
+    selectedStatus
+
+){
+
+    const row =
+
+        tableBody.querySelector(
+
+            'tr[data-student-id="' +
+
+            CSS.escape(studentId) +
+
+            '"]'
+
+        );
+
+    if(!row){
+
+        return;
+
+    }
+
+    const buttons =
+
+        row.querySelectorAll(
+            ".attendance-btn"
+        );
+
+    buttons.forEach(
+
+        function(button){
+
+            const status =
+                button.dataset.status;
+
+            let text;
+
+            if(status === "present"){
+
+                text =
+                    "✅ Present";
+
+            }
+
+            else if(status === "absent"){
+
+                text =
+                    "❌ Absent";
+
+            }
+
+            else{
+
+                text =
+                    "🟡 Leave";
+
+            }
+
+            if(status === selectedStatus){
+
+                button.classList.add(
+                    "selected"
+                );
+
+                button.textContent =
+                    text + " ✓";
+
+            }
+
+            else{
+
+                button.classList.remove(
+                    "selected"
+                );
+
+                button.textContent =
+                    text;
+
+            }
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function updateSummary(){
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent =
+        class2Students.length;
+
+    let present = 0;
+
+    let absent = 0;
+
+    let leave = 0;
+
+    class2Students.forEach(
+
+        function(student){
+
+            const id =
+                student.firebaseKey;
+
+            const status =
+
+                pendingAttendance[id] ??
+
+                attendanceData[id];
+
+            if(status === "present"){
+
+                present++;
+
+            }
+
+            if(status === "absent"){
+
+                absent++;
+
+            }
+
+            if(status === "leave"){
+
+                leave++;
+
+            }
+
+        }
+
+    );
+
+    document.getElementById(
+        "presentStudents"
+    ).textContent =
+        present;
+
+    document.getElementById(
+        "absentStudents"
+    ).textContent =
+        absent;
+
+    document.getElementById(
+        "leaveStudents"
+    ).textContent =
+        leave;
+
+}
+
+
+/* =====================================================
+   SAVE ATTENDANCE
+===================================================== */
+
+saveButton.addEventListener(
+
+    "click",
+
+    async function(){
+
+        const date =
+            dateInput.value;
+
+        if(!date){
+
+            alert(
+                "Please select an attendance date."
+            );
+
+            return;
+
+        }
+
+        if(class2Students.length === 0){
+
+            alert(
+                "No Class 2 students found."
+            );
+
+            return;
+
+        }
+
+        const finalAttendance = {
+
+            ...attendanceData,
+
+            ...pendingAttendance
+
+        };
+
+        const markedCount =
+
+            Object.keys(
+                finalAttendance
+            ).length;
+
+        if(
+            markedCount <
+            class2Students.length
+        ){
+
+            const remaining =
+
+                class2Students.length -
+                markedCount;
+
+            const answer =
+
+                confirm(
+
+                    remaining +
+
+                    " student(s) are not marked.\n\n" +
+
+                    "Do you still want to save?"
+
+                );
+
+            if(!answer){
+
+                return;
+
+            }
+
+        }
+
+        saveButton.disabled =
+            true;
+
+        saveButton.textContent =
+            "⏳ Saving Attendance...";
+
+        try{
+
+            const attendanceRef =
+
+                ref(
+
+                    db,
+
+                    "attendance/Class2/" +
+                    date
+
+                );
+
+            await set(
+
+                attendanceRef,
+
+                finalAttendance
+
+            );
+
+            attendanceData =
+                finalAttendance;
+
+            pendingAttendance = {};
+
+            connectionStatus.textContent =
+
+                "🟢 Attendance saved successfully for " +
+                date +
+                ".";
+
+            saveButton.textContent =
+                "✅ Attendance Saved";
+
+            renderStudents();
+
+            setTimeout(
+
+                function(){
+
+                    saveButton.disabled =
+                        false;
+
+                    saveButton.textContent =
+                        "💾 Save Today's Attendance";
+
+                },
+
+                1500
+
+            );
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+            connectionStatus.textContent =
+
+                "🔴 Error saving attendance: " +
+                error.message;
+
+            saveButton.disabled =
+                false;
+
+            saveButton.textContent =
+                "💾 Save Today's Attendance";
+
+            alert(
+
+                "Attendance could not be saved.\n\n" +
+                error.message
+
+            );
+
+        }
+
+    }
+
+);
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
 
     const div =
         document.createElement("div");
 
-    div.textContent = text;
+    div.textContent =
+        String(value);
 
     return div.innerHTML;
 
 }
-
-
-renderStudents();
 
 </script>
 
