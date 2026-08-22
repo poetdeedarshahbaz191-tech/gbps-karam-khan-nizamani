@@ -1,544 +1,1507 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Class 3 Attendance | GBPS Karam Khan Nizamani Campus</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<title>Class 3 Daily Attendance | GBPS Karam Khan Nizamani</title>
 
-        body {
-            background: #f4f8ff;
-            color: #222;
-        }
+<style>
 
-        header {
-            background: #0d47a1;
-            color: white;
-            text-align: center;
-            padding: 25px 15px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-        header h1 {
-            font-size: 25px;
-        }
+body{
+    background:#f2f6f9;
+    color:#222;
+}
 
-        header p {
-            margin-top: 7px;
-            font-size: 15px;
-        }
+header{
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:18px 15px;
+}
 
-        .container {
-            max-width: 950px;
-            margin: 25px auto;
-            padding: 15px;
-        }
+header h1{
+    font-size:22px;
+}
 
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 18px;
-            background: #0d47a1;
-            color: white;
-            text-decoration: none;
-            border-radius: 7px;
-        }
+header p{
+    margin-top:6px;
+    font-size:14px;
+}
 
-        h2 {
-            color: #0d47a1;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.container{
+    max-width:1200px;
+    margin:20px auto;
+    padding:15px;
+}
 
-        .date-box {
-            background: white;
-            padding: 18px;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            text-align: center;
-        }
+.box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
 
-        .date-box label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-        }
+.back{
+    display:inline-block;
+    color:#006a4e;
+    text-decoration:none;
+    font-weight:bold;
+    margin-bottom:15px;
+}
 
-        .date-box input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 16px;
-        }
+h2{
+    color:#006a4e;
+    margin-bottom:8px;
+}
 
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+.date-box{
+    margin-top:15px;
+}
 
-        .card {
-            background: white;
-            padding: 18px 10px;
-            text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
+.date-box label{
+    font-weight:bold;
+}
 
-        .card strong {
-            display: block;
-            font-size: 25px;
-            color: #0d47a1;
-            margin-bottom: 5px;
-        }
+input[type="date"]{
+    width:100%;
+    padding:11px;
+    margin-top:6px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+}
 
-        .add-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
+.status{
+    padding:11px;
+    margin-bottom:15px;
+    border-radius:7px;
+    background:#e8f5e9;
+    color:#006a4e;
+    font-weight:bold;
+    text-align:center;
+}
 
-        .add-box h3 {
-            color: #0d47a1;
-            margin-bottom: 15px;
-        }
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
-        }
+.summary-box{
+    background:white;
+    padding:15px 8px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
 
-        input[type="text"] {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 15px;
-        }
+.summary-box strong{
+    display:block;
+    font-size:24px;
+    color:#006a4e;
+    margin-bottom:5px;
+}
 
-        button {
-            border: none;
-            cursor: pointer;
-            border-radius: 7px;
-            padding: 12px 16px;
-            font-size: 15px;
-        }
+.save-box{
+    text-align:center;
+}
 
-        .add-btn {
-            background: #0d47a1;
-            color: white;
-        }
+.save-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#006a4e;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    touch-action:manipulation;
+}
 
-        .student-list {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            overflow-x: auto;
-        }
+.save-btn:disabled{
+    background:#999;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 700px;
-        }
+.table-box{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
 
-        th {
-            background: #0d47a1;
-            color: white;
-            padding: 13px;
-        }
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
 
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            text-align: center;
-        }
+th,
+td{
+    padding:10px 7px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
 
-        .status-btn {
-            padding: 8px 10px;
-            margin: 2px;
-            color: white;
-        }
+th{
+    background:#006a4e;
+    color:white;
+    white-space:nowrap;
+}
 
-        .present {
-            background: #2e7d32;
-        }
+td{
+    white-space:nowrap;
+}
 
-        .absent {
-            background: #c62828;
-        }
+/* ===============================
+   ATTENDANCE BUTTONS
+================================ */
 
-        .leave {
-            background: #ef6c00;
-        }
+.attendance-btn{
 
-        .edit {
-            background: #6a1b9a;
-            color: white;
-        }
+    display:inline-flex;
 
-        .delete {
-            background: #b71c1c;
-            color: white;
-        }
+    align-items:center;
 
-        .selected {
-            outline: 3px solid #222;
-        }
+    justify-content:center;
 
-        footer {
-            margin-top: 35px;
-            background: #0d47a1;
-            color: white;
-            text-align: center;
-            padding: 18px;
-            font-size: 14px;
-        }
+    min-width:95px;
 
-        @media (max-width: 650px) {
+    min-height:45px;
 
-            .summary {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    padding:10px 12px;
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+    border:2px solid;
 
-            header h1 {
-                font-size: 21px;
-            }
-        }
-    </style>
+    border-radius:8px;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    touch-action:manipulation;
+
+    -webkit-tap-highlight-color:rgba(0,0,0,.15);
+
+    user-select:none;
+
+    -webkit-user-select:none;
+
+    position:relative;
+
+    z-index:20;
+
+    pointer-events:auto;
+
+    transition:transform .08s ease,
+               background .15s ease;
+
+}
+
+.attendance-btn:active{
+    transform:scale(.94);
+}
+
+.present-btn{
+    background:#e8f5e9;
+    color:#2e7d32;
+    border-color:#81c784;
+}
+
+.absent-btn{
+    background:#ffebee;
+    color:#c62828;
+    border-color:#ef9a9a;
+}
+
+.leave-btn{
+    background:#fff8e1;
+    color:#f57f17;
+    border-color:#ffcc80;
+}
+
+.present-btn.selected{
+    background:#2e7d32;
+    color:white;
+    border-color:#1b5e20;
+}
+
+.absent-btn.selected{
+    background:#c62828;
+    color:white;
+    border-color:#8e0000;
+}
+
+.leave-btn.selected{
+    background:#f9a825;
+    color:white;
+    border-color:#f57f17;
+}
+
+.empty{
+    padding:20px;
+    text-align:center;
+    color:#777;
+}
+
+footer{
+    margin-top:30px;
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:13px;
+}
+
+@media(max-width:650px){
+
+    header h1{
+        font-size:18px;
+    }
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .box{
+        padding:15px;
+    }
+
+    .attendance-btn{
+        min-width:88px;
+        min-height:45px;
+        padding:10px 8px;
+        font-size:12px;
+    }
+
+    table{
+        min-width:850px;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
-    <h1>Government Boys Primary School</h1>
+
+    <h1>🏫 Government Boys Primary School</h1>
+
     <p>Karam Khan Nizamani Campus</p>
+
 </header>
 
 <div class="container">
 
-    <a href="index.html" class="back">← Back to Home</a>
+    <div class="box">
 
-    <h2>Class 3 Student Record & Attendance</h2>
+        <a
+            href="admin-dashboard.html"
+            class="back"
+        >
+            ← Admin Dashboard
+        </a>
 
-    <div class="date-box">
-        <label for="attendanceDate">Attendance Date:</label>
-        <input type="date" id="attendanceDate">
+        <h2>
+            👨‍🎓 Class 3 Daily Attendance
+        </h2>
+
+        <p>
+            Select the attendance date and mark each Class 3 student.
+        </p>
+
+        <div class="date-box">
+
+            <label for="attendanceDate">
+                Attendance Date:
+            </label>
+
+            <input
+                type="date"
+                id="attendanceDate"
+            >
+
+        </div>
+
     </div>
 
     <div class="summary">
 
-        <div class="card">
-            <strong id="totalStudents">0</strong>
+        <div class="summary-box">
+
+            <strong id="totalStudents">
+                0
+            </strong>
+
             Total Students
+
         </div>
 
-        <div class="card">
-            <strong id="presentStudents">0</strong>
-            Present Students
+        <div class="summary-box">
+
+            <strong id="presentStudents">
+                0
+            </strong>
+
+            Present
+
         </div>
 
-        <div class="card">
-            <strong id="absentStudents">0</strong>
-            Absent Students
+        <div class="summary-box">
+
+            <strong id="absentStudents">
+                0
+            </strong>
+
+            Absent
+
         </div>
 
-        <div class="card">
-            <strong id="leaveStudents">0</strong>
+        <div class="summary-box">
+
+            <strong id="leaveStudents">
+                0
+            </strong>
+
             Leave
-        </div>
-
-    </div>
-
-    <div class="add-box">
-
-        <h3>➕ Add Student</h3>
-
-        <div class="form-row">
-
-            <input
-                type="text"
-                id="studentName"
-                placeholder="Student Name"
-            >
-
-            <input
-                type="text"
-                id="grNumber"
-                placeholder="GR No."
-            >
-
-            <button class="add-btn" onclick="addStudent()">
-                Add Student
-            </button>
 
         </div>
 
     </div>
 
-    <div class="student-list">
+    <div class="box save-box">
+
+        <button
+            type="button"
+            id="saveButton"
+            class="save-btn"
+            disabled
+        >
+            💾 Save Today's Attendance
+        </button>
+
+    </div>
+
+    <div class="table-box">
+
+        <div
+            id="connectionStatus"
+            class="status"
+        >
+            🟡 Connecting to Firebase...
+        </div>
 
         <table>
 
             <thead>
+
                 <tr>
-                    <th>#</th>
+
+                    <th>S. No.</th>
+
                     <th>Student Name</th>
+
+                    <th>Father's Name</th>
+
                     <th>GR No.</th>
-                    <th>Attendance</th>
-                    <th>Action</th>
+
+                    <th>Roll No.</th>
+
+                    <th>Present</th>
+
+                    <th>Absent</th>
+
+                    <th>Leave</th>
+
                 </tr>
+
             </thead>
 
-            <tbody id="studentTable"></tbody>
+            <tbody
+                id="studentTableBody"
+            ></tbody>
 
         </table>
+
+        <div
+            id="emptyMessage"
+            class="empty"
+            style="display:none;"
+        >
+            No Class 3 students found.
+        </div>
 
     </div>
 
 </div>
 
 <footer>
+
+    <strong>
+        Government Boys Primary School
+    </strong>
+
+    <br>
+
+    Karam Khan Nizamani Campus
+
+    <br><br>
+
     © 2026 Government Boys Primary School
+
 </footer>
 
-<script>
+<script type="module">
 
-    let students = JSON.parse(
-        localStorage.getItem("class3Students")
-    ) || [];
+/* =====================================================
+   FIREBASE IMPORTS
+===================================================== */
 
-    let attendance = JSON.parse(
-        localStorage.getItem("class3Attendance")
-    ) || {};
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-    const dateInput = document.getElementById("attendanceDate");
+import {
+    getDatabase,
+    ref,
+    onValue,
+    set
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
-    dateInput.value = new Date().toISOString().split("T")[0];
 
-    dateInput.addEventListener("change", renderStudents);
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
-    function saveData() {
+const firebaseConfig = {
 
-        localStorage.setItem(
-            "class3Students",
-            JSON.stringify(students)
-        );
+    apiKey:
+        "AIzaSy0TboTizM_SfChAAhvjmZloB-j5wCKLH4Ps",
 
-        localStorage.setItem(
-            "class3Attendance",
-            JSON.stringify(attendance)
-        );
-    }
+    authDomain:
+        "gbps-karam-khan-nizamani.firebaseapp.com",
 
-    function addStudent() {
+    databaseURL:
+        "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
 
-        const name = document
-            .getElementById("studentName")
-            .value.trim();
+    projectId:
+        "gbps-karam-khan-nizamani",
 
-        const gr = document
-            .getElementById("grNumber")
-            .value.trim();
+    storageBucket:
+        "gbps-karam-khan-nizamani.firebasestorage.app",
 
-        if (!name || !gr) {
-            alert("Please enter Student Name and GR No.");
+    messagingSenderId:
+        "772460890400",
+
+    appId:
+        "1:772460890400:web:cf2379f4e0d21ebe476f45",
+
+    measurementId:
+        "G-KDQ1MQ16WN"
+
+};
+
+
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getDatabase(app);
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const tableBody =
+    document.getElementById(
+        "studentTableBody"
+    );
+
+const emptyMessage =
+    document.getElementById(
+        "emptyMessage"
+    );
+
+const connectionStatus =
+    document.getElementById(
+        "connectionStatus"
+    );
+
+const dateInput =
+    document.getElementById(
+        "attendanceDate"
+    );
+
+const saveButton =
+    document.getElementById(
+        "saveButton"
+    );
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function getLocalDate(){
+
+    const now =
+        new Date();
+
+    return (
+
+        now.getFullYear() +
+
+        "-" +
+
+        String(
+            now.getMonth() + 1
+        ).padStart(2,"0") +
+
+        "-" +
+
+        String(
+            now.getDate()
+        ).padStart(2,"0")
+
+    );
+
+}
+
+dateInput.value =
+    localStorage.getItem(
+        "class3AttendanceDate"
+    ) ||
+    getLocalDate();
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let class3Students = [];
+
+let attendanceData = {};
+
+let pendingAttendance = {};
+
+
+/* =====================================================
+   LOAD STUDENTS
+===================================================== */
+
+const studentsRef =
+    ref(
+        db,
+        "students"
+    );
+
+onValue(
+
+    studentsRef,
+
+    function(snapshot){
+
+        const data =
+            snapshot.val();
+
+        if(!data){
+
+            class3Students = [];
+
+            renderStudents();
+
+            connectionStatus.textContent =
+                "🟢 Connected, but no students were found.";
+
             return;
+
         }
 
-        students.push({
-            id: Date.now(),
-            name: name,
-            gr: gr
-        });
+        class3Students =
 
-        saveData();
+            Object.entries(data)
 
-        document.getElementById("studentName").value = "";
-        document.getElementById("grNumber").value = "";
+            .map(
+                function([key,student]){
 
-        renderStudents();
-    }
+                    return {
 
-    function setAttendance(id, status) {
+                        ...student,
 
-        const date = dateInput.value;
+                        firebaseKey:key
 
-        if (!attendance[date]) {
-            attendance[date] = {};
-        }
+                    };
 
-        attendance[date][id] = status;
+                }
+            )
 
-        saveData();
+            .filter(
+                function(student){
 
-        renderStudents();
-    }
+                    const classValue =
 
-    function editStudent(id) {
+                        String(
 
-        const student = students.find(
-            s => s.id === id
-        );
+                            student.className ||
 
-        if (!student) return;
+                            student.class ||
 
-        const newName = prompt(
-            "Edit Student Name:",
-            student.name
-        );
+                            ""
 
-        if (newName === null) return;
+                        )
 
-        const newGR = prompt(
-            "Edit GR No.:",
-            student.gr
-        );
+                        .trim()
 
-        if (newGR === null) return;
+                        .toLowerCase();
 
-        if (!newName.trim() || !newGR.trim()) {
-            alert("Student Name and GR No. cannot be empty.");
-            return;
-        }
+                    return (
 
-        student.name = newName.trim();
-        student.gr = newGR.trim();
+                        classValue === "class 3" ||
 
-        saveData();
+                        classValue === "3" ||
 
-        renderStudents();
-    }
+                        classValue === "class3"
 
-    function deleteStudent(id) {
+                    );
 
-        if (!confirm("Delete this student?")) {
-            return;
-        }
+                }
+            );
 
-        students = students.filter(
-            student => student.id !== id
-        );
+        class3Students.sort(
 
-        Object.keys(attendance).forEach(date => {
+            function(a,b){
 
-            if (attendance[date]) {
-                delete attendance[date][id];
+                const rollA =
+                    parseInt(
+
+                        a.roll ||
+
+                        a.rollNo ||
+
+                        "999999"
+
+                    );
+
+                const rollB =
+                    parseInt(
+
+                        b.roll ||
+
+                        b.rollNo ||
+
+                        "999999"
+
+                    );
+
+                return rollA - rollB;
+
             }
 
-        });
+        );
 
-        saveData();
+        connectionStatus.textContent =
 
-        renderStudents();
+            "🟢 Connected. " +
+
+            class3Students.length +
+
+            " Class 3 student(s) loaded.";
+
+        loadAttendance();
+
+    },
+
+    function(error){
+
+        console.error(error);
+
+        connectionStatus.textContent =
+
+            "🔴 Firebase connection error: " +
+
+            error.message;
+
     }
 
-    function renderStudents() {
+);
 
-        const table = document.getElementById("studentTable");
 
-        const date = dateInput.value;
+/* =====================================================
+   LOAD ATTENDANCE
+===================================================== */
 
-        table.innerHTML = "";
+function loadAttendance(){
 
-        let present = 0;
-        let absent = 0;
-        let leave = 0;
+    const date =
+        dateInput.value;
 
-        students.forEach((student, index) => {
+    if(!date){
+
+        return;
+
+    }
+
+    const attendanceRef =
+
+        ref(
+
+            db,
+
+            "attendance/Class3/" +
+            date
+
+        );
+
+    onValue(
+
+        attendanceRef,
+
+        function(snapshot){
+
+            attendanceData =
+                snapshot.val() || {};
+
+            pendingAttendance = {};
+
+            renderStudents();
+
+            saveButton.disabled =
+                false;
+
+        },
+
+        function(error){
+
+            console.error(error);
+
+            connectionStatus.textContent =
+
+                "🔴 Could not load attendance: " +
+
+                error.message;
+
+            saveButton.disabled =
+                true;
+
+        },
+
+        {
+            onlyOnce:true
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   DATE CHANGE
+===================================================== */
+
+dateInput.addEventListener(
+
+    "change",
+
+    function(){
+
+        localStorage.setItem(
+
+            "class3AttendanceDate",
+
+            this.value
+
+        );
+
+        attendanceData = {};
+
+        pendingAttendance = {};
+
+        saveButton.disabled =
+            true;
+
+        loadAttendance();
+
+    }
+
+);
+
+
+/* =====================================================
+   RENDER STUDENTS
+===================================================== */
+
+function renderStudents(){
+
+    tableBody.innerHTML = "";
+
+    if(class3Students.length === 0){
+
+        emptyMessage.style.display =
+            "block";
+
+        updateSummary();
+
+        return;
+
+    }
+
+    emptyMessage.style.display =
+        "none";
+
+    class3Students.forEach(
+
+        function(student,index){
+
+            const id =
+                student.firebaseKey;
 
             const status =
-                attendance[date]?.[student.id] || "";
 
-            if (status === "Present") present++;
-            if (status === "Absent") absent++;
-            if (status === "Leave") leave++;
+                pendingAttendance[id] ??
 
-            const row = document.createElement("tr");
+                attendanceData[id] ??
+
+                "none";
+
+            const row =
+                document.createElement("tr");
+
+            row.dataset.studentId =
+                id;
 
             row.innerHTML = `
 
-                <td>${index + 1}</td>
-
-                <td>${student.name}</td>
-
-                <td>${student.gr}</td>
-
                 <td>
-
-                    <button
-                        class="status-btn present ${status === "Present" ? "selected" : ""}"
-                        onclick="setAttendance(${student.id}, 'Present')">
-                        Present
-                    </button>
-
-                    <button
-                        class="status-btn absent ${status === "Absent" ? "selected" : ""}"
-                        onclick="setAttendance(${student.id}, 'Absent')">
-                        Absent
-                    </button>
-
-                    <button
-                        class="status-btn leave ${status === "Leave" ? "selected" : ""}"
-                        onclick="setAttendance(${student.id}, 'Leave')">
-                        Leave
-                    </button>
-
+                    ${index + 1}
                 </td>
 
                 <td>
-
-                    <button
-                        class="status-btn edit"
-                        onclick="editStudent(${student.id})">
-                        ✏️ Edit
-                    </button>
-
-                    <button
-                        class="status-btn delete"
-                        onclick="deleteStudent(${student.id})">
-                        🗑️ Delete
-                    </button>
-
+                    ${escapeHTML(
+                        student.name ||
+                        student.studentName ||
+                        "—"
+                    )}
                 </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.father ||
+                        student.fatherName ||
+                        "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.grNumber ||
+                        student.grNo ||
+                        "—"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        student.roll ||
+                        student.rollNo ||
+                        "—"
+                    )}
+                </td>
+
+                <td class="present-cell"></td>
+
+                <td class="absent-cell"></td>
+
+                <td class="leave-cell"></td>
 
             `;
 
-            table.appendChild(row);
+            const presentButton =
 
-        });
+                createAttendanceButton(
 
-        document.getElementById("totalStudents").textContent =
-            students.length;
+                    "present",
 
-        document.getElementById("presentStudents").textContent =
-            present;
+                    "✅ Present",
 
-        document.getElementById("absentStudents").textContent =
-            absent;
+                    id,
 
-        document.getElementById("leaveStudents").textContent =
-            leave;
+                    status === "present"
+
+                );
+
+            const absentButton =
+
+                createAttendanceButton(
+
+                    "absent",
+
+                    "❌ Absent",
+
+                    id,
+
+                    status === "absent"
+
+                );
+
+            const leaveButton =
+
+                createAttendanceButton(
+
+                    "leave",
+
+                    "🟡 Leave",
+
+                    id,
+
+                    status === "leave"
+
+                );
+
+            row.querySelector(
+                ".present-cell"
+            ).appendChild(
+                presentButton
+            );
+
+            row.querySelector(
+                ".absent-cell"
+            ).appendChild(
+                absentButton
+            );
+
+            row.querySelector(
+                ".leave-cell"
+            ).appendChild(
+                leaveButton
+            );
+
+            tableBody.appendChild(row);
+
+        }
+
+    );
+
+    updateSummary();
+
+}
+
+
+/* =====================================================
+   CREATE BUTTON
+===================================================== */
+
+function createAttendanceButton(
+
+    status,
+
+    text,
+
+    studentId,
+
+    selected
+
+){
+
+    const button =
+        document.createElement("button");
+
+    button.type =
+        "button";
+
+    button.className =
+
+        "attendance-btn " +
+
+        status +
+
+        "-btn" +
+
+        (
+            selected
+            ? " selected"
+            : ""
+        );
+
+    button.dataset.studentId =
+        studentId;
+
+    button.dataset.status =
+        status;
+
+    button.textContent =
+
+        selected
+
+        ? text + " ✓"
+
+        : text;
+
+    return button;
+
+}
+
+
+/* =====================================================
+   SINGLE TABLE CLICK HANDLER
+===================================================== */
+
+tableBody.addEventListener(
+
+    "click",
+
+    function(event){
+
+        const button =
+
+            event.target.closest(
+                ".attendance-btn"
+            );
+
+        if(!button){
+
+            return;
+
+        }
+
+        event.preventDefault();
+
+        const studentId =
+            button.dataset.studentId;
+
+        const status =
+            button.dataset.status;
+
+        if(!studentId || !status){
+
+            return;
+
+        }
+
+        markAttendance(
+
+            studentId,
+
+            status
+
+        );
+
     }
 
-    renderStudents();
+);
+
+
+/* =====================================================
+   MARK ATTENDANCE
+===================================================== */
+
+function markAttendance(
+
+    studentId,
+
+    status
+
+){
+
+    console.log(
+
+        "Attendance clicked:",
+
+        studentId,
+
+        status
+
+    );
+
+    pendingAttendance[studentId] =
+        status;
+
+    updateButtonSelection(
+
+        studentId,
+
+        status
+
+    );
+
+    updateSummary();
+
+}
+
+
+/* =====================================================
+   UPDATE SELECTED BUTTONS
+===================================================== */
+
+function updateButtonSelection(
+
+    studentId,
+
+    selectedStatus
+
+){
+
+    const row =
+
+        tableBody.querySelector(
+
+            'tr[data-student-id="' +
+
+            CSS.escape(studentId) +
+
+            '"]'
+
+        );
+
+    if(!row){
+
+        return;
+
+    }
+
+    const buttons =
+
+        row.querySelectorAll(
+            ".attendance-btn"
+        );
+
+    buttons.forEach(
+
+        function(button){
+
+            const status =
+                button.dataset.status;
+
+            let text;
+
+            if(status === "present"){
+
+                text =
+                    "✅ Present";
+
+            }
+
+            else if(status === "absent"){
+
+                text =
+                    "❌ Absent";
+
+            }
+
+            else{
+
+                text =
+                    "🟡 Leave";
+
+            }
+
+            if(status === selectedStatus){
+
+                button.classList.add(
+                    "selected"
+                );
+
+                button.textContent =
+                    text + " ✓";
+
+            }
+
+            else{
+
+                button.classList.remove(
+                    "selected"
+                );
+
+                button.textContent =
+                    text;
+
+            }
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function updateSummary(){
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent =
+        class3Students.length;
+
+    let present = 0;
+
+    let absent = 0;
+
+    let leave = 0;
+
+    class3Students.forEach(
+
+        function(student){
+
+            const id =
+                student.firebaseKey;
+
+            const status =
+
+                pendingAttendance[id] ??
+
+                attendanceData[id];
+
+            if(status === "present"){
+
+                present++;
+
+            }
+
+            if(status === "absent"){
+
+                absent++;
+
+            }
+
+            if(status === "leave"){
+
+                leave++;
+
+            }
+
+        }
+
+    );
+
+    document.getElementById(
+        "presentStudents"
+    ).textContent =
+        present;
+
+    document.getElementById(
+        "absentStudents"
+    ).textContent =
+        absent;
+
+    document.getElementById(
+        "leaveStudents"
+    ).textContent =
+        leave;
+
+}
+
+
+/* =====================================================
+   SAVE ATTENDANCE
+===================================================== */
+
+saveButton.addEventListener(
+
+    "click",
+
+    async function(){
+
+        const date =
+            dateInput.value;
+
+        if(!date){
+
+            alert(
+                "Please select an attendance date."
+            );
+
+            return;
+
+        }
+
+        if(class3Students.length === 0){
+
+            alert(
+                "No Class 3 students found."
+            );
+
+            return;
+
+        }
+
+        const finalAttendance = {
+
+            ...attendanceData,
+
+            ...pendingAttendance
+
+        };
+
+        const markedCount =
+
+            Object.keys(
+                finalAttendance
+            ).length;
+
+        if(
+            markedCount <
+            class3Students.length
+        ){
+
+            const remaining =
+
+                class3Students.length -
+                markedCount;
+
+            const answer =
+
+                confirm(
+
+                    remaining +
+
+                    " student(s) are not marked.\n\n" +
+
+                    "Do you still want to save?"
+
+                );
+
+            if(!answer){
+
+                return;
+
+            }
+
+        }
+
+        saveButton.disabled =
+            true;
+
+        saveButton.textContent =
+            "⏳ Saving Attendance...";
+
+        try{
+
+            const attendanceRef =
+
+                ref(
+
+                    db,
+
+                    "attendance/Class3/" +
+                    date
+
+                );
+
+            await set(
+
+                attendanceRef,
+
+                finalAttendance
+
+            );
+
+            attendanceData =
+                finalAttendance;
+
+            pendingAttendance = {};
+
+            connectionStatus.textContent =
+
+                "🟢 Attendance saved successfully for " +
+                date +
+                ".";
+
+            saveButton.textContent =
+                "✅ Attendance Saved";
+
+            renderStudents();
+
+            setTimeout(
+
+                function(){
+
+                    saveButton.disabled =
+                        false;
+
+                    saveButton.textContent =
+                        "💾 Save Today's Attendance";
+
+                },
+
+                1500
+
+            );
+
+        }
+
+        catch(error){
+
+            console.error(error);
+
+            connectionStatus.textContent =
+
+                "🔴 Error saving attendance: " +
+                error.message;
+
+            saveButton.disabled =
+                false;
+
+            saveButton.textContent =
+                "💾 Save Today's Attendance";
+
+            alert(
+
+                "Attendance could not be saved.\n\n" +
+                error.message
+
+            );
+
+        }
+
+    }
+
+);
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(value);
+
+    return div.innerHTML;
+
+}
 
 </script>
 
