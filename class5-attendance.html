@@ -1,1 +1,1485 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Class 5 Daily Attendance | GBPS Karam Khan Nizamani</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f2f6f9;
+    color:#222;
+}
+
+header{
+    background:#0d47a1;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+header h1{
+    font-size:25px;
+}
+
+header p{
+    margin-top:7px;
+    font-size:15px;
+}
+
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:10px 18px;
+    background:#0d47a1;
+    color:white;
+    text-decoration:none;
+    border-radius:7px;
+}
+
+h2{
+    color:#0d47a1;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.date-box,
+.quick-box,
+.student-list{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.date-box{
+    padding:18px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.date-box label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:8px;
+}
+
+.date-box input{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+}
+
+/* SUMMARY */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:18px 10px;
+    text-align:center;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.card strong{
+    display:block;
+    font-size:25px;
+    color:#0d47a1;
+    margin-bottom:5px;
+}
+
+/* QUICK ATTENDANCE */
+
+.quick-box{
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.quick-box h3{
+    color:#0d47a1;
+    margin-bottom:8px;
+}
+
+.quick-box p{
+    color:#555;
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+.quick-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.quick-field{
+    text-align:center;
+}
+
+.quick-field label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.quick-field input{
+    width:100%;
+    padding:12px;
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    border:1px solid #ccc;
+    border-radius:7px;
+}
+
+.quick-save{
+    margin-top:15px;
+    width:100%;
+    background:#0d47a1;
+    color:white;
+    font-weight:bold;
+}
+
+.quick-status{
+    margin-top:12px;
+    padding:12px;
+    text-align:center;
+    border-radius:7px;
+    font-weight:bold;
+    display:none;
+}
+
+.quick-status.success{
+    display:block;
+    background:#e8f5e9;
+    color:#2e7d32;
+}
+
+.quick-status.warning{
+    display:block;
+    background:#fff3e0;
+    color:#ef6c00;
+}
+
+.quick-status.error{
+    display:block;
+    background:#ffebee;
+    color:#c62828;
+}
+
+/* FIREBASE STATUS */
+
+.firebase-status{
+    background:white;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+    font-size:14px;
+}
+
+/* STUDENT LIST */
+
+.student-list{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:800px;
+}
+
+th{
+    background:#0d47a1;
+    color:white;
+    padding:13px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+}
+
+.status-btn{
+    padding:8px 10px;
+    margin:2px;
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:7px;
+}
+
+.present{
+    background:#2e7d32;
+}
+
+.absent{
+    background:#c62828;
+}
+
+.leave{
+    background:#ef6c00;
+}
+
+.selected{
+    outline:3px solid #222;
+}
+
+.empty{
+    padding:25px;
+    text-align:center;
+    color:#777;
+}
+
+.loading{
+    padding:25px;
+    text-align:center;
+    color:#1565c0;
+}
+
+footer{
+    margin-top:35px;
+    background:#0d47a1;
+    color:white;
+    text-align:center;
+    padding:18px;
+    font-size:14px;
+}
+
+@media(max-width:650px){
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .quick-row{
+        grid-template-columns:1fr;
+    }
+
+    header h1{
+        font-size:21px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>
+        Government Boys Primary School
+    </h1>
+
+    <p>
+        Karam Khan Nizamani Campus
+    </p>
+
+</header>
+
+
+<div class="container">
+
+    <a
+        href="admin.html"
+        class="back"
+    >
+        ← Admin Dashboard
+    </a>
+
+
+    <h2>
+        👨‍🎓 Class 5 Daily Attendance
+    </h2>
+
+
+    <!-- DATE -->
+
+    <div class="date-box">
+
+        <label for="attendanceDate">
+            Attendance Date:
+        </label>
+
+        <input
+            type="date"
+            id="attendanceDate"
+        >
+
+    </div>
+
+
+    <!-- FIREBASE STATUS -->
+
+    <div
+        id="firebaseStatus"
+        class="firebase-status"
+    >
+        🔄 Loading Class 5 students from Firebase...
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary">
+
+        <div class="card">
+
+            <strong id="totalStudents">
+                0
+            </strong>
+
+            Total Students
+
+        </div>
+
+
+        <div class="card">
+
+            <strong id="presentStudents">
+                0
+            </strong>
+
+            Present
+
+        </div>
+
+
+        <div class="card">
+
+            <strong id="absentStudents">
+                0
+            </strong>
+
+            Absent
+
+        </div>
+
+
+        <div class="card">
+
+            <strong id="leaveStudents">
+                0
+            </strong>
+
+            Leave
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ATTENDANCE -->
+
+    <div class="quick-box">
+
+        <h3>
+            ⚡ Quick Daily Attendance
+        </h3>
+
+        <p>
+            Enter the number of Present, Absent and Leave
+            students. The system will automatically check
+            the result against the total Class 5 students.
+        </p>
+
+
+        <div class="quick-row">
+
+            <div class="quick-field">
+
+                <label>
+                    🟢 Present
+                </label>
+
+                <input
+                    type="number"
+                    id="quickPresent"
+                    min="0"
+                    value="0"
+                    oninput="checkQuickAttendance()"
+                >
+
+            </div>
+
+
+            <div class="quick-field">
+
+                <label>
+                    🔴 Absent
+                </label>
+
+                <input
+                    type="number"
+                    id="quickAbsent"
+                    min="0"
+                    value="0"
+                    oninput="checkQuickAttendance()"
+                >
+
+            </div>
+
+
+            <div class="quick-field">
+
+                <label>
+                    🟡 Leave
+                </label>
+
+                <input
+                    type="number"
+                    id="quickLeave"
+                    min="0"
+                    value="0"
+                    oninput="checkQuickAttendance()"
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="quick-save"
+            onclick="saveQuickAttendance()"
+        >
+            💾 Save Quick Attendance
+        </button>
+
+
+        <div
+            id="quickStatus"
+            class="quick-status"
+        ></div>
+
+    </div>
+
+
+    <!-- STUDENT LIST -->
+
+    <div class="student-list">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        S. No.
+                    </th>
+
+                    <th>
+                        Student Name
+                    </th>
+
+                    <th>
+                        GR No.
+                    </th>
+
+                    <th>
+                        Present
+                    </th>
+
+                    <th>
+                        Absent
+                    </th>
+
+                    <th>
+                        Leave
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="studentTable"
+            ></tbody>
+
+        </table>
+
+
+        <div
+            id="loadingMessage"
+            class="loading"
+        >
+            🔄 Loading students...
+        </div>
+
+
+        <div
+            id="emptyMessage"
+            class="empty"
+            style="display:none;"
+        >
+            No Class 5 students found in Firebase.
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <strong>
+        Government Boys Primary School
+    </strong>
+
+    <br>
+
+    Karam Khan Nizamani Campus
+
+    <br><br>
+
+    © 2026 Government Boys Primary School
+
+</footer>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    onValue
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+/* ==========================================
+   FIREBASE CONFIGURATION
+========================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBoTtizM_SfChAAhvjmZloB-j5wCKLH4Ps",
+
+    authDomain:
+        "gbps-karam-khan-nizamani.firebaseapp.com",
+
+    databaseURL:
+        "https://gbps-karam-khan-nizamani-default-rtdb.firebaseio.com",
+
+    projectId:
+        "gbps-karam-khan-nizamani",
+
+    storageBucket:
+        "gbps-karam-khan-nizamani.firebasestorage.app",
+
+    messagingSenderId:
+        "772460890400",
+
+    appId:
+        "1:772460890400:web:cf2379f4e0d21ebe476f45",
+
+    measurementId:
+        "G-KDQ1MQ16WN"
+
+};
+
+
+/* ==========================================
+   INITIALIZE FIREBASE
+========================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const database =
+    getDatabase(app);
+
+
+const studentsRef =
+    ref(database,"students");
+
+
+/* ==========================================
+   DATA
+========================================== */
+
+let students = [];
+
+let attendance =
+    JSON.parse(
+        localStorage.getItem(
+            "class5Attendance"
+        )
+    ) || {};
+
+let quickAttendance =
+    JSON.parse(
+        localStorage.getItem(
+            "class5QuickAttendance"
+        )
+    ) || {};
+
+
+/* ==========================================
+   DATE
+========================================== */
+
+const dateInput =
+    document.getElementById(
+        "attendanceDate"
+    );
+
+
+const today =
+    new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+dateInput.value =
+    localStorage.getItem(
+        "class5AttendanceDate"
+    ) || today;
+
+
+dateInput.addEventListener(
+    "change",
+    function(){
+
+        localStorage.setItem(
+            "class5AttendanceDate",
+            this.value
+        );
+
+        loadQuickAttendance();
+
+        renderStudents();
+
+    }
+);
+
+
+/* ==========================================
+   FIREBASE STUDENT LISTENER
+========================================== */
+
+onValue(
+
+    studentsRef,
+
+    function(snapshot){
+
+        const data =
+            snapshot.val() || {};
+
+
+        students = [];
+
+
+        Object.keys(data).forEach(
+            function(id){
+
+                const student =
+                    data[id];
+
+
+                /*
+                   IMPORTANT:
+                   Only Class 5 students
+                */
+
+                if(
+                    student.className ===
+                    "Class 5"
+                ){
+
+                    students.push({
+
+                        id:id,
+
+                        name:
+                            student.name || "",
+
+                        gr:
+                            student.grNumber || "",
+
+                        roll:
+                            student.roll || ""
+
+                    });
+
+                }
+
+            }
+        );
+
+
+        /*
+           Sort by GR number where possible
+        */
+
+        students.sort(
+            function(a,b){
+
+                return String(a.gr)
+                    .localeCompare(
+                        String(b.gr),
+                        undefined,
+                        {
+                            numeric:true
+                        }
+                    );
+
+            }
+        );
+
+
+        document.getElementById(
+            "firebaseStatus"
+        ).textContent =
+            "🟢 Connected. " +
+            students.length +
+            " Class 5 student(s) loaded from Firebase.";
+
+
+        document.getElementById(
+            "loadingMessage"
+        ).style.display =
+            "none";
+
+
+        renderStudents();
+
+        loadQuickAttendance();
+
+    },
+
+    function(error){
+
+        console.error(error);
+
+
+        document.getElementById(
+            "firebaseStatus"
+        ).textContent =
+            "❌ Could not load students: " +
+            error.message;
+
+
+        document.getElementById(
+            "loadingMessage"
+        ).style.display =
+            "none";
+
+    }
+
+);
+
+
+/* ==========================================
+   SAVE ATTENDANCE DATA
+========================================== */
+
+function saveAttendanceData(){
+
+    localStorage.setItem(
+
+        "class5Attendance",
+
+        JSON.stringify(
+            attendance
+        )
+
+    );
+
+
+    localStorage.setItem(
+
+        "class5QuickAttendance",
+
+        JSON.stringify(
+            quickAttendance
+        )
+
+    );
+
+}
+
+
+/* ==========================================
+   INDIVIDUAL ATTENDANCE
+========================================== */
+
+window.setAttendance =
+function(id,status){
+
+    const date =
+        dateInput.value;
+
+
+    if(!date){
+
+        alert(
+            "Please select Attendance Date."
+        );
+
+        return;
+
+    }
+
+
+    if(!attendance[date]){
+
+        attendance[date] = {};
+
+    }
+
+
+    attendance[date][id] =
+        status;
+
+
+    saveAttendanceData();
+
+
+    renderStudents();
+
+};
+
+
+/* ==========================================
+   QUICK ATTENDANCE CHECK
+========================================== */
+
+window.checkQuickAttendance =
+function(){
+
+    const present =
+        Number(
+            document.getElementById(
+                "quickPresent"
+            ).value
+        ) || 0;
+
+
+    const absent =
+        Number(
+            document.getElementById(
+                "quickAbsent"
+            ).value
+        ) || 0;
+
+
+    const leave =
+        Number(
+            document.getElementById(
+                "quickLeave"
+            ).value
+        ) || 0;
+
+
+    const total =
+        students.length;
+
+
+    const entered =
+        present +
+        absent +
+        leave;
+
+
+    const status =
+        document.getElementById(
+            "quickStatus"
+        );
+
+
+    if(total === 0){
+
+        status.className =
+            "quick-status warning";
+
+        status.textContent =
+            "⚠️ No Class 5 students are loaded.";
+
+        return;
+
+    }
+
+
+    if(
+        present < 0 ||
+        absent < 0 ||
+        leave < 0
+    ){
+
+        status.className =
+            "quick-status error";
+
+        status.textContent =
+            "❌ Numbers cannot be negative.";
+
+        return;
+
+    }
+
+
+    if(
+        entered === total
+    ){
+
+        status.className =
+            "quick-status success";
+
+        status.textContent =
+            "✅ Correct: " +
+            present +
+            " Present + " +
+            absent +
+            " Absent + " +
+            leave +
+            " Leave = " +
+            total +
+            " students.";
+
+    }
+
+    else{
+
+        status.className =
+            "quick-status warning";
+
+        status.textContent =
+            "⚠️ Entered total: " +
+            entered +
+            " | Class total: " +
+            total;
+
+    }
+
+};
+
+
+/* ==========================================
+   SAVE QUICK ATTENDANCE
+========================================== */
+
+window.saveQuickAttendance =
+function(){
+
+    const date =
+        dateInput.value;
+
+
+    if(!date){
+
+        alert(
+            "Please select Attendance Date."
+        );
+
+        return;
+
+    }
+
+
+    const present =
+        Number(
+            document.getElementById(
+                "quickPresent"
+            ).value
+        ) || 0;
+
+
+    const absent =
+        Number(
+            document.getElementById(
+                "quickAbsent"
+            ).value
+        ) || 0;
+
+
+    const leave =
+        Number(
+            document.getElementById(
+                "quickLeave"
+            ).value
+        ) || 0;
+
+
+    const total =
+        students.length;
+
+
+    const entered =
+        present +
+        absent +
+        leave;
+
+
+    if(total === 0){
+
+        alert(
+            "No Class 5 students are available."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        entered !== total
+    ){
+
+        alert(
+
+            "Attendance numbers do not match.\n\n" +
+
+            "Present + Absent + Leave = " +
+            entered +
+            "\n" +
+
+            "Total Students = " +
+            total +
+            "\n\n" +
+
+            "Please correct the numbers."
+
+        );
+
+        return;
+
+    }
+
+
+    quickAttendance[date] = {
+
+        present:
+            present,
+
+        absent:
+            absent,
+
+        leave:
+            leave,
+
+        total:
+            total
+
+    };
+
+
+    saveAttendanceData();
+
+
+    updateSummary(
+        present,
+        absent,
+        leave
+    );
+
+
+    const status =
+        document.getElementById(
+            "quickStatus"
+        );
+
+
+    status.className =
+        "quick-status success";
+
+
+    status.textContent =
+        "🟢 Attendance saved successfully for " +
+        date +
+        ".";
+
+};
+
+
+/* ==========================================
+   LOAD QUICK ATTENDANCE
+========================================== */
+
+function loadQuickAttendance(){
+
+    const date =
+        dateInput.value;
+
+
+    const data =
+        quickAttendance[date];
+
+
+    if(data){
+
+        document.getElementById(
+            "quickPresent"
+        ).value =
+            data.present;
+
+
+        document.getElementById(
+            "quickAbsent"
+        ).value =
+            data.absent;
+
+
+        document.getElementById(
+            "quickLeave"
+        ).value =
+            data.leave;
+
+
+        updateSummary(
+            data.present,
+            data.absent,
+            data.leave
+        );
+
+
+        checkQuickAttendance();
+
+    }
+
+    else{
+
+        document.getElementById(
+            "quickPresent"
+        ).value =
+            0;
+
+
+        document.getElementById(
+            "quickAbsent"
+        ).value =
+            0;
+
+
+        document.getElementById(
+            "quickLeave"
+        ).value =
+            0;
+
+
+        updateSummary(
+            0,
+            0,
+            0
+        );
+
+
+        const status =
+            document.getElementById(
+                "quickStatus"
+            );
+
+
+        status.className =
+            "quick-status";
+
+
+        status.textContent =
+            "";
+
+    }
+
+}
+
+
+/* ==========================================
+   SUMMARY
+========================================== */
+
+function updateSummary(
+    present,
+    absent,
+    leave
+){
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent =
+        students.length;
+
+
+    document.getElementById(
+        "presentStudents"
+    ).textContent =
+        present;
+
+
+    document.getElementById(
+        "absentStudents"
+    ).textContent =
+        absent;
+
+
+    document.getElementById(
+        "leaveStudents"
+    ).textContent =
+        leave;
+
+}
+
+
+/* ==========================================
+   RENDER STUDENTS
+========================================== */
+
+function renderStudents(){
+
+    const table =
+        document.getElementById(
+            "studentTable"
+        );
+
+
+    const emptyMessage =
+        document.getElementById(
+            "emptyMessage"
+        );
+
+
+    const date =
+        dateInput.value;
+
+
+    table.innerHTML = "";
+
+
+    if(
+        students.length === 0
+    ){
+
+        emptyMessage.style.display =
+            "block";
+
+
+        updateSummary(
+            0,
+            0,
+            0
+        );
+
+
+        return;
+
+    }
+
+
+    emptyMessage.style.display =
+        "none";
+
+
+    let present = 0;
+
+    let absent = 0;
+
+    let leave = 0;
+
+
+    students.forEach(
+        function(student,index){
+
+            const status =
+                attendance[date]?.[
+                    student.id
+                ] || "";
+
+
+            if(
+                status === "Present"
+            ){
+
+                present++;
+
+            }
+
+
+            if(
+                status === "Absent"
+            ){
+
+                absent++;
+
+            }
+
+
+            if(
+                status === "Leave"
+            ){
+
+                leave++;
+
+            }
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${student.name || "—"}
+                </td>
+
+                <td>
+                    ${student.gr || "—"}
+                </td>
+
+                <td>
+
+                    <button
+                        class="status-btn present
+                        ${
+                            status === "Present"
+                            ? "selected"
+                            : ""
+                        }"
+                        onclick="
+                            setAttendance(
+                                '${student.id}',
+                                'Present'
+                            )
+                        "
+                    >
+                        ✅
+                    </button>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="status-btn absent
+                        ${
+                            status === "Absent"
+                            ? "selected"
+                            : ""
+                        }"
+                        onclick="
+                            setAttendance(
+                                '${student.id}',
+                                'Absent'
+                            )
+                        "
+                    >
+                        ❌
+                    </button>
+
+                </td>
+
+                <td>
+
+                    <button
+                        class="status-btn leave
+                        ${
+                            status === "Leave"
+                            ? "selected"
+                            : ""
+                        }"
+                        onclick="
+                            setAttendance(
+                                '${student.id}',
+                                'Leave'
+                            )
+                        "
+                    >
+                        🟡
+                    </button>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(row);
+
+        }
+    );
+
+
+    /*
+       If quick attendance has been saved
+       for this date, display that result.
+       Otherwise display individual attendance.
+    */
+
+    if(
+        quickAttendance[date]
+    ){
+
+        updateSummary(
+
+            quickAttendance[date].present,
+
+            quickAttendance[date].absent,
+
+            quickAttendance[date].leave
+
+        );
+
+    }
+
+    else{
+
+        updateSummary(
+            present,
+            absent,
+            leave
+        );
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
