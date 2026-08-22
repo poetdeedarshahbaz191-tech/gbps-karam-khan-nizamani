@@ -589,8 +589,7 @@ import {
 import {
     getDatabase,
     ref,
-    onValue,
-    set
+    onValue
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 
@@ -652,9 +651,21 @@ const studentsRef =
 
 let students = [];
 
-let attendance = {};
 
-let quickAttendance = {};
+let attendance =
+    JSON.parse(
+        localStorage.getItem(
+            "class2Attendance"
+        )
+    ) || {};
+
+
+let quickAttendance =
+    JSON.parse(
+        localStorage.getItem(
+            "class2QuickAttendance"
+        )
+    ) || {};
 
 
 /* ==========================================
@@ -709,7 +720,9 @@ dateInput.addEventListener(
             this.value
         );
 
-        loadAttendance();
+        loadQuickAttendance();
+
+        renderStudents();
 
     }
 );
@@ -769,11 +782,6 @@ onValue(
                             student.studentName ||
                             "",
 
-                        father:
-                            student.father ||
-                            student.fatherName ||
-                            "",
-
                         gr:
                             student.grNumber ||
                             student.grNo ||
@@ -793,7 +801,7 @@ onValue(
 
 
         /*
-           Sort by GR number
+           Sort by GR number where possible
         */
 
         students.sort(
@@ -829,7 +837,9 @@ onValue(
             "none";
 
 
-        loadAttendance();
+        renderStudents();
+
+        loadQuickAttendance();
 
     },
 
@@ -858,118 +868,29 @@ onValue(
 
 
 /* ==========================================
-   LOAD ATTENDANCE FROM FIREBASE
+   SAVE ATTENDANCE DATA
 ========================================== */
 
-function loadAttendance(){
+function saveAttendanceData(){
 
-    const date =
-        dateInput.value;
+    localStorage.setItem(
 
+        "class2Attendance",
 
-    if(!date){
+        JSON.stringify(
+            attendance
+        )
 
-        return;
-
-    }
-
-
-    const attendanceRef =
-        ref(
-            database,
-            "attendance/Class2/" + date
-        );
+    );
 
 
-    onValue(
+    localStorage.setItem(
 
-        attendanceRef,
+        "class2QuickAttendance",
 
-        function(snapshot){
-
-            const data =
-                snapshot.val() || {};
-
-
-            attendance = {};
-
-
-            Object.keys(data).forEach(
-                function(id){
-
-                    const value =
-                        data[id];
-
-
-                    if(
-                        value === "present" ||
-                        value === "Present"
-                    ){
-
-                        attendance[id] =
-                            "Present";
-
-                    }
-
-                    else if(
-                        value === "absent" ||
-                        value === "Absent"
-                    ){
-
-                        attendance[id] =
-                            "Absent";
-
-                    }
-
-                    else if(
-                        value === "leave" ||
-                        value === "Leave"
-                    ){
-
-                        attendance[id] =
-                            "Leave";
-
-                    }
-
-                }
-            );
-
-
-            /*
-               Load quick summary if saved
-            */
-
-            if(data.quickAttendance){
-
-                quickAttendance[date] =
-                    data.quickAttendance;
-
-            }
-
-
-            renderStudents();
-
-            loadQuickAttendance();
-
-        },
-
-        function(error){
-
-            console.error(error);
-
-            document.getElementById(
-                "firebaseStatus"
-            ).textContent =
-
-                "❌ Could not load attendance: " +
-
-                error.message;
-
-        },
-
-        {
-            onlyOnce:true
-        }
+        JSON.stringify(
+            quickAttendance
+        )
 
     );
 
@@ -981,7 +902,7 @@ function loadAttendance(){
 ========================================== */
 
 window.setAttendance =
-async function(id,status){
+function(id,status){
 
     const date =
         dateInput.value;
@@ -998,63 +919,21 @@ async function(id,status){
     }
 
 
-    attendance[id] =
+    if(!attendance[date]){
+
+        attendance[date] = {};
+
+    }
+
+
+    attendance[date][id] =
         status;
 
 
+    saveAttendanceData();
+
+
     renderStudents();
-
-
-    try{
-
-        const attendanceRef =
-            ref(
-                database,
-                "attendance/Class2/" + date
-            );
-
-
-        const firebaseData = {};
-
-
-        Object.keys(attendance).forEach(
-            function(studentId){
-
-                firebaseData[studentId] =
-                    attendance[studentId];
-
-            }
-        );
-
-
-        await set(
-            attendanceRef,
-            firebaseData
-        );
-
-
-        document.getElementById(
-            "firebaseStatus"
-        ).textContent =
-
-            "🟢 Attendance updated successfully for " +
-            date + ".";
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-
-        document.getElementById(
-            "firebaseStatus"
-        ).textContent =
-
-            "❌ Could not save attendance: " +
-            error.message;
-
-    }
 
 };
 
@@ -1190,7 +1069,7 @@ function(){
 ========================================== */
 
 window.saveQuickAttendance =
-async function(){
+function(){
 
     const date =
         dateInput.value;
@@ -1281,27 +1160,7 @@ async function(){
     }
 
 
-    const attendanceRef =
-        ref(
-            database,
-            "attendance/Class2/" + date
-        );
-
-
-    const firebaseData = {};
-
-
-    Object.keys(attendance).forEach(
-        function(id){
-
-            firebaseData[id] =
-                attendance[id];
-
-        }
-    );
-
-
-    firebaseData.quickAttendance = {
+    quickAttendance[date] = {
 
         present:
             present,
@@ -1318,88 +1177,33 @@ async function(){
     };
 
 
-    try{
-
-        await set(
-            attendanceRef,
-            firebaseData
-        );
+    saveAttendanceData();
 
 
-        quickAttendance[date] = {
-
-            present:
-                present,
-
-            absent:
-                absent,
-
-            leave:
-                leave,
-
-            total:
-                total
-
-        };
+    updateSummary(
+        present,
+        absent,
+        leave
+    );
 
 
-        updateSummary(
-            present,
-            absent,
-            leave
-        );
-
-
-        const status =
-            document.getElementById(
-                "quickStatus"
-            );
-
-
-        status.className =
-            "quick-status success";
-
-
-        status.textContent =
-
-            "🟢 Attendance saved successfully for " +
-
-            date +
-
-            ".";
-
-
+    const status =
         document.getElementById(
-            "firebaseStatus"
-        ).textContent =
-
-            "🟢 Quick attendance saved successfully for " +
-            date + ".";
-
-    }
-
-    catch(error){
-
-        console.error(error);
+            "quickStatus"
+        );
 
 
-        const status =
-            document.getElementById(
-                "quickStatus"
-            );
+    status.className =
+        "quick-status success";
 
 
-        status.className =
-            "quick-status error";
+    status.textContent =
 
+        "🟢 Attendance saved successfully for " +
 
-        status.textContent =
+        date +
 
-            "❌ Could not save attendance: " +
-
-            error.message;
-
-    }
+        ".";
 
 };
 
@@ -1591,7 +1395,7 @@ function renderStudents(){
         function(student,index){
 
             const status =
-                attendance[
+                attendance[date]?.[
                     student.id
                 ] || "";
 
@@ -1721,6 +1525,11 @@ function renderStudents(){
         }
     );
 
+
+    /*
+       If quick attendance has been saved
+       for this date, display that result.
+    */
 
     if(
         quickAttendance[date]
