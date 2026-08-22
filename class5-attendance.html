@@ -1,247 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Class 5 Attendance | GBPS Karam Khan Nizamani Campus</title>
+<meta charset="UTF-8">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-        body {
-            background: #f4f8ff;
-            color: #222;
-        }
+<title>Class 5 Daily Attendance | GBPS Karam Khan Nizamani</title>
 
-        header {
-            background: #0d47a1;
-            color: white;
-            text-align: center;
-            padding: 25px 15px;
-        }
+<style>
 
-        header h1 {
-            font-size: 25px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-        header p {
-            margin-top: 7px;
-            font-size: 15px;
-        }
+body{
+    background:#f2f6f9;
+    color:#222;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 25px auto;
-            padding: 15px;
-        }
+header{
+    background:#0d47a1;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
 
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 18px;
-            background: #0d47a1;
-            color: white;
-            text-decoration: none;
-            border-radius: 7px;
-        }
+header h1{
+    font-size:25px;
+}
 
-        h2 {
-            color: #0d47a1;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+header p{
+    margin-top:7px;
+    font-size:15px;
+}
 
-        .date-box,
-        .add-box,
-        .student-list {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:15px;
+}
 
-        .date-box {
-            padding: 18px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+.back{
+    display:inline-block;
+    margin-bottom:20px;
+    padding:10px 18px;
+    background:#0d47a1;
+    color:white;
+    text-decoration:none;
+    border-radius:7px;
+}
 
-        .date-box label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-        }
+h2{
+    color:#0d47a1;
+    text-align:center;
+    margin-bottom:20px;
+}
 
-        .date-box input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 16px;
-        }
+.date-box,
+.add-box,
+.student-list{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
 
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+.date-box{
+    padding:18px;
+    margin-bottom:20px;
+    text-align:center;
+}
 
-        .card {
-            background: white;
-            padding: 18px 10px;
-            text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
+.date-box label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:8px;
+}
 
-        .card strong {
-            display: block;
-            font-size: 25px;
-            color: #0d47a1;
-            margin-bottom: 5px;
-        }
+.date-box input{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+}
 
-        .add-box {
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
 
-        .add-box h3 {
-            color: #0d47a1;
-            margin-bottom: 15px;
-        }
+.card{
+    background:white;
+    padding:18px 10px;
+    text-align:center;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
-        }
+.card strong{
+    display:block;
+    font-size:25px;
+    color:#0d47a1;
+    margin-bottom:5px;
+}
 
-        input[type="text"] {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 15px;
-        }
+.add-box{
+    padding:20px;
+    margin-bottom:20px;
+}
 
-        button {
-            border: none;
-            cursor: pointer;
-            border-radius: 7px;
-            padding: 12px 16px;
-            font-size: 15px;
-        }
+.add-box h3{
+    color:#0d47a1;
+    margin-bottom:15px;
+}
 
-        .add-btn {
-            background: #0d47a1;
-            color: white;
-        }
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr auto;
+    gap:10px;
+}
 
-        .student-list {
-            overflow-x: auto;
-        }
+input[type="text"]{
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 850px;
-        }
+button{
+    border:none;
+    cursor:pointer;
+    border-radius:7px;
+    padding:12px 16px;
+    font-size:15px;
+}
 
-        th {
-            background: #0d47a1;
-            color: white;
-            padding: 13px;
-        }
+.add-btn{
+    background:#0d47a1;
+    color:white;
+}
 
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            text-align: center;
-        }
+.student-list{
+    overflow-x:auto;
+}
 
-        .status-btn {
-            padding: 8px 10px;
-            margin: 2px;
-            color: white;
-        }
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:850px;
+}
 
-        .present {
-            background: #2e7d32;
-        }
+th{
+    background:#0d47a1;
+    color:white;
+    padding:13px;
+}
 
-        .absent {
-            background: #c62828;
-        }
+td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+}
 
-        .leave {
-            background: #ef6c00;
-        }
+.status-btn{
+    padding:8px 10px;
+    margin:2px;
+    color:white;
+}
 
-        .edit {
-            background: #6a1b9a;
-        }
+.present{
+    background:#2e7d32;
+}
 
-        .delete {
-            background: #b71c1c;
-        }
+.absent{
+    background:#c62828;
+}
 
-        .selected {
-            outline: 3px solid #222;
-        }
+.leave{
+    background:#ef6c00;
+}
 
-        .empty {
-            padding: 25px;
-            text-align: center;
-            color: #777;
-        }
+.edit{
+    background:#6a1b9a;
+}
 
-        footer {
-            margin-top: 35px;
-            background: #0d47a1;
-            color: white;
-            text-align: center;
-            padding: 18px;
-            font-size: 14px;
-        }
+.delete{
+    background:#b71c1c;
+}
 
-        @media (max-width: 650px) {
+.selected{
+    outline:3px solid #222;
+}
 
-            .summary {
-                grid-template-columns: repeat(2, 1fr);
-            }
+.empty{
+    padding:25px;
+    text-align:center;
+    color:#777;
+}
 
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+footer{
+    margin-top:35px;
+    background:#0d47a1;
+    color:white;
+    text-align:center;
+    padding:18px;
+    font-size:14px;
+}
 
-            header h1 {
-                font-size: 21px;
-            }
-        }
-    </style>
+@media(max-width:650px){
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    header h1{
+        font-size:21px;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
-    <h1>Government Boys Primary School</h1>
-    <p>Karam Khan Nizamani Campus</p>
+
+    <h1>
+        Government Boys Primary School
+    </h1>
+
+    <p>
+        Karam Khan Nizamani Campus
+    </p>
+
 </header>
+
 
 <div class="container">
 
-    <a href="admin.html" class="back">
+    <a
+        href="admin.html"
+        class="back"
+    >
         ← Admin Dashboard
     </a>
 
+
     <h2>
-        👨‍🎓 Class 5 Student Record & Attendance
+        👨‍🎓 Class 5 Daily Attendance
     </h2>
+
 
     <div class="date-box">
 
@@ -256,33 +278,60 @@
 
     </div>
 
+
     <div class="summary">
 
         <div class="card">
-            <strong id="totalStudents">0</strong>
+
+            <strong id="totalStudents">
+                0
+            </strong>
+
             Total Students
+
         </div>
 
-        <div class="card">
-            <strong id="presentStudents">0</strong>
-            Present Students
-        </div>
 
         <div class="card">
-            <strong id="absentStudents">0</strong>
-            Absent Students
+
+            <strong id="presentStudents">
+                0
+            </strong>
+
+            Present
+
         </div>
 
+
         <div class="card">
-            <strong id="leaveStudents">0</strong>
+
+            <strong id="absentStudents">
+                0
+            </strong>
+
+            Absent
+
+        </div>
+
+
+        <div class="card">
+
+            <strong id="leaveStudents">
+                0
+            </strong>
+
             Leave
+
         </div>
 
     </div>
 
+
     <div class="add-box">
 
-        <h3>➕ Add Student</h3>
+        <h3>
+            ➕ Add Student
+        </h3>
 
         <div class="form-row">
 
@@ -309,6 +358,7 @@
 
     </div>
 
+
     <div class="student-list">
 
         <table>
@@ -316,21 +366,48 @@
             <thead>
 
                 <tr>
-                    <th>S. No.</th>
-                    <th>Student Name</th>
-                    <th>GR No.</th>
-                    <th>Present</th>
-                    <th>Absent</th>
-                    <th>Leave</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
+
+                    <th>
+                        S. No.
+                    </th>
+
+                    <th>
+                        Student Name
+                    </th>
+
+                    <th>
+                        GR No.
+                    </th>
+
+                    <th>
+                        Present
+                    </th>
+
+                    <th>
+                        Absent
+                    </th>
+
+                    <th>
+                        Leave
+                    </th>
+
+                    <th>
+                        Edit
+                    </th>
+
+                    <th>
+                        Remove
+                    </th>
+
                 </tr>
 
             </thead>
 
+
             <tbody id="studentTable"></tbody>
 
         </table>
+
 
         <div
             id="emptyMessage"
@@ -342,6 +419,7 @@
     </div>
 
 </div>
+
 
 <footer>
 
@@ -359,7 +437,12 @@
 
 </footer>
 
+
 <script>
+
+/* ================================
+   CLASS 5 DATA
+================================ */
 
 let students =
     JSON.parse(
@@ -368,6 +451,7 @@ let students =
         )
     ) || [];
 
+
 let attendance =
     JSON.parse(
         localStorage.getItem(
@@ -375,24 +459,32 @@ let attendance =
         )
     ) || {};
 
+
+/* ================================
+   DATE
+================================ */
+
 const dateInput =
     document.getElementById(
         "attendanceDate"
     );
+
 
 const today =
     new Date()
         .toISOString()
         .split("T")[0];
 
+
 dateInput.value =
     localStorage.getItem(
         "class5AttendanceDate"
     ) || today;
 
+
 dateInput.addEventListener(
     "change",
-    function () {
+    function(){
 
         localStorage.setItem(
             "class5AttendanceDate",
@@ -405,7 +497,11 @@ dateInput.addEventListener(
 );
 
 
-function saveData() {
+/* ================================
+   SAVE DATA
+================================ */
+
+function saveData(){
 
     localStorage.setItem(
         "class5Students",
@@ -420,28 +516,36 @@ function saveData() {
 }
 
 
-function addStudent() {
+/* ================================
+   ADD STUDENT
+================================ */
+
+function addStudent(){
 
     const name =
         document
-            .getElementById("studentName")
-            .value
-            .trim();
+        .getElementById("studentName")
+        .value
+        .trim();
+
 
     const gr =
         document
-            .getElementById("grNumber")
-            .value
-            .trim();
+        .getElementById("grNumber")
+        .value
+        .trim();
 
-    if (!name || !gr) {
+
+    if(!name || !gr){
 
         alert(
             "Please enter Student Name and GR No."
         );
 
         return;
+
     }
+
 
     const exists =
         students.some(
@@ -450,65 +554,81 @@ function addStudent() {
                 gr.toLowerCase()
         );
 
-    if (exists) {
+
+    if(exists){
 
         alert(
             "This GR No. already exists."
         );
 
         return;
+
     }
+
 
     students.push({
 
-        id: Date.now(),
+        id:Date.now(),
 
-        name: name,
+        name:name,
 
-        gr: gr
+        gr:gr
 
     });
 
+
     saveData();
+
 
     document.getElementById(
         "studentName"
     ).value = "";
 
+
     document.getElementById(
         "grNumber"
     ).value = "";
+
 
     renderStudents();
 
 }
 
 
+/* ================================
+   ATTENDANCE
+================================ */
+
 function setAttendance(
     id,
     status
-) {
+){
 
     const date =
         dateInput.value;
 
-    if (!date) {
+
+    if(!date){
 
         alert(
             "Please select Attendance Date."
         );
 
         return;
+
     }
 
-    if (!attendance[date]) {
+
+    if(!attendance[date]){
 
         attendance[date] = {};
 
     }
 
+
     attendance[date][id] =
         status;
+
 
     saveData();
 
@@ -517,14 +637,20 @@ function setAttendance(
 }
 
 
-function editStudent(id) {
+/* ================================
+   EDIT STUDENT
+================================ */
+
+function editStudent(id){
 
     const student =
         students.find(
             s => s.id === id
         );
 
-    if (!student) return;
+
+    if(!student) return;
+
 
     const newName =
         prompt(
@@ -532,13 +658,16 @@ function editStudent(id) {
             student.name
         );
 
-    if (
+
+    if(
         newName === null ||
         newName.trim() === ""
-    ) {
+    ){
 
         return;
+
     }
+
 
     const newGR =
         prompt(
@@ -546,13 +675,16 @@ function editStudent(id) {
             student.gr
         );
 
-    if (
+
+    if(
         newGR === null ||
         newGR.trim() === ""
-    ) {
+    ){
 
         return;
+
     }
+
 
     const duplicate =
         students.some(
@@ -562,20 +694,25 @@ function editStudent(id) {
                 newGR.trim().toLowerCase()
         );
 
-    if (duplicate) {
+
+    if(duplicate){
 
         alert(
             "This GR No. already exists."
         );
 
         return;
+
     }
+
 
     student.name =
         newName.trim();
 
+
     student.gr =
         newGR.trim();
+
 
     saveData();
 
@@ -584,39 +721,48 @@ function editStudent(id) {
 }
 
 
-function deleteStudent(id) {
+/* ================================
+   DELETE STUDENT
+================================ */
+
+function deleteStudent(id){
 
     const student =
         students.find(
             s => s.id === id
         );
 
-    if (!student) return;
 
-    if (
+    if(!student) return;
+
+
+    if(
         !confirm(
             "Remove " +
             student.name +
             " from Class 5?"
         )
-    ) {
+    ){
 
         return;
+
     }
+
 
     students =
         students.filter(
             s => s.id !== id
         );
 
+
     Object.keys(
         attendance
     ).forEach(
         date => {
 
-            if (
+            if(
                 attendance[date]
-            ) {
+            ){
 
                 delete attendance[
                     date
@@ -627,6 +773,7 @@ function deleteStudent(id) {
         }
     );
 
+
     saveData();
 
     renderStudents();
@@ -634,22 +781,30 @@ function deleteStudent(id) {
 }
 
 
-function renderStudents() {
+/* ================================
+   RENDER STUDENTS
+================================ */
+
+function renderStudents(){
 
     const table =
         document.getElementById(
             "studentTable"
         );
 
+
     const emptyMessage =
         document.getElementById(
             "emptyMessage"
         );
 
+
     const date =
         dateInput.value;
 
+
     table.innerHTML = "";
+
 
     let present = 0;
 
@@ -658,21 +813,21 @@ function renderStudents() {
     let leave = 0;
 
 
-    if (
+    if(
         students.length === 0
-    ) {
+    ){
 
         emptyMessage.style.display =
             "block";
 
-    } else {
+    }else{
 
         emptyMessage.style.display =
             "none";
 
 
         students.forEach(
-            (student, index) => {
+            (student,index) => {
 
                 const status =
                     attendance[date]?.[
@@ -680,27 +835,27 @@ function renderStudents() {
                     ] || "";
 
 
-                if (
+                if(
                     status === "Present"
-                ) {
+                ){
 
                     present++;
 
                 }
 
 
-                if (
+                if(
                     status === "Absent"
-                ) {
+                ){
 
                     absent++;
 
                 }
 
 
-                if (
+                if(
                     status === "Leave"
-                ) {
+                ){
 
                     leave++;
 
@@ -822,6 +977,7 @@ function renderStudents() {
 
                 `;
 
+
                 table.appendChild(row);
 
             }
@@ -835,15 +991,18 @@ function renderStudents() {
     ).textContent =
         students.length;
 
+
     document.getElementById(
         "presentStudents"
     ).textContent =
         present;
 
+
     document.getElementById(
         "absentStudents"
     ).textContent =
         absent;
+
 
     document.getElementById(
         "leaveStudents"
@@ -852,6 +1011,10 @@ function renderStudents() {
 
 }
 
+
+/* ================================
+   START PAGE
+================================ */
 
 renderStudents();
 
