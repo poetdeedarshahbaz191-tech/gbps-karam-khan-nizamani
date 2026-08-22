@@ -1,321 +1,437 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>School Attendance Summary | GBPS Karam Khan Nizamani</title>
+<meta charset="UTF-8">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-        body {
-            background: #f2f6f9;
-            color: #222;
-        }
+<title>Final Daily Attendance Report | GBPS Karam Khan Nizamani</title>
 
-        header {
-            background: #006a4e;
-            color: white;
-            text-align: center;
-            padding: 20px 15px;
-        }
+<style>
 
-        header h1 {
-            font-size: 23px;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
 
-        header p {
-            margin-top: 6px;
-            font-size: 14px;
-        }
+body{
+    background:#f2f6f9;
+    color:#222;
+}
 
-        .container {
-            max-width: 1100px;
-            margin: 20px auto;
-            padding: 15px;
-        }
+/* ================= HEADER ================= */
 
-        .top-box,
-        .table-box {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            margin-bottom: 18px;
-        }
+header{
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
 
-        .back {
-            display: inline-block;
-            color: #006a4e;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+header h1{
+    font-size:23px;
+}
 
-        h2 {
-            color: #006a4e;
-            margin-bottom: 8px;
-        }
+header p{
+    margin-top:6px;
+    font-size:14px;
+}
 
-        .date-box {
-            margin-top: 18px;
-        }
+/* ================= CONTAINER ================= */
 
-        .date-box label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
+.container{
+    max-width:1100px;
+    margin:20px auto;
+    padding:15px;
+}
 
-        input[type="date"] {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 15px;
-        }
+/* ================= TOP BOX ================= */
 
-        .status {
-            padding: 11px;
-            margin-bottom: 18px;
-            border-radius: 7px;
-            background: #e8f5e9;
-            color: #006a4e;
-            font-weight: bold;
-        }
+.top-box,
+.table-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+    margin-bottom:18px;
+}
 
-        .school-summary {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+.back{
+    display:inline-block;
+    color:#006a4e;
+    text-decoration:none;
+    font-weight:bold;
+    margin-bottom:15px;
+}
 
-        .summary-box {
-            background: white;
-            padding: 18px 10px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-        }
+h2{
+    color:#006a4e;
+    margin-bottom:8px;
+}
 
-        .summary-box strong {
-            display: block;
-            font-size: 28px;
-            margin-bottom: 6px;
-        }
+/* ================= DATE ================= */
 
-        .summary-box.total strong {
-            color: #006a4e;
-        }
+.date-box{
+    margin-top:18px;
+}
 
-        .summary-box.present strong {
-            color: #2e7d32;
-        }
+.date-box label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:6px;
+}
 
-        .summary-box.absent strong {
-            color: #c62828;
-        }
+input[type="date"]{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:15px;
+}
 
-        .summary-box.leave strong {
-            color: #f9a825;
-        }
+/* ================= STATUS ================= */
 
-        .table-box {
-            overflow-x: auto;
-        }
+.status{
+    padding:11px;
+    margin-bottom:18px;
+    border-radius:7px;
+    background:#e8f5e9;
+    color:#006a4e;
+    font-weight:bold;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 650px;
-        }
+/* ================= SCHOOL TOTALS ================= */
 
-        th,
-        td {
-            padding: 12px 8px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
+.school-summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
 
-        th {
-            background: #006a4e;
-            color: white;
-        }
+.summary-box{
+    background:white;
+    padding:18px 10px;
+    text-align:center;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.07);
+}
 
-        tr:last-child td {
-            border-bottom: none;
-        }
+.summary-box strong{
+    display:block;
+    font-size:28px;
+    margin-bottom:6px;
+}
 
-        .class-name {
-            text-align: left;
-            font-weight: bold;
-        }
+.summary-box.total strong{
+    color:#006a4e;
+}
 
-        .present-number {
-            color: #2e7d32;
-            font-weight: bold;
-        }
+.summary-box.present strong{
+    color:#2e7d32;
+}
 
-        .absent-number {
-            color: #c62828;
-            font-weight: bold;
-        }
+.summary-box.absent strong{
+    color:#c62828;
+}
 
-        .leave-number {
-            color: #f9a825;
-            font-weight: bold;
-        }
+.summary-box.leave strong{
+    color:#f9a825;
+}
 
-        .grand-total {
-            background: #e8f5e9;
-            font-weight: bold;
-        }
+/* ================= TABLE ================= */
 
-        .loading {
-            padding: 20px;
-            text-align: center;
-            color: #777;
-        }
+.table-box{
+    overflow-x:auto;
+}
 
-        footer {
-            margin-top: 30px;
-            background: #006a4e;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            font-size: 13px;
-        }
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
 
-        @media (max-width: 650px) {
-            .school-summary {
-                grid-template-columns: repeat(2, 1fr);
-            }
+th,
+td{
+    padding:12px 8px;
+    border-bottom:1px solid #ddd;
+    text-align:center;
+}
 
-            header h1 {
-                font-size: 20px;
-            }
+th{
+    background:#006a4e;
+    color:white;
+}
 
-            .container {
-                padding: 10px;
-            }
+tr:last-child td{
+    border-bottom:none;
+}
 
-            .top-box,
-            .table-box {
-                padding: 15px;
-            }
+.class-name{
+    text-align:left;
+    font-weight:bold;
+}
 
-            .summary-box strong {
-                font-size: 25px;
-            }
-        }
-    </style>
+.present-number{
+    color:#2e7d32;
+    font-weight:bold;
+}
+
+.absent-number{
+    color:#c62828;
+    font-weight:bold;
+}
+
+.leave-number{
+    color:#f9a825;
+    font-weight:bold;
+}
+
+/* ================= GRAND TOTAL ================= */
+
+.grand-total{
+    background:#e8f5e9;
+    font-weight:bold;
+    font-size:16px;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+    padding:20px;
+    text-align:center;
+    color:#777;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    margin-top:30px;
+    background:#006a4e;
+    color:white;
+    text-align:center;
+    padding:20px;
+    font-size:13px;
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:650px){
+
+    .school-summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    header h1{
+        font-size:20px;
+    }
+
+    .container{
+        padding:10px;
+    }
+
+    .top-box,
+    .table-box{
+        padding:15px;
+    }
+
+    .summary-box strong{
+        font-size:25px;
+    }
+
+}
+
+</style>
+
 </head>
 
 <body>
 
+<!-- ================= HEADER ================= -->
+
 <header>
-    <h1>🏫 Government Boys Primary School</h1>
-    <p>Karam Khan Nizamani Campus</p>
+
+    <h1>
+        🏫 Government Boys Primary School
+    </h1>
+
+    <p>
+        Karam Khan Nizamani Campus
+    </p>
+
 </header>
+
 
 <div class="container">
 
-    <div class="top-box">
 
-        <a href="admin.html" class="back">
-            ← Admin Dashboard
-        </a>
+<!-- ================= TOP ================= -->
 
-        <h2>📊 School Attendance Summary</h2>
+<div class="top-box">
 
-        <p>
-            View attendance totals for KG and Classes 1–5.
-        </p>
-
-        <div class="date-box">
-
-            <label for="attendanceDate">
-                Attendance Date:
-            </label>
-
-            <input
-                type="date"
-                id="attendanceDate"
-            >
-
-        </div>
-
-    </div>
-
-    <div
-        id="connectionStatus"
-        class="status"
+    <a
+        href="admin.html"
+        class="back"
     >
-        🟡 Loading student and attendance data...
-    </div>
+        ← Admin Dashboard
+    </a>
 
-    <div class="school-summary">
+    <h2>
+        📊 Final Daily Attendance Report
+    </h2>
 
-        <div class="summary-box total">
-            <strong id="schoolTotal">0</strong>
-            Total Students
-        </div>
+    <p>
+        Complete attendance report for KG and Classes 1–5.
+    </p>
 
-        <div class="summary-box present">
-            <strong id="schoolPresent">0</strong>
-            Present
-        </div>
 
-        <div class="summary-box absent">
-            <strong id="schoolAbsent">0</strong>
-            Absent
-        </div>
+    <div class="date-box">
 
-        <div class="summary-box leave">
-            <strong id="schoolLeave">0</strong>
-            Leave
-        </div>
+        <label for="attendanceDate">
+            Attendance Date:
+        </label>
 
-    </div>
-
-    <div class="table-box">
-
-        <h2>📚 Class-wise Attendance</h2>
-
-        <table>
-
-            <thead>
-                <tr>
-                    <th>Class</th>
-                    <th>Total Students</th>
-                    <th>Present</th>
-                    <th>Absent</th>
-                    <th>Leave</th>
-                </tr>
-            </thead>
-
-            <tbody id="summaryTable">
-
-                <tr>
-                    <td colspan="5" class="loading">
-                        Loading...
-                    </td>
-                </tr>
-
-            </tbody>
-
-        </table>
+        <input
+            type="date"
+            id="attendanceDate"
+        >
 
     </div>
 
 </div>
+
+
+<!-- ================= CONNECTION ================= -->
+
+<div
+    id="connectionStatus"
+    class="status"
+>
+    🟡 Loading student and attendance data...
+</div>
+
+
+<!-- ================= SCHOOL TOTALS ================= -->
+
+<div class="school-summary">
+
+    <div class="summary-box total">
+
+        <strong id="schoolTotal">
+            0
+        </strong>
+
+        Total Students
+
+    </div>
+
+
+    <div class="summary-box present">
+
+        <strong id="schoolPresent">
+            0
+        </strong>
+
+        Present
+
+    </div>
+
+
+    <div class="summary-box absent">
+
+        <strong id="schoolAbsent">
+            0
+        </strong>
+
+        Absent
+
+    </div>
+
+
+    <div class="summary-box leave">
+
+        <strong id="schoolLeave">
+            0
+        </strong>
+
+        Leave
+
+    </div>
+
+</div>
+
+
+<!-- ================= FINAL TABLE ================= -->
+
+<div class="table-box">
+
+    <h2>
+        📚 Class-wise Final Daily Attendance
+    </h2>
+
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Class
+                </th>
+
+                <th>
+                    Total
+                </th>
+
+                <th>
+                    Present
+                </th>
+
+                <th>
+                    Absent
+                </th>
+
+                <th>
+                    Leave
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="summaryTable">
+
+            <tr>
+
+                <td
+                    colspan="5"
+                    class="loading"
+                >
+                    🟡 Loading...
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
@@ -383,6 +499,7 @@ const firebaseConfig = {
 
     measurementId:
         "G-KDQ1MQ16WN"
+
 };
 
 
@@ -390,100 +507,119 @@ const firebaseConfig = {
    INITIALIZE FIREBASE
 ===================================================== */
 
-const app = initializeApp(firebaseConfig);
+const app =
+    initializeApp(firebaseConfig);
 
-const db = getDatabase(app);
+const db =
+    getDatabase(app);
 
 
 /* =====================================================
-   CLASS CONFIGURATION
+   CLASSES
 ===================================================== */
 
 const classes = [
 
     {
-        name: "👶 KG",
-        names: [
+        name:"👶 KG",
+
+        names:[
             "KG",
             "K.G",
             "KINDERGARTEN",
             "KINDER GARTEN"
         ],
-        attendancePaths: [
+
+        attendancePaths:[
             "kg",
             "KG"
         ]
     },
 
+
     {
-        name: "1️⃣ Class 1",
-        names: [
+        name:"1️⃣ Class 1",
+
+        names:[
             "CLASS 1",
             "1",
             "1ST",
             "ONE"
         ],
-        attendancePaths: [
+
+        attendancePaths:[
             "class1",
             "Class 1",
             "CLASS 1"
         ]
     },
 
+
     {
-        name: "2️⃣ Class 2",
-        names: [
+        name:"2️⃣ Class 2",
+
+        names:[
             "CLASS 2",
             "2",
             "2ND",
             "TWO"
         ],
-        attendancePaths: [
+
+        attendancePaths:[
             "class2",
             "Class 2",
             "CLASS 2"
         ]
     },
 
+
     {
-        name: "3️⃣ Class 3",
-        names: [
+        name:"3️⃣ Class 3",
+
+        names:[
             "CLASS 3",
             "3",
             "3RD",
             "THREE"
         ],
-        attendancePaths: [
+
+        attendancePaths:[
             "class3",
             "Class 3",
             "CLASS 3"
         ]
     },
 
+
     {
-        name: "4️⃣ Class 4",
-        names: [
+        name:"4️⃣ Class 4",
+
+        names:[
             "CLASS 4",
             "4",
             "4TH",
             "FOUR"
         ],
-        attendancePaths: [
+
+        attendancePaths:[
             "class4",
             "Class 4",
             "CLASS 4"
         ]
     },
 
+
     {
-        name: "5️⃣ Class 5",
-        names: [
+        name:"5️⃣ Class 5",
+
+        names:[
             "CLASS 5",
             "5",
             "5TH",
             "FIVE"
         ],
-        attendancePaths: [
+
+        attendancePaths:[
             "class5",
             "Class 5",
             "CLASS 5"
@@ -494,44 +630,54 @@ const classes = [
 
 
 /* =====================================================
-   HTML ELEMENTS
+   ELEMENTS
 ===================================================== */
 
 const dateInput =
-    document.getElementById("attendanceDate");
+    document.getElementById(
+        "attendanceDate"
+    );
 
 const summaryTable =
-    document.getElementById("summaryTable");
+    document.getElementById(
+        "summaryTable"
+    );
 
 const connectionStatus =
-    document.getElementById("connectionStatus");
+    document.getElementById(
+        "connectionStatus"
+    );
 
 
 /* =====================================================
-   TODAY'S DATE
+   TODAY
 ===================================================== */
 
-function getToday() {
+function getToday(){
 
-    const now = new Date();
+    const now =
+        new Date();
 
     const year =
         now.getFullYear();
 
     const month =
-        String(now.getMonth() + 1)
-        .padStart(2, "0");
+        String(
+            now.getMonth()+1
+        ).padStart(2,"0");
 
     const day =
-        String(now.getDate())
-        .padStart(2, "0");
+        String(
+            now.getDate()
+        ).padStart(2,"0");
 
     return `${year}-${month}-${day}`;
+
 }
 
 
 /* =====================================================
-   SET DATE
+   DATE
 ===================================================== */
 
 dateInput.value =
@@ -541,26 +687,28 @@ dateInput.value =
 
 
 /* =====================================================
-   NORMALIZE TEXT
+   NORMALIZE
 ===================================================== */
 
-function normalize(value) {
+function normalize(value){
 
-    return String(value ?? "")
-        .trim()
-        .toUpperCase()
-        .replace(/\s+/g, " ");
+    return String(
+        value ?? ""
+    )
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g," ");
 
 }
 
 
 /* =====================================================
-   GET STUDENT CLASS
+   STUDENT CLASS
 ===================================================== */
 
-function getStudentClass(student) {
+function getStudentClass(student){
 
-    const possibleValues = [
+    const values = [
 
         student.className,
         student.class,
@@ -571,13 +719,16 @@ function getStudentClass(student) {
 
     ];
 
-    for (const value of possibleValues) {
 
-        if (
+    for(
+        const value of values
+    ){
+
+        if(
             value !== undefined &&
             value !== null &&
             String(value).trim() !== ""
-        ) {
+        ){
 
             return normalize(value);
 
@@ -585,52 +736,54 @@ function getStudentClass(student) {
 
     }
 
+
     return "";
 
 }
 
 
 /* =====================================================
-   CHECK WHETHER STUDENT BELONGS TO CLASS
+   STUDENT BELONGS TO CLASS
 ===================================================== */
 
 function studentBelongsToClass(
     student,
     classInfo
-) {
+){
 
     const studentClass =
         getStudentClass(student);
 
-    if (!studentClass) {
+
+    if(!studentClass){
+
         return false;
+
     }
+
 
     return classInfo.names.some(
         className =>
-            normalize(className) === studentClass
+            normalize(className)
+            === studentClass
     );
 
 }
 
 
 /* =====================================================
-   GET STUDENT IDENTIFIERS
+   STUDENT IDENTIFIERS
 ===================================================== */
 
 function getStudentIdentifiers(
     firebaseKey,
     student
-) {
+){
 
     const identifiers = [];
 
 
-    /*
-       Firebase database key
-    */
-
-    if (firebaseKey) {
+    if(firebaseKey){
 
         identifiers.push(
             String(firebaseKey)
@@ -638,10 +791,6 @@ function getStudentIdentifiers(
 
     }
 
-
-    /*
-       Common student ID fields
-    */
 
     const fields = [
 
@@ -665,72 +814,77 @@ function getStudentIdentifiers(
     ];
 
 
-    fields.forEach(field => {
+    fields.forEach(
+        field => {
 
-        if (
-            student[field] !== undefined &&
-            student[field] !== null &&
-            String(student[field]).trim() !== ""
-        ) {
+            if(
+                student[field] !== undefined &&
+                student[field] !== null &&
+                String(
+                    student[field]
+                ).trim() !== ""
+            ){
 
-            identifiers.push(
-                String(student[field]).trim()
-            );
+                identifiers.push(
+                    String(
+                        student[field]
+                    ).trim()
+                );
+
+            }
 
         }
+    );
 
-    });
-
-
-    /*
-       Remove duplicate identifiers
-    */
 
     return [
-        ...new Set(identifiers)
+        ...new Set(
+            identifiers
+        )
     ];
 
 }
 
 
 /* =====================================================
-   NORMALIZE ATTENDANCE STATUS
+   STATUS
 ===================================================== */
 
-function normalizeStatus(value) {
+function normalizeStatus(value){
 
     const status =
         normalize(value);
 
-    if (
+
+    if(
         status === "PRESENT" ||
         status === "P" ||
         status === "YES" ||
         status === "TRUE"
-    ) {
+    ){
 
         return "present";
 
     }
 
 
-    if (
+    if(
         status === "ABSENT" ||
         status === "A" ||
         status === "NO" ||
         status === "FALSE"
-    ) {
+    ){
 
         return "absent";
 
     }
 
 
-    if (
+    if(
         status === "LEAVE" ||
         status === "L" ||
         status === "ON LEAVE"
-    ) {
+    ){
 
         return "leave";
 
@@ -743,23 +897,21 @@ function normalizeStatus(value) {
 
 
 /* =====================================================
-   FIND ATTENDANCE STATUS FOR STUDENT
+   FIND STUDENT STATUS
 ===================================================== */
 
 function findStudentStatus(
     firebaseKey,
     student,
     attendanceData
-) {
+){
 
-    if (!attendanceData) {
+    if(!attendanceData){
+
         return "";
+
     }
 
-
-    /*
-       Get all possible IDs for this student.
-    */
 
     const identifiers =
         getStudentIdentifiers(
@@ -768,28 +920,32 @@ function findStudentStatus(
         );
 
 
-    /*
-       Direct object lookup
-    */
+    /* Direct lookup */
 
-    for (
-        const identifier of identifiers
-    ) {
+    for(
+        const identifier
+        of identifiers
+    ){
 
-        if (
+        if(
             Object.prototype.hasOwnProperty.call(
                 attendanceData,
                 identifier
             )
-        ) {
+        ){
 
             const status =
                 normalizeStatus(
-                    attendanceData[identifier]
+                    attendanceData[
+                        identifier
+                    ]
                 );
 
-            if (status) {
+
+            if(status){
+
                 return status;
+
             }
 
         }
@@ -797,39 +953,47 @@ function findStudentStatus(
     }
 
 
-    /*
-       Case-insensitive lookup.
-       This helps if Firebase uses different
-       capitalization for the student key.
-    */
+    /* Case-insensitive lookup */
 
     const attendanceKeys =
-        Object.keys(attendanceData);
+        Object.keys(
+            attendanceData
+        );
 
 
-    for (
-        const identifier of identifiers
-    ) {
+    for(
+        const identifier
+        of identifiers
+    ){
 
         const wanted =
-            normalize(identifier);
+            normalize(
+                identifier
+            );
+
 
         const foundKey =
             attendanceKeys.find(
                 key =>
-                    normalize(key) === wanted
+                    normalize(key)
+                    === wanted
             );
 
 
-        if (foundKey) {
+        if(foundKey){
 
             const status =
                 normalizeStatus(
-                    attendanceData[foundKey]
+                    attendanceData[
+                        foundKey
+                    ]
                 );
 
-            if (status) {
+
+            if(status){
+
                 return status;
+
             }
 
         }
@@ -837,37 +1001,23 @@ function findStudentStatus(
     }
 
 
-    /*
-       Some attendance systems save records as objects,
-       for example:
+    /* Object records */
 
-       {
-           "-ABC123": {
-               status: "present"
-           }
-       }
-
-       or:
-
-       {
-           "-ABC123": {
-               attendance: "present"
-           }
-       }
-    */
-
-    for (
-        const identifier of identifiers
-    ) {
+    for(
+        const identifier
+        of identifiers
+    ){
 
         const record =
-            attendanceData[identifier];
+            attendanceData[
+                identifier
+            ];
 
 
-        if (
+        if(
             record &&
             typeof record === "object"
-        ) {
+        ){
 
             const possibleStatus =
                 record.status ||
@@ -882,8 +1032,10 @@ function findStudentStatus(
                 );
 
 
-            if (status) {
+            if(status){
+
                 return status;
+
             }
 
         }
@@ -891,20 +1043,22 @@ function findStudentStatus(
     }
 
 
-    /*
-       Search through attendance records
-       when records contain studentId fields.
-    */
+    /* Search records */
 
-    for (
-        const [key, record]
-        of Object.entries(attendanceData)
-    ) {
+    for(
+        const [
+            key,
+            record
+        ]
+        of Object.entries(
+            attendanceData
+        )
+    ){
 
-        if (
+        if(
             !record ||
             typeof record !== "object"
-        ) {
+        ){
 
             continue;
 
@@ -940,12 +1094,14 @@ function findStudentStatus(
             identifiers.some(
                 identifier =>
                     recordIdentifiers.includes(
-                        normalize(identifier)
+                        normalize(
+                            identifier
+                        )
                     )
             );
 
 
-        if (matches) {
+        if(matches){
 
             const possibleStatus =
                 record.status ||
@@ -960,8 +1116,10 @@ function findStudentStatus(
                 );
 
 
-            if (status) {
+            if(status){
+
                 return status;
+
             }
 
         }
@@ -975,53 +1133,46 @@ function findStudentStatus(
 
 
 /* =====================================================
-   LOAD ATTENDANCE FROM POSSIBLE PATHS
+   LOAD ATTENDANCE
 ===================================================== */
 
 async function loadAttendance(
     classInfo,
     date
-) {
+){
 
-    /*
-       Try all possible paths.
-
-       Example:
-
-       attendance/kg/2026-08-21
-
-       attendance/KG/2026-08-21
-    */
-
-    for (
+    for(
         const pathName
         of classInfo.attendancePaths
-    ) {
+    ){
 
         const path =
             `attendance/${pathName}/${date}`;
 
 
-        try {
+        try{
 
             const snapshot =
                 await get(
-                    ref(db, path)
+                    ref(
+                        db,
+                        path
+                    )
                 );
 
 
-            if (
+            if(
                 snapshot.exists()
-            ) {
+            ){
 
                 const data =
                     snapshot.val();
 
 
-                if (
+                if(
                     data &&
                     typeof data === "object"
-                ) {
+                ){
 
                     return data;
 
@@ -1030,7 +1181,7 @@ async function loadAttendance(
             }
 
         }
-        catch (error) {
+        catch(error){
 
             console.warn(
                 "Could not read:",
@@ -1049,29 +1200,33 @@ async function loadAttendance(
 
 
 /* =====================================================
-   LOAD SCHOOL SUMMARY
+   LOAD FINAL DAILY REPORT
 ===================================================== */
 
-async function loadSchoolSummary() {
+async function loadSchoolSummary(){
 
     const date =
         dateInput.value;
 
 
-    if (!date) {
+    if(!date){
+
         return;
+
     }
 
 
     summaryTable.innerHTML = `
 
         <tr>
+
             <td
                 colspan="5"
                 class="loading"
             >
                 🟡 Loading attendance...
             </td>
+
         </tr>
 
     `;
@@ -1081,11 +1236,9 @@ async function loadSchoolSummary() {
         "🟡 Loading students and attendance...";
 
 
-    try {
+    try{
 
-        /* =========================================
-           LOAD STUDENTS
-        ========================================= */
+        /* LOAD STUDENTS */
 
         const studentsSnapshot =
             await get(
@@ -1096,9 +1249,9 @@ async function loadSchoolSummary() {
             );
 
 
-        if (
+        if(
             !studentsSnapshot.exists()
-        ) {
+        ){
 
             throw new Error(
                 "No students found in Firebase."
@@ -1108,14 +1261,15 @@ async function loadSchoolSummary() {
 
 
         const studentsData =
-            studentsSnapshot.val() || {};
+            studentsSnapshot.val()
+            || {};
 
 
         const students =
             Object.entries(
                 studentsData
             ).map(
-                ([firebaseKey, student]) => ({
+                ([firebaseKey,student]) => ({
 
                     firebaseKey,
 
@@ -1125,26 +1279,15 @@ async function loadSchoolSummary() {
             );
 
 
-        /* =========================================
-           SCHOOL TOTALS
-        ========================================= */
-
-        let schoolTotal = 0;
-        let schoolPresent = 0;
-        let schoolAbsent = 0;
-        let schoolLeave = 0;
-
-
         const results = [];
 
 
-        /* =========================================
-           PROCESS EACH CLASS
-        ========================================= */
+        /* PROCESS CLASSES */
 
-        for (
-            const classInfo of classes
-        ) {
+        for(
+            const classInfo
+            of classes
+        ){
 
             const classStudents =
                 students.filter(
@@ -1160,10 +1303,6 @@ async function loadSchoolSummary() {
                 classStudents.length;
 
 
-            /*
-               Load attendance for this class/date.
-            */
-
             const attendanceData =
                 await loadAttendance(
                     classInfo,
@@ -1172,14 +1311,11 @@ async function loadSchoolSummary() {
 
 
             let present = 0;
+
             let absent = 0;
+
             let leave = 0;
 
-
-            /*
-               Match each student against
-               the attendance records.
-            */
 
             classStudents.forEach(
                 student => {
@@ -1192,23 +1328,23 @@ async function loadSchoolSummary() {
                         );
 
 
-                    if (
+                    if(
                         status === "present"
-                    ) {
+                    ){
 
                         present++;
 
                     }
-                    else if (
+                    else if(
                         status === "absent"
-                    ) {
+                    ){
 
                         absent++;
 
                     }
-                    else if (
+                    else if(
                         status === "leave"
-                    ) {
+                    ){
 
                         leave++;
 
@@ -1217,23 +1353,6 @@ async function loadSchoolSummary() {
                 }
             );
 
-
-            /* =====================================
-               SCHOOL TOTALS
-            ===================================== */
-
-            schoolTotal += total;
-
-            schoolPresent += present;
-
-            schoolAbsent += absent;
-
-            schoolLeave += leave;
-
-
-            /* =====================================
-               SAVE RESULT
-            ===================================== */
 
             results.push({
 
@@ -1253,16 +1372,44 @@ async function loadSchoolSummary() {
         }
 
 
-        /* =========================================
-           DISPLAY TABLE
-        ========================================= */
-
-        displayResults(results);
+        displayResults(
+            results
+        );
 
 
-        /* =========================================
-           DISPLAY TOP TOTALS
-        ========================================= */
+        /* SCHOOL TOTALS */
+
+        const schoolTotal =
+            results.reduce(
+                (sum,item) =>
+                    sum + item.total,
+                0
+            );
+
+
+        const schoolPresent =
+            results.reduce(
+                (sum,item) =>
+                    sum + item.present,
+                0
+            );
+
+
+        const schoolAbsent =
+            results.reduce(
+                (sum,item) =>
+                    sum + item.absent,
+                0
+            );
+
+
+        const schoolLeave =
+            results.reduce(
+                (sum,item) =>
+                    sum + item.leave,
+                0
+            );
+
 
         document.getElementById(
             "schoolTotal"
@@ -1288,19 +1435,13 @@ async function loadSchoolSummary() {
             schoolLeave;
 
 
-        /* =========================================
-           CONNECTION MESSAGE
-        ========================================= */
-
         connectionStatus.textContent =
-            `🟢 Connected. Attendance summary loaded for ${date}.`;
-
+            `🟢 Connected. Final daily report loaded for ${date}.`;
 
     }
-    catch (error) {
+    catch(error){
 
         console.error(
-            "Attendance Summary Error:",
             error
         );
 
@@ -1359,7 +1500,9 @@ async function loadSchoolSummary() {
    DISPLAY RESULTS
 ===================================================== */
 
-function displayResults(results) {
+function displayResults(
+    results
+){
 
     summaryTable.innerHTML = "";
 
@@ -1398,19 +1541,19 @@ function displayResults(results) {
             `;
 
 
-            summaryTable.appendChild(row);
+            summaryTable.appendChild(
+                row
+            );
 
         }
     );
 
 
-    /* =============================================
-       ALL CLASSES
-    ============================================= */
+    /* ALL CLASSES */
 
     const total =
         results.reduce(
-            (sum, item) =>
+            (sum,item) =>
                 sum + item.total,
             0
         );
@@ -1418,7 +1561,7 @@ function displayResults(results) {
 
     const present =
         results.reduce(
-            (sum, item) =>
+            (sum,item) =>
                 sum + item.present,
             0
         );
@@ -1426,7 +1569,7 @@ function displayResults(results) {
 
     const absent =
         results.reduce(
-            (sum, item) =>
+            (sum,item) =>
                 sum + item.absent,
             0
         );
@@ -1434,7 +1577,7 @@ function displayResults(results) {
 
     const leave =
         results.reduce(
-            (sum, item) =>
+            (sum,item) =>
                 sum + item.leave,
             0
         );
@@ -1488,7 +1631,7 @@ function displayResults(results) {
 
 dateInput.addEventListener(
     "change",
-    function() {
+    function(){
 
         localStorage.setItem(
             "schoolAttendanceDate",
@@ -1510,5 +1653,4 @@ loadSchoolSummary();
 </script>
 
 </body>
-</html>
-
+    </html>
